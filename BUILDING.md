@@ -4,6 +4,10 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 
 This document is licensed under [The Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
 
+## Definitions
+
+### Version
+
 When using the name 'version' we mean the versioning scheme described in [VERSIONING.md](VERSIONING.md)
 
 ## Introduction
