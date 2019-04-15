@@ -18,6 +18,15 @@ It is NOT the purpose of this document to describe how a project might create a 
 
 ## Release Pipeline
 
+Each Pristine project MUST provide a `bin/release.sh` script which will make a release to the various targets.
+
+Each target may be scripted directly into the `bin/release.sh` shell script, or it may be broken down into files following the pattern:`./bin/release.{target}.sh`.
+
+While the `.sh` extension is mandatory, the scripts may be written with one of the following headers:
+ - `#!bin/sh`
+ - `#!bin/node`
+ - `#!/usr/bin/env node`
+
 ### Create a build from current branch
 
 Process is outlined in [BUILDING.md](BUILDING.md)
