@@ -62,7 +62,7 @@ Each release target MUST have a `bin/build.{target}.{ext}` file.
 The result of this is that every project MUST produce a build for each target when the following command is invoked:
 
 ```
-bin/build.{target}.{ext}`
+bin/build.{target}.{ext}
 ```
 
 The file MUST be placed in the project's `bin` directory.
