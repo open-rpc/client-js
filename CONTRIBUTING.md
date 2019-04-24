@@ -42,7 +42,7 @@ For small documentation changes and fixes, these can be done quickly following t
 1. Review & Test changes
     * If the code changed, then test it. If documentation changed, then preview the rendered Markdown.
 2. Commiting
-    * Follow the [Convention Commits](CONVENTIONAL_COMMITS.md) guidelines to create a commit message
+    * Follow the [Conventional Commits](CONVENTIONAL_COMMITS.md) guidelines to create a commit message.
 3. Sign the CLA
     * Make sure you've signed the repository's Contributor License Agreement. We are not asking you to assign copyright to us, but to give us the right to distribute your code without restriction. We ask this of all contributors in order to assure our users of the origin and continuing existence of the code. You only need to sign the CLA once.
 4. Submit a pull request
