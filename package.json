@@ -1,0 +1,28 @@
+{
+  "name": "@open-rpc/client-js",
+  "version": "0.0.0-development",
+  "description": " A browser-compatible JSON-RPC client with multiple transports.",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --fix -p .",
+    "test": "npm run lint && jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-rpc/client-js.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/open-rpc/client-js/issues"
+  },
+  "homepage": "https://github.com/open-rpc/client-js#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.12",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  }
+}
