@@ -39,12 +39,4 @@ describe("client-js", () => {
     c.request("foo", []);
   });
 
-  it("can handle onData", () => {
-    const transport = new EventEmitterTransport("foo://unique-uri");
-    const c = new RequestManager([transport]);
-    const data = "{\"result\": \"bar\", \"id\": 1}";
-    c.request("foo", []);
-    c.onData(data);
-  });
-
 });

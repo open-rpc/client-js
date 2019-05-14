@@ -47,7 +47,7 @@ class RequestManager {
       transport.close();
     });
   }
-  public onData(data: string): void {
+  private onData(data: string): void {
     const parsedData = JSON.parse(data);
     if (typeof parsedData.result === "undefined") {
       return;
