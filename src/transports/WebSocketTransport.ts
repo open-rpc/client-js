@@ -2,7 +2,7 @@ import WebSocket from "isomorphic-ws";
 import ITransport from "./Transport";
 
 class WebSocketTransport implements ITransport {
-  public connection: WebSocket | undefined;
+  public connection: WebSocket;
   constructor(uri: string) {
     this.connection = new WebSocket(uri);
   }
@@ -18,23 +18,14 @@ class WebSocketTransport implements ITransport {
     });
   }
   public onData(callback: any) {
-    if (!this.connection) {
-      return;
-    }
     this.connection.addEventListener("message", (ev: MessageEvent) => {
       callback(ev.data);
     });
   }
   public sendData(data: any) {
-    if (!this.connection) {
-      return;
-    }
     this.connection.send(data);
   }
   public close() {
-    if (!this.connection) {
-      return;
-    }
     this.connection.close();
   }
 }

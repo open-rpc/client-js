@@ -1,4 +1,3 @@
-
 export default interface ITransport {
   connect(): Promise<any>;
   close(): void;

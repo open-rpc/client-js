@@ -1,12 +1,7 @@
-import Client from ".";
-import RequestManager from "./RequestManager";
-import Transport from "./transports/HTTPTransport";
-
-const t = new Transport("http://localhost:8545");
-
+import { Client, RequestManager, HTTPTransport } from ".";
+const t = new HTTPTransport("http://localhost:3333");
 const c = new Client(new RequestManager([t]));
 
-// make request for eth_blockNumber
-c.request("eth_blockNumber", []).then((b: any) => {
-  console.log('in then', b); //tslint:disable-line
+c.request("addition", [2, 2]).then((result: any) => {
+  console.log('addition result: ', result); // tslint:disable-line
 });
