@@ -1,10 +1,10 @@
-import WebSocket from "isomorphic-ws";
+import WS from "isomorphic-ws";
 import ITransport from "./Transport";
 
 class WebSocketTransport implements ITransport {
-  public connection: WebSocket;
+  public connection: WS;
   constructor(uri: string) {
-    this.connection = new WebSocket(uri);
+    this.connection = new WS(uri);
   }
   public connect(): Promise<any> {
     return new Promise((resolve, reject) => {

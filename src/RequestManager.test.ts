@@ -21,6 +21,12 @@ describe("client-js", () => {
     return c.connect();
   });
 
+  it("can close", () => {
+    const transport = new EventEmitterTransport("foo://unique-uri");
+    const c = new RequestManager([transport]);
+    c.close();
+  });
+
   it("can send a request", (done) => {
     const transport = new EventEmitterTransport("foo://unique-uri");
     const c = new RequestManager([transport]);
@@ -31,6 +37,14 @@ describe("client-js", () => {
       done();
     });
     c.request("foo", []);
+  });
+
+  it("can handle onData", () => {
+    const transport = new EventEmitterTransport("foo://unique-uri");
+    const c = new RequestManager([transport]);
+    const data = "{\"result\": \"bar\", \"id\": 1}";
+    c.request("foo", []);
+    c.onData(data);
   });
 
 });
