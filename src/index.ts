@@ -1,4 +1,7 @@
 import RequestManager from "./RequestManager";
+import EventEmitterTransport from "./transports/EventEmitterTransport";
+import HTTPTransport from "./transports/HTTPTransport";
+import WebSocketTransport from "./transports/WebSocketTransport";
 
 interface IClient {
   request(method: string, params: any): Promise<any>;
@@ -15,3 +18,10 @@ class Client implements IClient {
 }
 
 export default Client;
+export {
+  Client,
+  RequestManager,
+  HTTPTransport,
+  EventEmitterTransport,
+  WebSocketTransport,
+};
