@@ -1,0 +1,89 @@
+version: 2
+
+aliases:
+  # -------------------------
+  #      ALIASES: Caches
+  # -------------------------
+  - &restore-deps-cache
+    key: deps-cache-{{ checksum "package-lock.json" }}
+
+  - &save-deps-cache
+    key: deps-cache-{{ checksum "package-lock.json" }}
+    paths:
+      - ~/client-js/node_modules
+
+  # -------------------------
+  #  ALIASES: Branch Filters
+  # -------------------------
+  - &filter-only-master
+    branches:
+      only: master
+  - &filter-only-semantic-pr
+    branches:
+      only:  /^(pull|dependabot|fix|feat)\/.*$/
+
+defaults: &defaults
+  working_directory: ~/client-js
+
+jobs:
+  test:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache: *restore-deps-cache
+      - run: npm install
+      - run: npm install codecov
+      - run: npm test
+      - run: ./node_modules/.bin/codecov
+      - save_cache: *save-deps-cache
+
+  build:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache: *restore-deps-cache
+      - run: npm install
+      - run: npm run build
+      - save_cache: *save-deps-cache
+
+  release:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache: *restore-deps-cache
+      - run: npm install
+      - run: npm run build
+      - run: npx semantic-release
+      - save_cache: *save-deps-cache
+
+workflows:
+  version: 2
+  analysis:
+    jobs:
+      - test:
+          filters: *filter-only-semantic-pr
+      - build:
+          filters: *filter-only-semantic-pr
+
+  release:
+    jobs:
+      - test:
+          filters: *filter-only-master
+      - build:
+          filters: *filter-only-master
+      - hold:
+          filters: *filter-only-master
+          type: approval
+          requires:
+            - test
+            - build
+      - release:
+          filters: *filter-only-master
+          requires:
+            - hold

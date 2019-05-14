@@ -33,8 +33,10 @@ class RequestManager {
       return;
     }
     // call request callback for id
-    this.requests[parsedData.id](parsedData);
-    delete this.requests[parsedData.id];
+    if (this.requests[parsedData.id]) {
+      this.requests[parsedData.id](parsedData);
+      delete this.requests[parsedData.id];
+    }
   }
   public async request(method: string, params: any): Promise<any> {
     await this.connectPromise;
