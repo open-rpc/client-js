@@ -8,9 +8,7 @@ class WebSocketTransport implements ITransport {
   }
   public connect(): Promise<any> {
     return new Promise((resolve, reject) => {
-      if (!this.connection) { return; }
       const cb = () => {
-        if (!this.connection) { return; }
         this.connection.removeEventListener("open", cb);
         resolve();
       };
