@@ -9,12 +9,12 @@ class EventEmitterTransport implements ITransport {
   public connect(): Promise<any> {
     return Promise.resolve();
   }
-  public onData(callback: any) {
+  public onData(callback: (data: string) => any) {
     this.connection.addListener("message", (data: any) => {
       callback(data);
     });
   }
-  public sendData(data: any) {
+  public sendData(data: string) {
     this.connection.emit("message", data);
   }
   public close() {

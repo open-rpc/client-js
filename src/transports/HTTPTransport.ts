@@ -11,7 +11,7 @@ class HTTPTransport implements ITransport {
   public connect(): Promise<any> {
     return Promise.resolve();
   }
-  public onData(callback: any) {
+  public onData(callback: (data: string) => any) {
     this.onDataCallbacks.push(callback);
   }
   public sendData(data: string) {
@@ -29,7 +29,7 @@ class HTTPTransport implements ITransport {
       });
     });
   }
-  public close() {
+  public close(): void {
     this.onDataCallbacks = [];
   }
 }
