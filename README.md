@@ -1,17 +1,12 @@
 # client-js
 A browser-compatible JSON-RPC client with multiple transports.
 
-```
-import { RequestManager, HTTPEndpoint, Client } from '@open-rpc/client-js';
-
-const managers = [
-  new RequestManager(new HTTPEndpoint(‘http://localhost:8545'))
-]
-
-const client = new Client(managers);
+```javascript
+import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
+const transport = new HTTPTransport('http://localhost:8545');
+const client = new Client(new RequestManager([transport]));
 const result = await client.request(‘addition’, [2, 2]);
 // => 4
-
 ```
 
 ### Contributing
