@@ -1,3 +1,35 @@
 {
-  "tagFormat": "${version}"
+  "tagFormat": "${version}",
+  "branch": "master",
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    "@semantic-release/github",
+    "@semantic-release/git",
+    "@semantic-release/npm"
+  ],
+  "verifyConditions": [
+    "@semantic-release/changelog",
+    "@semantic-release/npm",
+    "@semantic-release/git",
+    "@semantic-release/github",
+    "@qiwi/semantic-release-gh-pages-plugin"
+  ],
+  "publish": [
+    "@semantic-release/github",
+    {
+      "path": "@qiwi/semantic-release-gh-pages-plugin",
+      "msg": "github pages release",
+      "src": "docs/",
+      "branch": "gh-pages"
+    },
+    "@semantic-release/npm"
+  ],
+  "success": [
+    "@semantic-release/github"
+  ],
+  "fail": [
+    "@semantic-release/github"
+  ]
 }

@@ -15,7 +15,7 @@ class RequestManager {
     this.requests = {};
     this.connectPromise = this.connect();
   }
-  public connect() {
+  public connect(): Promise<any> {
     const promises = this.transports.map((transport) => {
       return new Promise(async (resolve, reject) => {
         await transport.connect();
@@ -26,17 +26,6 @@ class RequestManager {
       });
     });
     return Promise.all(promises);
-  }
-  public onData(data: string) {
-    const parsedData = JSON.parse(data);
-    if (typeof parsedData.result === "undefined") {
-      return;
-    }
-    // call request callback for id
-    if (this.requests[parsedData.id]) {
-      this.requests[parsedData.id](parsedData);
-      delete this.requests[parsedData.id];
-    }
   }
   public async request(method: string, params: any): Promise<any> {
     await this.connectPromise;
@@ -53,10 +42,21 @@ class RequestManager {
       }));
     });
   }
-  public close() {
+  public close(): void {
     this.transports.forEach((transport) => {
       transport.close();
     });
+  }
+  public onData(data: string): void {
+    const parsedData = JSON.parse(data);
+    if (typeof parsedData.result === "undefined") {
+      return;
+    }
+    // call request callback for id
+    if (this.requests[parsedData.id]) {
+      this.requests[parsedData.id](parsedData);
+      delete this.requests[parsedData.id];
+    }
   }
 }
 

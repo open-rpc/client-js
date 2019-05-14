@@ -15,15 +15,15 @@ class WebSocketTransport implements ITransport {
       this.connection.addEventListener("open", cb);
     });
   }
-  public onData(callback: any) {
-    this.connection.addEventListener("message", (ev: MessageEvent) => {
+  public onData(callback: (data: string) => any) {
+    this.connection.addEventListener("message", (ev: {data: string}) => {
       callback(ev.data);
     });
   }
   public sendData(data: any) {
     this.connection.send(data);
   }
-  public close() {
+  public close(): void {
     this.connection.close();
   }
 }

@@ -4,7 +4,7 @@
   "description": " A browser-compatible JSON-RPC client with multiple transports.",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && typedoc --out docs",
     "lint": "tslint --fix -p .",
     "test": "npm run lint && jest --coverage"
   },
@@ -19,12 +19,21 @@
   },
   "homepage": "https://github.com/open-rpc/client-js#readme",
   "devDependencies": {
+    "@qiwi/semantic-release-gh-pages-plugin": "^1.8.0",
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/commit-analyzer": "^6.1.0",
+    "@semantic-release/git": "^7.0.8",
+    "@semantic-release/github": "^5.2.10",
+    "@semantic-release/npm": "^5.1.7",
+    "@semantic-release/release-notes-generator": "^7.1.4",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/jest": "^24.0.12",
     "@types/websocket": "0.0.40",
+    "@types/ws": "^6.0.1",
     "jest": "^24.8.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
+    "typedoc": "^0.14.2",
     "typescript": "^3.4.5"
   },
   "dependencies": {
