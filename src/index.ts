@@ -10,8 +10,8 @@ interface IClient {
 /**
  * OpenRPC Client JS is a browser-compatible JSON-RPC client with multiple transports and
  * multiple request managers to enable features like round-robin or fallback-by-position.
- *
- * ```javascript
+ * @example
+ * ```typescript
  * import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
  * const transport = new HTTPTransport('http://localhost:3333');
  * const client = new Client(new RequestManager([transport]));
