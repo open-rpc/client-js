@@ -10,7 +10,6 @@ describe("client-js", () => {
 
   it("has a request method that returns a promise", () => {
     const c = new Client(new RequestManager([new EventEmitterTransport("foo://unique")]));
-    console.log("test city before"); // tslint:disable-line
     expect(typeof c.request).toEqual("function");
     expect(typeof c.request("my_method", null).then).toEqual("function");
   });

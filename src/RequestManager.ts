@@ -33,7 +33,10 @@ class RequestManager {
       const i = id++;
       // naively grab first transport and use it
       const transport = this.transports[0];
-      this.requests[i] = resolve;
+      this.requests[i] = {
+        resolve,
+        reject,
+      };
       transport.sendData(JSON.stringify({
         jsonrpc: "2.0",
         id: i,
@@ -49,14 +52,20 @@ class RequestManager {
   }
   private onData(data: string): void {
     const parsedData = JSON.parse(data);
-    if (typeof parsedData.result === "undefined") {
+    if (typeof parsedData.result === "undefined" && typeof parsedData.error === "undefined") {
       return;
     }
-    // call request callback for id
-    if (this.requests[parsedData.id]) {
-      this.requests[parsedData.id](parsedData);
-      delete this.requests[parsedData.id];
+    const req = this.requests[parsedData.id];
+    if (req === undefined) {
+      return;
     }
+    // resolve promise for id
+    if (parsedData.error) {
+      req.reject(parsedData.error);
+    } else {
+      req.resolve(parsedData.result);
+    }
+    delete this.requests[parsedData.id];
   }
 }
 

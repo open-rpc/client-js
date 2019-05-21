@@ -39,4 +39,32 @@ describe("client-js", () => {
     c.request("foo", []);
   });
 
+  it("can send a request and error", () => {
+    const transport = new EventEmitterTransport("foo://unique-uri");
+    const c = new RequestManager([transport]);
+    transport.onData = (fn) => {
+      transport.connection.on("message", () => {
+        fn(JSON.stringify({
+          jsonrpc: "2.0",
+          id: 3,
+          error: {
+            code: 0,
+            message: "out of order",
+            data: {
+              foo: "bar",
+            },
+          },
+        }));
+      });
+    };
+    c.connect();
+    expect(c.request("foo", [])).rejects.toBe({
+      code: 0,
+      message: "out of order",
+      data: {
+        foo: "bar",
+      },
+    });
+  });
+
 });
