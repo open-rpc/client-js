@@ -46,7 +46,7 @@ describe("client-js", () => {
       transport.connection.on("message", () => {
         fn(JSON.stringify({
           jsonrpc: "2.0",
-          id: 1,
+          id: 3,
           error: {
             code: 0,
             message: "out of order",
@@ -58,7 +58,13 @@ describe("client-js", () => {
       });
     };
     c.connect();
-    expect(c.request("foo", [])).rejects.toThrow();
+    expect(c.request("foo", [])).rejects.toBe({
+      code: 0,
+      message: "out of order",
+      data: {
+        foo: "bar",
+      },
+    });
   });
 
 });

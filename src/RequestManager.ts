@@ -59,15 +59,9 @@ class RequestManager {
     // call request callback for id
     if (req) {
       if (parsedData.error) {
-        req.reject(new Error(
-          [
-            `code: ${parsedData.error.code}`,
-            `message: ${parsedData.error.message}`,
-            `data: ${JSON.stringify(parsedData.error.data)}`,
-          ].join("\n"),
-        ));
+        req.reject(parsedData.error);
       } else {
-        req.resolve(parsedData);
+        req.resolve(parsedData.result);
       }
       delete this.requests[parsedData.id];
     }
