@@ -1,3 +1,13 @@
+## [1.0.1](https://github.com/open-rpc/client-js/compare/1.0.0...1.0.1) (2019-05-21)
+
+
+### Bug Fixes
+
+* add badges ([41a87f1](https://github.com/open-rpc/client-js/commit/41a87f1))
+* error support ([2d91e5a](https://github.com/open-rpc/client-js/commit/2d91e5a))
+* return early if no req ([5e2dab2](https://github.com/open-rpc/client-js/commit/5e2dab2))
+* use object for error ([efd0f61](https://github.com/open-rpc/client-js/commit/efd0f61))
+
 # 1.0.0 (2019-05-15)
 
 
