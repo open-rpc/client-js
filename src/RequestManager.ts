@@ -56,15 +56,16 @@ class RequestManager {
       return;
     }
     const req = this.requests[parsedData.id];
-    // call request callback for id
-    if (req) {
-      if (parsedData.error) {
-        req.reject(parsedData.error);
-      } else {
-        req.resolve(parsedData.result);
-      }
-      delete this.requests[parsedData.id];
+    if (req === undefined) {
+      return;
     }
+    // resolve promise for id
+    if (parsedData.error) {
+      req.reject(parsedData.error);
+    } else {
+      req.resolve(parsedData.result);
+    }
+    delete this.requests[parsedData.id];
   }
 }
 
