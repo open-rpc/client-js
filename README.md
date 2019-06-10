@@ -15,7 +15,7 @@
 A browser-compatible JSON-RPC client with multiple transports:
 
 - HTTP/HTTPS
-- Websocket
+- WebSocket
 - Event Emitter
 
 ```javascript
