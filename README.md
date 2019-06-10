@@ -12,7 +12,11 @@
   </span>
 </center>
 
-A browser-compatible JSON-RPC client with multiple transports.
+A browser-compatible JSON-RPC client with multiple transports:
+
+- HTTP/HTTPS
+- Websocket
+- Event Emitter
 
 ```javascript
 import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
