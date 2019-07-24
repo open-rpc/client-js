@@ -39,7 +39,42 @@ describe("client-js", () => {
     c.request("foo", []);
   });
 
-  it("can send a request and error", () => {
+  it("can batch a request", async () => {
+    const transport = new EventEmitterTransport("foo://unique-uri");
+    transport.sendData = (data) => {
+      const result = JSON.stringify([
+        {
+          jsonrpc: "2.0",
+          id: 3,
+          result: "foo",
+        },
+        {
+          jsonrpc: "2.0",
+          id: 4,
+          result: "bar",
+        },
+      ]);
+      transport.connection.emit("message", result);
+    };
+
+    const c = new RequestManager([transport]);
+    return c.connect().then(() => {
+      c.startBatch();
+      const requests = [
+        c.request("foo", []),
+        c.request("foo", []),
+      ];
+      c.endBatch();
+      return Promise.all(requests).then((results) => {
+        expect(results[0]).toEqual("foo");
+        expect(results[1]).toEqual("bar");
+        c.close();
+      });
+
+    });
+  });
+
+  it("can send a request and error", async () => {
     const transport = new EventEmitterTransport("foo://unique-uri");
     const c = new RequestManager([transport]);
     transport.onData = (fn) => {

@@ -1,9 +1,28 @@
 import ITransport from "./transports/Transport";
+
 let id = 1;
 
 interface IJSONRPCRequest {
   jsonrpc: "2.0";
   id: number;
+  method: string;
+  params: any[] | object;
+}
+interface IJSONRPCError {
+  code: number;
+  message: string;
+  data: any;
+}
+
+interface IJSONRPCResponse {
+  jsonrpc: "2.0";
+  id: number;
+  result?: any;
+  error?: IJSONRPCError;
+}
+
+interface IJSONRPCNotification {
+  jsonrpc: "2.0";
   method: string;
   params: any[] | object;
 }
@@ -15,8 +34,8 @@ interface IJSONRPCRequest {
  */
 class RequestManager {
   public transports: ITransport[];
+  public connectPromise: Promise<any>;
   private requests: any;
-  private connectPromise: Promise<any>;
   private batchStarted: boolean = false;
   private batch: IJSONRPCRequest[] = [];
 
@@ -40,7 +59,6 @@ class RequestManager {
   }
 
   public async request(method: string, params: any): Promise<any> {
-    await this.connectPromise;
     return new Promise((resolve, reject) => {
       const i = id++;
       // naively grab first transport and use it
@@ -56,7 +74,7 @@ class RequestManager {
         params,
       };
       if (this.batchStarted) {
-        this.batch.push(payload); // could dedupe
+        this.batch.push(payload);
       } else {
         transport.sendData(JSON.stringify(payload));
       }
@@ -95,7 +113,19 @@ class RequestManager {
   }
 
   private onData(data: string): void {
-    const parsedData = JSON.parse(data);
+    const parsedData: IJSONRPCResponse[] | IJSONRPCResponse = JSON.parse(data);
+    if (Array.isArray(parsedData)) {
+      parsedData.forEach((response) => {
+        if (this.requests[response.id]) {
+          if (response.error) {
+            this.requests[response.id].reject(new Error(response.error.message));
+          } else {
+            this.requests[response.id].resolve(response.result);
+          }
+        }
+      });
+      return;
+    }
     if (typeof parsedData.result === "undefined" && typeof parsedData.error === "undefined") {
       return;
     }
