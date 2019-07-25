@@ -21,7 +21,6 @@ interface IClient {
  * ```
  *
  */
-
 class Client implements IClient {
   public requestManager: RequestManager;
   constructor(requestManager: RequestManager) {
@@ -29,27 +28,44 @@ class Client implements IClient {
   }
 
   /**
-   * Starts a JSON-RPC Batch call. The client will batch following requests.
-   * This method REQUIRES endBatch be called when finished calling requests.
+   * Initiates [[RequestManager.startBatch]] in order to build a batch call.
+   *
+   * Subsequent calls to [[Client.request]] will be added to the batch. Once endBatch is called, the promises for the
+   * [[Client.request]] will then be resolved.  If the request manager already has a batch in progress, this method
+   * is a noop.
+   *
+   * @example
+   * myClient.startBatch();
+   * myClient.request("foo", ["bar"]).then(() => console.log('foobar'));
+   * myClient.request("foo", ["baz"]).then(() => console.log('foobaz'));
+   * myClient.endBatch();
    */
   public startBatch(): void {
     return this.requestManager.startBatch();
   }
 
   /**
-   * Ends a JSON-RPC Batch call. This client will batch requests from when startBatch
-   * was called until endBatch. This REQUIRES startBatch to be called first.
+   * Initiates [[RequestManager.endBatch]] in order to finalize and send the batch to the underlying transport.
+   *
+   * [[Client.endBatch]] will send the [[Client.request]] calls made since the last [[Client.startBatch]] call. For that
+   * reason, [[Client.startBatch]] MUST be called before [[Client.endBatch]].
+   *
+   * @example
+   * myClient.startBatch();
+   * myClient.request("foo", ["bar"]).then(() => console.log('foobar'));
+   * myClient.request("foo", ["baz"]).then(() => console.log('foobaz'));
+   * myClient.endBatch();
    */
   public endBatch(): void {
     return this.requestManager.endBatch();
   }
+
   /**
    * A JSON-RPC call is represented by sending a Request object to a Server.
    *
-   * @param method A String containing the name of the method to be invoked.
-   * Method names that begin with the word rpc followed by a
-   * period character (U+002E or ASCII 46) are reserved for rpc-internal
-   * methods and extensions and MUST NOT be used for anything else.
+   * @param method A String containing the name of the method to be invoked. Method names that begin with the word rpc
+   * followed by a period character (U+002E or ASCII 46) are reserved for rpc-internal methods and extensions and
+   * MUST NOT be used for anything else.
    * @param params A Structured value that holds the parameter values to be used during the invocation of the method.
    */
   public async request(method: string, params: any) {

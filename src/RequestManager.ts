@@ -88,6 +88,9 @@ class RequestManager {
   }
 
   /**
+   * Begins a batch call by setting the [[RequestManager.batchStarted]] flag to `true`.
+   *
+   * [[RequestManager.batch]] is a singleton - only one batch can exist at a given time, per [[RequestManager]].
    *
    */
   public startBatch(): void {
