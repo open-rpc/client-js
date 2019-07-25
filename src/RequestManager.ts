@@ -114,14 +114,16 @@ class RequestManager {
 
   private onData(data: string): void {
     const parsedData: IJSONRPCResponse[] | IJSONRPCResponse = JSON.parse(data);
+    // handle batch requests
     if (Array.isArray(parsedData)) {
       parsedData.forEach((response) => {
-        if (this.requests[response.id]) {
-          if (response.error) {
-            this.requests[response.id].reject(new Error(response.error.message));
-          } else {
-            this.requests[response.id].resolve(response.result);
-          }
+        if (!this.requests[response.id]) {
+          return;
+        }
+        if (response.error) {
+          this.requests[response.id].reject(response.error);
+        } else {
+          this.requests[response.id].resolve(response.result);
         }
       });
       return;

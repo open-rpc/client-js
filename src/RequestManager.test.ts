@@ -39,18 +39,69 @@ describe("client-js", () => {
     c.request("foo", []);
   });
 
-  it("can batch a request", async () => {
+  it("can error on batchng a request", async () => {
+    const transport = new EventEmitterTransport("foo://unique-uri");
+    const c = new RequestManager([transport]);
+    return c.connect().then(() => {
+      expect(() => c.endBatch()).toThrow();
+    });
+  });
+
+  it("can return errors on batchng requests", async () => {
     const transport = new EventEmitterTransport("foo://unique-uri");
     transport.sendData = (data) => {
       const result = JSON.stringify([
         {
           jsonrpc: "2.0",
           id: 3,
-          result: "foo",
+          error: {
+            code: 509,
+            message: "too much 509",
+            data: {
+              test: "data",
+            },
+          },
         },
         {
           jsonrpc: "2.0",
           id: 4,
+          result: "bar",
+        },
+      ]);
+      transport.connection.emit("message", result);
+    };
+
+    const c = new RequestManager([transport]);
+    return c.connect().then(() => {
+      c.startBatch();
+      const requests = [
+        c.request("foo", []),
+        c.request("foo", []),
+      ];
+      c.endBatch();
+      expect(Promise.all(requests)).rejects.toEqual({
+        code: 509,
+        message: "too much 509",
+        data: {
+          test: "data",
+        },
+      });
+      c.close();
+    });
+  });
+
+  it("can batch a request", async () => {
+    const transport = new EventEmitterTransport("foo://unique-uri");
+    transport.sendData = (data) => {
+      const result = JSON.stringify([
+        {
+          jsonrpc: "2.0",
+          id: 5,
+          result: "foo",
+        },
+        {
+          jsonrpc: "2.0",
+          id: 6,
           result: "bar",
         },
       ]);
@@ -81,7 +132,7 @@ describe("client-js", () => {
       transport.connection.on("message", () => {
         fn(JSON.stringify({
           jsonrpc: "2.0",
-          id: 3,
+          id: 7,
           error: {
             code: 0,
             message: "out of order",
