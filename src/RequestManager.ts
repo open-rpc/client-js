@@ -2,7 +2,7 @@ import ITransport from "./transports/Transport";
 
 interface IJSONRPCRequest {
   jsonrpc: "2.0";
-  id: string;
+  id: string | number;
   method: string;
   params: any[] | object;
 }
@@ -14,7 +14,7 @@ interface IJSONRPCError {
 
 interface IJSONRPCResponse {
   jsonrpc: "2.0";
-  id: string; // can also be null
+  id: string | number; // can also be null
   result?: any;
   error?: IJSONRPCError;
 }
@@ -117,6 +117,7 @@ class RequestManager {
     const results = parsedData instanceof Array ? parsedData : [parsedData];
 
     results.forEach((response) => {
+      const id = typeof response.id === "string" ? response.id : response.id.toString();
       const promiseForResult = this.requests[response.id];
       if (promiseForResult === undefined) {
         throw new Error(

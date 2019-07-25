@@ -96,12 +96,12 @@ describe("client-js", () => {
       const result = JSON.stringify([
         {
           jsonrpc: "2.0",
-          id: "0",
+          id: 0,
           result: "foo",
         },
         {
           jsonrpc: "2.0",
-          id: "1",
+          id: 1,
           result: "bar",
         },
       ]);
