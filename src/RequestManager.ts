@@ -118,7 +118,7 @@ class RequestManager {
 
     results.forEach((response) => {
       const id = typeof response.id === "string" ? response.id : response.id.toString();
-      const promiseForResult = this.requests[response.id];
+      const promiseForResult = this.requests[id];
       if (promiseForResult === undefined) {
         throw new Error(
           `Received an unrecognized response id: ${response.id}. Valid ids are: ${Object.keys(this.requests)}`,
