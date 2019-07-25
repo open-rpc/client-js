@@ -30,34 +30,34 @@ class Client implements IClient {
   /**
    * Initiates [[RequestManager.startBatch]] in order to build a batch call.
    *
-   * Subsequent calls to [[Client.request]] will be added to the batch. Once endBatch is called, the promises for the
-   * [[Client.request]] will then be resolved.  If the request manager already has a batch in progress, this method
-   * is a noop.
+   * Subsequent calls to [[Client.request]] will be added to the batch. Once [[Client.stopBatch]] is called, the
+   * promises for the [[Client.request]] will then be resolved.  If the [[RequestManager]] already has a batch in
+   * progress, this method is a noop.
    *
    * @example
    * myClient.startBatch();
    * myClient.request("foo", ["bar"]).then(() => console.log('foobar'));
    * myClient.request("foo", ["baz"]).then(() => console.log('foobaz'));
-   * myClient.endBatch();
+   * myClient.stopBatch();
    */
   public startBatch(): void {
     return this.requestManager.startBatch();
   }
 
   /**
-   * Initiates [[RequestManager.endBatch]] in order to finalize and send the batch to the underlying transport.
+   * Initiates [[RequestManager.stopBatch]] in order to finalize and send the batch to the underlying transport.
    *
-   * [[Client.endBatch]] will send the [[Client.request]] calls made since the last [[Client.startBatch]] call. For that
-   * reason, [[Client.startBatch]] MUST be called before [[Client.endBatch]].
+   * [[Client.stopBatch]] will send the [[Client.request]] calls made since the last [[Client.startBatch]] call. For
+   * that reason, [[Client.startBatch]] MUST be called before [[Client.stopBatch]].
    *
    * @example
    * myClient.startBatch();
    * myClient.request("foo", ["bar"]).then(() => console.log('foobar'));
    * myClient.request("foo", ["baz"]).then(() => console.log('foobaz'));
-   * myClient.endBatch();
+   * myClient.stopBatch();
    */
-  public endBatch(): void {
-    return this.requestManager.endBatch();
+  public stopBatch(): void {
+    return this.requestManager.stopBatch();
   }
 
   /**

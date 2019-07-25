@@ -98,7 +98,7 @@ class RequestManager {
     this.batchStarted = true;
   }
 
-  public endBatch(): void {
+  public stopBatch(): void {
     if (this.batchStarted === false) {
       throw new Error("cannot end that which has never started");
     }

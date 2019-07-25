@@ -43,7 +43,7 @@ describe("client-js", () => {
     const transport = new EventEmitterTransport("foo://unique-uri");
     const c = new RequestManager([transport]);
     return c.connect().then(() => {
-      expect(() => c.endBatch()).toThrow();
+      expect(() => c.stopBatch()).toThrow();
     });
   });
 
@@ -86,7 +86,7 @@ describe("client-js", () => {
       },
     });
     expect(requests[1]).resolves.toEqual("bar");
-    c.endBatch();
+    c.stopBatch();
     c.close();
   });
 
@@ -115,7 +115,7 @@ describe("client-js", () => {
       c.request("foo", []),
       c.request("foo", []),
     ];
-    c.endBatch();
+    c.stopBatch();
     const [a, b] = await Promise.all(requests);
     expect(a).toEqual("foo");
     expect(b).toEqual("bar");
