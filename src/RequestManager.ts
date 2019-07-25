@@ -1,10 +1,8 @@
 import ITransport from "./transports/Transport";
 
-let id = 1;
-
 interface IJSONRPCRequest {
   jsonrpc: "2.0";
-  id: number;
+  id: string;
   method: string;
   params: any[] | object;
 }
@@ -16,7 +14,7 @@ interface IJSONRPCError {
 
 interface IJSONRPCResponse {
   jsonrpc: "2.0";
-  id: number;
+  id: string; // can also be null
   result?: any;
   error?: IJSONRPCError;
 }
@@ -38,6 +36,7 @@ class RequestManager {
   private requests: any;
   private batchStarted: boolean = false;
   private batch: IJSONRPCRequest[] = [];
+  private lastId: number = -1;
 
   constructor(transports: ITransport[]) {
     this.transports = transports;
@@ -59,14 +58,15 @@ class RequestManager {
   }
 
   public async request(method: string, params: any): Promise<any> {
+    const i = (++this.lastId).toString();
     return new Promise((resolve, reject) => {
-      const i = id++;
       // naively grab first transport and use it
       const transport = this.transports[0];
       this.requests[i] = {
         resolve,
         reject,
       };
+
       const payload: IJSONRPCRequest = {
         jsonrpc: "2.0",
         id: i,
@@ -78,7 +78,7 @@ class RequestManager {
       } else {
         transport.sendData(JSON.stringify(payload));
       }
-    });
+    }).finally(() => this.requests[i] = undefined);
   }
 
   public close(): void {
@@ -98,9 +98,6 @@ class RequestManager {
     this.batchStarted = true;
   }
 
-  /**
-   *
-   */
   public endBatch(): void {
     if (this.batchStarted === false) {
       throw new Error("cannot end that which has never started");
@@ -117,34 +114,24 @@ class RequestManager {
 
   private onData(data: string): void {
     const parsedData: IJSONRPCResponse[] | IJSONRPCResponse = JSON.parse(data);
-    // handle batch requests
-    if (Array.isArray(parsedData)) {
-      parsedData.forEach((response) => {
-        if (!this.requests[response.id]) {
-          return;
-        }
-        if (response.error) {
-          this.requests[response.id].reject(response.error);
-        } else {
-          this.requests[response.id].resolve(response.result);
-        }
-      });
-      return;
-    }
-    if (typeof parsedData.result === "undefined" && typeof parsedData.error === "undefined") {
-      return;
-    }
-    const req = this.requests[parsedData.id];
-    if (req === undefined) {
-      return;
-    }
-    // resolve promise for id
-    if (parsedData.error) {
-      req.reject(parsedData.error);
-    } else {
-      req.resolve(parsedData.result);
-    }
-    delete this.requests[parsedData.id];
+    const results = parsedData instanceof Array ? parsedData : [parsedData];
+
+    results.forEach((response) => {
+      const promiseForResult = this.requests[response.id];
+      if (promiseForResult === undefined) {
+        throw new Error(
+          `Received an unrecognized response id: ${response.id}. Valid ids are: ${Object.keys(this.requests)}`,
+        );
+      }
+
+      if (response.error) {
+        promiseForResult.reject(response.error);
+      } else if (response.result) {
+        promiseForResult.resolve(response.result);
+      } else {
+        throw new Error(`Malformed JSON-RPC response object: ${response}`);
+      }
+    });
   }
 }
 
