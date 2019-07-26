@@ -150,4 +150,14 @@ describe("client-js", () => {
     });
   });
 
+  describe("stopBatch", () => {
+    it("does nothing if the batch is empty", () => {
+      const transport = new EventEmitterTransport("foo://unique-uri");
+      transport.sendData = jest.fn();
+      const c = new RequestManager([transport]);
+      c.startBatch();
+      c.stopBatch();
+      expect(transport.sendData).not.toHaveBeenCalled();
+    });
+  });
 });
