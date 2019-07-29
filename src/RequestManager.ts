@@ -45,16 +45,10 @@ class RequestManager {
   }
 
   public connect(): Promise<any> {
-    const promises = this.transports.map((transport) => {
-      return new Promise(async (resolve, reject) => {
-        await transport.connect();
-        transport.onData((data: any) => {
-          this.onData(data);
-        });
-        resolve();
-      });
-    });
-    return Promise.all(promises);
+    return Promise.all(this.transports.map(async (transport) => {
+      await transport.connect();
+      transport.onData(this.onData.bind(this));
+    }));
   }
 
   public async request(method: string, params: any): Promise<any> {
