@@ -1,5 +1,29 @@
 import ITransport from "./transports/Transport";
-let id = 1;
+
+interface IJSONRPCRequest {
+  jsonrpc: "2.0";
+  id: string | number;
+  method: string;
+  params: any[] | object;
+}
+interface IJSONRPCError {
+  code: number;
+  message: string;
+  data: any;
+}
+
+interface IJSONRPCResponse {
+  jsonrpc: "2.0";
+  id: string | number; // can also be null
+  result?: any;
+  error?: IJSONRPCError;
+}
+
+interface IJSONRPCNotification {
+  jsonrpc: "2.0";
+  method: string;
+  params: any[] | object;
+}
 
 /*
 ** Naive Request Manager, only use 1st transport.
@@ -8,64 +32,101 @@ let id = 1;
  */
 class RequestManager {
   public transports: ITransport[];
+  public connectPromise: Promise<any>;
+  public batch: IJSONRPCRequest[] = [];
   private requests: any;
-  private connectPromise: Promise<any>;
+  private batchStarted: boolean = false;
+  private lastId: number = -1;
+
   constructor(transports: ITransport[]) {
     this.transports = transports;
     this.requests = {};
     this.connectPromise = this.connect();
   }
+
   public connect(): Promise<any> {
-    const promises = this.transports.map((transport) => {
-      return new Promise(async (resolve, reject) => {
-        await transport.connect();
-        transport.onData((data: any) => {
-          this.onData(data);
-        });
-        resolve();
-      });
-    });
-    return Promise.all(promises);
+    return Promise.all(this.transports.map(async (transport) => {
+      transport.onData(this.onData.bind(this));
+      await transport.connect();
+    }));
   }
+
   public async request(method: string, params: any): Promise<any> {
-    await this.connectPromise;
+    const i = (++this.lastId).toString();
+
+    // naively grab first transport and use it
+    const transport = this.transports[0];
+
+    const payload: IJSONRPCRequest = {
+      jsonrpc: "2.0",
+      id: i,
+      method,
+      params,
+    };
+
     return new Promise((resolve, reject) => {
-      const i = id++;
-      // naively grab first transport and use it
-      const transport = this.transports[0];
-      this.requests[i] = {
-        resolve,
-        reject,
-      };
-      transport.sendData(JSON.stringify({
-        jsonrpc: "2.0",
-        id: i,
-        method,
-        params,
-      }));
-    });
+      this.requests[i] = { resolve, reject };
+
+      if (this.batchStarted) {
+        this.batch.push(payload);
+      } else {
+        transport.sendData(JSON.stringify(payload));
+      }
+    }).finally(() => this.requests[i] = undefined);
   }
+
   public close(): void {
     this.transports.forEach((transport) => {
       transport.close();
     });
   }
+
+  /**
+   * Begins a batch call by setting the [[RequestManager.batchStarted]] flag to `true`.
+   *
+   * [[RequestManager.batch]] is a singleton - only one batch can exist at a given time, per [[RequestManager]].
+   *
+   */
+  public startBatch(): void {
+    if (this.batchStarted) { return; }
+    this.batchStarted = true;
+  }
+
+  public stopBatch(): void {
+    if (this.batchStarted === false) {
+      throw new Error("cannot end that which has never started");
+    }
+
+    if (this.batch.length === 0) {
+      return;
+    }
+
+    const batch = JSON.stringify(this.batch);
+    this.batch = [];
+    this.transports[0].sendData(batch);
+  }
+
   private onData(data: string): void {
-    const parsedData = JSON.parse(data);
-    if (typeof parsedData.result === "undefined" && typeof parsedData.error === "undefined") {
-      return;
-    }
-    const req = this.requests[parsedData.id];
-    if (req === undefined) {
-      return;
-    }
-    // resolve promise for id
-    if (parsedData.error) {
-      req.reject(parsedData.error);
-    } else {
-      req.resolve(parsedData.result);
-    }
-    delete this.requests[parsedData.id];
+    const parsedData: IJSONRPCResponse[] | IJSONRPCResponse = JSON.parse(data);
+    const results = parsedData instanceof Array ? parsedData : [parsedData];
+
+    results.forEach((response) => {
+      const id = typeof response.id === "string" ? response.id : response.id.toString();
+      const promiseForResult = this.requests[id];
+      if (promiseForResult === undefined) {
+        throw new Error(
+          `Received an unrecognized response id: ${response.id}. Valid ids are: ${Object.keys(this.requests)}`,
+        );
+      }
+
+      if (response.error) {
+        promiseForResult.reject(response.error);
+      } else if (response.result) {
+        promiseForResult.resolve(response.result);
+      } else {
+        promiseForResult.reject(new Error(`Malformed JSON-RPC response object: ${JSON.stringify(response)}`));
+      }
+    });
   }
 }
 
