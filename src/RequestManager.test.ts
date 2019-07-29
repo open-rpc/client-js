@@ -171,6 +171,25 @@ describe("client-js", () => {
     });
   });
 
+  it("onData throws if the ID is not found", async () => {
+    const emitter = new EventEmitter();
+    const transport = new EventEmitterTransport(emitter, "from1", "to1");
+    const serverTransport = new EventEmitterTransport(emitter, "to1", "from1");
+    const c = new RequestManager([transport]);
+    await c.connect();
+    expect(() => serverTransport.sendData(JSON.stringify({
+      jsonrpc: "2.0",
+      id: 10,
+      error: {
+        code: 0,
+        message: "out of order",
+        data: {
+          foo: "bar",
+        },
+      },
+    }))).toThrow();
+  });
+
   describe("stopBatch", () => {
     it("does nothing if the batch is empty", () => {
       const emitter = new EventEmitter();
@@ -180,6 +199,21 @@ describe("client-js", () => {
       c.startBatch();
       c.stopBatch();
       expect(transport.sendData).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("startBatch", () => {
+    it("it does nothing if a batch is already started", async () => {
+      const emitter = new EventEmitter();
+      const transport = new EventEmitterTransport(emitter, "from1", "to1");
+      const c = new RequestManager([transport]);
+      await c.connect();
+      c.startBatch();
+      c.request("foo", []);
+      expect(c.batch.length).toBe(1);
+      c.startBatch();
+      c.request("foo", []);
+      expect(c.batch.length).toBe(2);
     });
   });
 });

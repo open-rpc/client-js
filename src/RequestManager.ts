@@ -33,9 +33,9 @@ interface IJSONRPCNotification {
 class RequestManager {
   public transports: ITransport[];
   public connectPromise: Promise<any>;
+  public batch: IJSONRPCRequest[] = [];
   private requests: any;
   private batchStarted: boolean = false;
-  private batch: IJSONRPCRequest[] = [];
   private lastId: number = -1;
 
   constructor(transports: ITransport[]) {
