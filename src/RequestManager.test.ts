@@ -180,14 +180,8 @@ describe("client-js", () => {
     expect(() => serverTransport.sendData(JSON.stringify({
       jsonrpc: "2.0",
       id: 10,
-      error: {
-        code: 0,
-        message: "out of order",
-        data: {
-          foo: "bar",
-        },
-      },
-    }))).toThrow();
+      result: 123,
+    }))).toThrow("Received an unrecognized response id: 10. Valid ids are: ");
   });
 
   describe("stopBatch", () => {
