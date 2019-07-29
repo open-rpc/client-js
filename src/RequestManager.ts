@@ -33,9 +33,9 @@ interface IJSONRPCNotification {
 class RequestManager {
   public transports: ITransport[];
   public connectPromise: Promise<any>;
+  public batch: IJSONRPCRequest[] = [];
   private requests: any;
   private batchStarted: boolean = false;
-  private batch: IJSONRPCRequest[] = [];
   private lastId: number = -1;
 
   constructor(transports: ITransport[]) {
@@ -46,27 +46,27 @@ class RequestManager {
 
   public connect(): Promise<any> {
     return Promise.all(this.transports.map(async (transport) => {
-      await transport.connect();
       transport.onData(this.onData.bind(this));
+      await transport.connect();
     }));
   }
 
   public async request(method: string, params: any): Promise<any> {
     const i = (++this.lastId).toString();
-    return new Promise((resolve, reject) => {
-      // naively grab first transport and use it
-      const transport = this.transports[0];
-      this.requests[i] = {
-        resolve,
-        reject,
-      };
 
-      const payload: IJSONRPCRequest = {
-        jsonrpc: "2.0",
-        id: i,
-        method,
-        params,
-      };
+    // naively grab first transport and use it
+    const transport = this.transports[0];
+
+    const payload: IJSONRPCRequest = {
+      jsonrpc: "2.0",
+      id: i,
+      method,
+      params,
+    };
+
+    return new Promise((resolve, reject) => {
+      this.requests[i] = { resolve, reject };
+
       if (this.batchStarted) {
         this.batch.push(payload);
       } else {
@@ -124,7 +124,7 @@ class RequestManager {
       } else if (response.result) {
         promiseForResult.resolve(response.result);
       } else {
-        promiseForResult.reject(new Error(`Malformed JSON-RPC response object: ${response}`));
+        promiseForResult.reject(new Error(`Malformed JSON-RPC response object: ${JSON.stringify(response)}`));
       }
     });
   }
