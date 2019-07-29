@@ -1,7 +1,6 @@
 import RequestManager from "./RequestManager";
 import EventEmitterTransport from "./transports/EventEmitterTransport";
 import { EventEmitter } from "events";
-import { doesNotReject } from "assert";
 
 describe("client-js", () => {
   it("can be constructed", () => {
