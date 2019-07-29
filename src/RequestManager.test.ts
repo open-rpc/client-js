@@ -3,6 +3,7 @@ import EventEmitterTransport from "./transports/EventEmitterTransport";
 import { EventEmitter } from "events";
 
 describe("client-js", () => {
+
   it("can be constructed", () => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
@@ -32,17 +33,15 @@ describe("client-js", () => {
     c.close();
   });
 
-  it("can send a request", (done) => {
+  it("can send a request", async () => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
     const serverTransport = new EventEmitterTransport(emitter, "to1", "from1");
     const c = new RequestManager([transport]);
-    c.connect().then(() => {
-      c.request("foo", []).then(() => {
-        done();
-      });
-      serverTransport.sendData(JSON.stringify({ id: 0, result: { foo: "foofoo" } }));
-    });
+    await c.connect();
+    const reqPromise = c.request("foo", []);
+    serverTransport.sendData(JSON.stringify({ id: 0, result: { foo: "foofoo" } }));
+    await expect(reqPromise).resolves.toEqual({ foo: "foofoo" });
   });
 
   it("can error on malformed response", (done) => {
@@ -63,9 +62,8 @@ describe("client-js", () => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
     const c = new RequestManager([transport]);
-    return c.connect().then(() => {
-      expect(() => c.stopBatch()).toThrow();
-    });
+    await c.connect();
+    expect(() => c.stopBatch()).toThrow();
   });
 
   it("can return errors on batch requests", (done) => {

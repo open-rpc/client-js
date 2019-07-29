@@ -10,17 +10,21 @@ class EventEmitterTransport implements ITransport {
     this.reqUri = reqUri;
     this.resUri = resUri;
   }
+
   public connect(): Promise<any> {
     return Promise.resolve();
   }
+
   public onData(callback: (data: string) => any) {
     this.connection.on(this.reqUri, (data: any) => {
       callback(data);
     });
   }
+
   public sendData(data: string) {
     this.connection.emit(this.resUri, data);
   }
+
   public close() {
     this.connection.removeAllListeners();
   }
