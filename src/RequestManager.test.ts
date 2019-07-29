@@ -1,6 +1,7 @@
 import RequestManager from "./RequestManager";
 import EventEmitterTransport from "./transports/EventEmitterTransport";
 import { EventEmitter } from "events";
+import { doesNotReject } from "assert";
 
 describe("client-js", () => {
   it("can be constructed", () => {
@@ -18,7 +19,7 @@ describe("client-js", () => {
     expect(typeof c.request("my_method", null).then).toEqual("function");
   });
 
-  it("can connect", () => {
+  it("can connect", async () => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
     const c = new RequestManager([transport]);
@@ -37,14 +38,26 @@ describe("client-js", () => {
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
     const serverTransport = new EventEmitterTransport(emitter, "to1", "from1");
     const c = new RequestManager([transport]);
-    c.connect();
-    transport.onData((data: any) => {
-      const d = JSON.parse(data);
-      expect(d.foo).toEqual("bar");
-      done();
+    c.connect().then(() => {
+      c.request("foo", []).then(() => {
+        done();
+      });
+      serverTransport.sendData(JSON.stringify({ id: 0, result: { foo: "foofoo" } }));
     });
-    c.request("foo", []);
-    serverTransport.sendData(JSON.stringify({ foo: "bar" }));
+  });
+
+  it("can error on malformed response", (done) => {
+    const emitter = new EventEmitter();
+    const transport = new EventEmitterTransport(emitter, "from1", "to1");
+    const serverTransport = new EventEmitterTransport(emitter, "to1", "from1");
+    const c = new RequestManager([transport]);
+    c.connect().then(() => {
+      c.request("foo", []).catch((e) => {
+        expect(e.message).toContain("Malformed");
+        done();
+      });
+      serverTransport.sendData(JSON.stringify({ id: 0, foo: "bar" }));
+    });
   });
 
   it("can error on batchng a request", async () => {
@@ -56,46 +69,50 @@ describe("client-js", () => {
     });
   });
 
-  it("can return errors on batch requests", async () => {
+  it("can return errors on batch requests", (done) => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
     const serverTransport = new EventEmitterTransport(emitter, "to1", "from1");
 
     const c = new RequestManager([transport]);
-    await c.connect();
-    c.startBatch();
-    const requests = [
-      c.request("foo", []),
-      c.request("foo", []),
-    ];
-    expect(requests[0]).rejects.toEqual({
-      code: 509,
-      message: "too much 509",
-      data: {
-        test: "data",
-      },
-    });
-    serverTransport.sendData(JSON.stringify([
-      {
-        jsonrpc: "2.0",
-        id: "0",
-        error: {
+    c.connect().then(() => {
+      c.startBatch();
+      const requests = [
+        c.request("foo", []),
+        c.request("foo", []),
+      ];
+      Promise.all(requests).catch((e) => {
+        expect(e).toEqual({
           code: 509,
           message: "too much 509",
           data: {
             test: "data",
           },
+        });
+        c.close();
+        done();
+      });
+      c.stopBatch();
+      serverTransport.sendData(JSON.stringify([
+        {
+          jsonrpc: "2.0",
+          id: "0",
+          error: {
+            code: 509,
+            message: "too much 509",
+            data: {
+              test: "data",
+            },
+          },
         },
-      },
-      {
-        jsonrpc: "2.0",
-        id: "1",
-        result: "bar",
-      },
-    ]));
-    expect(requests[1]).resolves.toEqual("bar");
-    c.stopBatch();
-    c.close();
+        {
+          jsonrpc: "2.0",
+          id: "1",
+          result: "bar",
+        },
+      ]));
+
+    });
   });
 
   it("can batch a request", (done) => {
@@ -132,32 +149,28 @@ describe("client-js", () => {
     });
   });
 
-  it("can send a request and error", async () => {
+  it("can send a request and error", (done) => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
+    const serverTransport = new EventEmitterTransport(emitter, "to1", "from1");
     const c = new RequestManager([transport]);
-    transport.onData = (fn) => {
-      transport.connection.on("message", () => {
-        fn(JSON.stringify({
-          jsonrpc: "2.0",
-          id: 7,
-          error: {
-            code: 0,
-            message: "out of order",
-            data: {
-              foo: "bar",
-            },
+    c.connect().then(() => {
+      c.request("foo", [])
+        .catch((e) => {
+          expect(e.message).toEqual("out of order");
+          done();
+        });
+      serverTransport.sendData(JSON.stringify({
+        jsonrpc: "2.0",
+        id: 0,
+        error: {
+          code: 0,
+          message: "out of order",
+          data: {
+            foo: "bar",
           },
-        }));
-      });
-    };
-    c.connect();
-    expect(c.request("foo", [])).rejects.toBe({
-      code: 0,
-      message: "out of order",
-      data: {
-        foo: "bar",
-      },
+        },
+      }));
     });
   });
 

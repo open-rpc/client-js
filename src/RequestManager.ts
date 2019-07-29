@@ -130,7 +130,7 @@ class RequestManager {
       } else if (response.result) {
         promiseForResult.resolve(response.result);
       } else {
-        throw new Error(`Malformed JSON-RPC response object: ${response}`);
+        promiseForResult.reject(new Error(`Malformed JSON-RPC response object: ${response}`));
       }
     });
   }
