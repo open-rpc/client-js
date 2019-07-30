@@ -1,3 +1,33 @@
+# [1.1.0](https://github.com/open-rpc/client-js/compare/1.0.1...1.1.0) (2019-07-30)
+
+
+### Bug Fixes
+
+* **batching:** add error tests ([46e8eec](https://github.com/open-rpc/client-js/commit/46e8eec))
+* **batching:** add tests ([c867faa](https://github.com/open-rpc/client-js/commit/c867faa))
+* change name of endBatch to stopBatch ([60c48ca](https://github.com/open-rpc/client-js/commit/60c48ca))
+* **README:** add transport support ([1c57adc](https://github.com/open-rpc/client-js/commit/1c57adc))
+* add more docs ([7423e52](https://github.com/open-rpc/client-js/commit/7423e52))
+* allow using integers as id ([2042f72](https://github.com/open-rpc/client-js/commit/2042f72))
+* cleanup vars ([72debcf](https://github.com/open-rpc/client-js/commit/72debcf))
+* deterministic id and cleanup ([097c960](https://github.com/open-rpc/client-js/commit/097c960))
+* event emitter transport ([ba1e23b](https://github.com/open-rpc/client-js/commit/ba1e23b))
+* improve coverage ([5496caf](https://github.com/open-rpc/client-js/commit/5496caf))
+* improve coverage on index ([8bcf352](https://github.com/open-rpc/client-js/commit/8bcf352))
+* improve test coverage ([7e59301](https://github.com/open-rpc/client-js/commit/7e59301))
+* mocking ([586ef40](https://github.com/open-rpc/client-js/commit/586ef40))
+* more specific assertion ([374beb3](https://github.com/open-rpc/client-js/commit/374beb3))
+* **README:** WebSocket casing ([10387e5](https://github.com/open-rpc/client-js/commit/10387e5))
+* move semantic deps to circle ([e3a2003](https://github.com/open-rpc/client-js/commit/e3a2003))
+* refactor request manager connect ([ea19ecf](https://github.com/open-rpc/client-js/commit/ea19ecf))
+* request manager tests ([8ba714e](https://github.com/open-rpc/client-js/commit/8ba714e))
+* update src/RequestManager.test.ts ([617e2ed](https://github.com/open-rpc/client-js/commit/617e2ed))
+
+
+### Features
+
+* batching ([5cc5887](https://github.com/open-rpc/client-js/commit/5cc5887))
+
 ## [1.0.1](https://github.com/open-rpc/client-js/compare/1.0.0...1.0.1) (2019-05-21)
 
 
