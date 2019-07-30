@@ -64,7 +64,9 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="openrpc-client-js">OpenRPC Client JS</h1>
+				<a href="#openrpc-client-js" id="openrpc-client-js" style="color: inherit; text-decoration: none;">
+					<h1>OpenRPC Client JS</h1>
+				</a>
 				<center>
 					<span>
 						<img alt="CircleCI branch" src="https://img.shields.io/circleci/project/github/open-rpc/client-js/master.svg">
@@ -76,13 +78,20 @@
 						<img alt="GitHub commits since latest release" src="https://img.shields.io/github/commits-since/open-rpc/client-js/latest.svg" />
 					</span>
 				</center>
-				<p>A browser-compatible JSON-RPC client with multiple transports.</p>
+				<p>A browser-compatible JSON-RPC client with multiple transports:</p>
+				<ul>
+					<li>HTTP/HTTPS</li>
+					<li>WebSocket</li>
+					<li>Event Emitter</li>
+				</ul>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, HTTPTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">'@open-rpc/client-js'</span>;
 <span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">'http://localhost:8545'</span>);
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-keyword">new</span> RequestManager([transport]));
 <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(‘addition’, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
 <span class="hljs-comment">// =&gt; { jsonrpc: '2.0', id: 1, result: 4 }</span></code></pre>
-				<h3 id="contributing">Contributing</h3>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h3>Contributing</h3>
+				</a>
 				<p>How to contribute, build and release are outlined in <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>, <a href="BUILDING.md">BUILDING.md</a> and <a href="RELEASING.md">RELEASING.md</a> respectively. Commits in this repository follow the <a href="CONVENTIONAL_COMMITS.md">CONVENTIONAL_COMMITS.md</a> specification.</p>
 			</div>
 		</div>
@@ -155,6 +164,7 @@
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -203,7 +213,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>

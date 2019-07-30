@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;example&quot; | @open-rpc/client-js</title>
+	<title>IJSONRPCResponse | @open-rpc/client-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,49 +56,82 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_example_.html">&quot;example&quot;</a>
+					<a href="../modules/_requestmanager_.html">&quot;RequestManager&quot;</a>
+				</li>
+				<li>
+					<a href="_requestmanager_.ijsonrpcresponse.html">IJSONRPCResponse</a>
 				</li>
 			</ul>
-			<h1>External module &quot;example&quot;</h1>
+			<h1>Interface IJSONRPCResponse</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">IJSONRPCResponse</span>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Variables</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_example_.html#c" class="tsd-kind-icon">c</a></li>
-								<li class="tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported"><a href="_example_.html#t" class="tsd-kind-icon">t</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#error" class="tsd-kind-icon">error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#result" class="tsd-kind-icon">result</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Variables</h2>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="c" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> c</h3>
-					<div class="tsd-signature tsd-kind-icon">c<span class="tsd-signature-symbol">:</span> <a href="../classes/_index_.client.html" class="tsd-signature-type">Client</a><span class="tsd-signature-symbol"> =&nbsp;new Client(new RequestManager([t]))</span></div>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="error" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error</h3>
+					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <a href="_requestmanager_.ijsonrpcerror.html" class="tsd-signature-type">IJSONRPCError</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/example.ts#L3">example.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L19">RequestManager.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-					<a name="t" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> t</h3>
-					<div class="tsd-signature tsd-kind-icon">t<span class="tsd-signature-symbol">:</span> <a href="../classes/_transports_httptransport_.httptransport.html" class="tsd-signature-type">HTTPTransport</a><span class="tsd-signature-symbol"> =&nbsp;new HTTPTransport(&quot;http://localhost:3333&quot;)</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/example.ts#L2">example.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L17">RequestManager.ts:17</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="jsonrpc" class="tsd-anchor"></a>
+					<h3>jsonrpc</h3>
+					<div class="tsd-signature tsd-kind-icon">jsonrpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"2.0"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L16">RequestManager.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+					<a name="result" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> result</h3>
+					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L18">RequestManager.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -110,58 +143,85 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_requestmanager_.html">"<wbr>Request<wbr>Manager"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_requestmanager_test_.html">"<wbr>Request<wbr>Manager.test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="___mocks___isomorphic_fetch_.html">"__mocks__/isomorphic-<wbr>fetch"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="___mocks___isomorphic_ws_.html">"__mocks__/isomorphic-<wbr>ws"</a>
-					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="_example_.html">"example"</a>
+						<a href="../modules/_requestmanager_.html">"<wbr>Request<wbr>Manager"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_index_.html">"index"</a>
+						<a href="../modules/_requestmanager_test_.html">"<wbr>Request<wbr>Manager.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_index_test_.html">"index.test"</a>
+						<a href="../modules/___mocks___isomorphic_fetch_.html">"__mocks__/isomorphic-<wbr>fetch"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_eventemittertransport_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport"</a>
+						<a href="../modules/___mocks___isomorphic_ws_.html">"__mocks__/isomorphic-<wbr>ws"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_eventemittertransport_test_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport.test"</a>
+						<a href="../modules/_example_.html">"example"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_httptransport_.html">"transports/HTTPTransport"</a>
+						<a href="../modules/_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_httptransport_test_.html">"transports/HTTPTransport.test"</a>
+						<a href="../modules/_index_test_.html">"index.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_transport_.html">"transports/<wbr>Transport"</a>
+						<a href="../modules/_transports_eventemittertransport_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_websockettransport_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport"</a>
+						<a href="../modules/_transports_eventemittertransport_test_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_websockettransport_test_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport.test"</a>
+						<a href="../modules/_transports_httptransport_.html">"transports/HTTPTransport"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_httptransport_test_.html">"transports/HTTPTransport.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_transport_.html">"transports/<wbr>Transport"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_websockettransport_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_websockettransport_test_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport.test"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_example_.html#c" class="tsd-kind-icon">c</a>
+					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+						<a href="../classes/_requestmanager_.requestmanager.html" class="tsd-kind-icon">Request<wbr>Manager</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_example_.html#t" class="tsd-kind-icon">t</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_requestmanager_.ijsonrpcerror.html" class="tsd-kind-icon">IJSONRPCError</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_requestmanager_.ijsonrpcnotification.html" class="tsd-kind-icon">IJSONRPCNotification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_requestmanager_.ijsonrpcrequest.html" class="tsd-kind-icon">IJSONRPCRequest</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_requestmanager_.ijsonrpcresponse.html" class="tsd-kind-icon">IJSONRPCResponse</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_requestmanager_.ijsonrpcresponse.html#error" class="tsd-kind-icon">error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_requestmanager_.ijsonrpcresponse.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_requestmanager_.ijsonrpcresponse.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+								<a href="_requestmanager_.ijsonrpcresponse.html#result" class="tsd-kind-icon">result</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
 				</ul>
 			</nav>
 		</div>

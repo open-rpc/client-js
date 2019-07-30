@@ -90,7 +90,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#connectpromise" class="tsd-kind-icon">connect<wbr>Promise</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#batch" class="tsd-kind-icon">batch</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#batchstarted" class="tsd-kind-icon">batch<wbr>Started</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#connectpromise" class="tsd-kind-icon">connect<wbr>Promise</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#lastid" class="tsd-kind-icon">last<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#requests" class="tsd-kind-icon">requests</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#transports" class="tsd-kind-icon">transports</a></li>
 							</ul>
@@ -102,6 +105,8 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#connect" class="tsd-kind-icon">connect</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#ondata" class="tsd-kind-icon">on<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#request" class="tsd-kind-icon">request</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#startbatch" class="tsd-kind-icon">start<wbr>Batch</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#stopbatch" class="tsd-kind-icon">stop<wbr>Batch</a></li>
 							</ul>
 						</section>
 					</div>
@@ -119,7 +124,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L12">RequestManager.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L39">RequestManager.ts:39</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -135,13 +140,43 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="batch" class="tsd-anchor"></a>
+					<h3>batch</h3>
+					<div class="tsd-signature tsd-kind-icon">batch<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_requestmanager_.ijsonrpcrequest.html" class="tsd-signature-type">IJSONRPCRequest</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L36">RequestManager.ts:36</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="batchstarted" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> batch<wbr>Started</h3>
+					<div class="tsd-signature tsd-kind-icon">batch<wbr>Started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L38">RequestManager.ts:38</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="connectpromise" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> connect<wbr>Promise</h3>
+					<h3>connect<wbr>Promise</h3>
 					<div class="tsd-signature tsd-kind-icon">connect<wbr>Promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L12">RequestManager.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L35">RequestManager.ts:35</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="lastid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> last<wbr>Id</h3>
+					<div class="tsd-signature tsd-kind-icon">last<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L39">RequestManager.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -151,7 +186,7 @@
 					<div class="tsd-signature tsd-kind-icon">requests<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L11">RequestManager.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L37">RequestManager.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -161,7 +196,7 @@
 					<div class="tsd-signature tsd-kind-icon">transports<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_transports_transport_.itransport.html" class="tsd-signature-type">ITransport</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L10">RequestManager.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L34">RequestManager.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -178,7 +213,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L48">RequestManager.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L78">RequestManager.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -195,7 +230,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L18">RequestManager.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L47">RequestManager.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -212,7 +247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L53">RequestManager.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L109">RequestManager.ts:109</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -235,7 +270,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6e78a99/src/RequestManager.ts#L30">RequestManager.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L54">RequestManager.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -248,6 +283,46 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="startbatch" class="tsd-anchor"></a>
+					<h3>start<wbr>Batch</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">start<wbr>Batch<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L90">RequestManager.ts:90</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Begins a batch call by setting the <a href="_requestmanager_.requestmanager.html#batchstarted">RequestManager.batchStarted</a> flag to <code>true</code>.</p>
+								</div>
+								<p><a href="_requestmanager_.requestmanager.html#batch">RequestManager.batch</a> is a singleton - only one batch can exist at a given time, per <a href="_requestmanager_.requestmanager.html">RequestManager</a>.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="stopbatch" class="tsd-anchor"></a>
+					<h3>stop<wbr>Batch</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">stop<wbr>Batch<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/1da70f3/src/RequestManager.ts#L95">RequestManager.ts:95</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -313,8 +388,17 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="_requestmanager_.requestmanager.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_requestmanager_.requestmanager.html#batch" class="tsd-kind-icon">batch</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_requestmanager_.requestmanager.html#batchstarted" class="tsd-kind-icon">batch<wbr>Started</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_requestmanager_.requestmanager.html#connectpromise" class="tsd-kind-icon">connect<wbr>Promise</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_requestmanager_.requestmanager.html#lastid" class="tsd-kind-icon">last<wbr>Id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_requestmanager_.requestmanager.html#requests" class="tsd-kind-icon">requests</a>
@@ -334,12 +418,27 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_requestmanager_.requestmanager.html#request" class="tsd-kind-icon">request</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_requestmanager_.requestmanager.html#startbatch" class="tsd-kind-icon">start<wbr>Batch</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_requestmanager_.requestmanager.html#stopbatch" class="tsd-kind-icon">stop<wbr>Batch</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_requestmanager_.html#id" class="tsd-kind-icon">id</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_requestmanager_.ijsonrpcerror.html" class="tsd-kind-icon">IJSONRPCError</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_requestmanager_.ijsonrpcnotification.html" class="tsd-kind-icon">IJSONRPCNotification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_requestmanager_.ijsonrpcrequest.html" class="tsd-kind-icon">IJSONRPCRequest</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_requestmanager_.ijsonrpcresponse.html" class="tsd-kind-icon">IJSONRPCResponse</a>
 					</li>
 				</ul>
 			</nav>
@@ -358,6 +457,7 @@
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -406,7 +506,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
