@@ -17,13 +17,30 @@ describe("EventEmitterTransport", () => {
   it("can send and receive data", (done) => {
     const emitter = new EventEmitter();
     const eventEmitterTransport = new EventEmitterTransport(emitter, "from1", "to1");
+    eventEmitterTransport.connect().then(() => {
+      const eventEmitterServerTransport = new EventEmitterTransport(emitter, "to1", "from1");
+      eventEmitterServerTransport.sendData(JSON.stringify({ foo: "bar" }));
+    });
     eventEmitterTransport.onData((data: any) => {
       const d = JSON.parse(data);
       expect(d.foo).toEqual("bar");
       done();
     });
-
-    const eventEmitterServerTransport = new EventEmitterTransport(emitter, "to1", "from1");
-    eventEmitterServerTransport.sendData(JSON.stringify({foo: "bar"}));
+  });
+  it("can handle multiple calls to onData", (done) => {
+    const emitter = new EventEmitter();
+    const eventEmitterTransport = new EventEmitterTransport(emitter, "from1", "to1");
+    eventEmitterTransport.connect().then(() => {
+      const eventEmitterServerTransport = new EventEmitterTransport(emitter, "to1", "from1");
+      eventEmitterServerTransport.sendData(JSON.stringify({ foo: "bar" }));
+    });
+    eventEmitterTransport.onData(() => {
+      // noop
+    });
+    eventEmitterTransport.onData((data: any) => {
+      const d = JSON.parse(data);
+      expect(d.foo).toEqual("bar");
+      done();
+    });
   });
 });

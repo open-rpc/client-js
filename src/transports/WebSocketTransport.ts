@@ -3,8 +3,10 @@ import ITransport from "./Transport";
 
 class WebSocketTransport implements ITransport {
   public connection: WS;
+  private onDataCallbacks: any[];
   constructor(uri: string) {
     this.connection = new WS(uri);
+    this.onDataCallbacks = [];
   }
   public connect(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -13,12 +15,15 @@ class WebSocketTransport implements ITransport {
         resolve();
       };
       this.connection.addEventListener("open", cb);
+      this.connection.addEventListener("message", (ev: { data: string }) => {
+        this.onDataCallbacks.map((callback: (data: string) => void) => {
+          callback(ev.data);
+        });
+      });
     });
   }
-  public onData(callback: (data: string) => any) {
-    this.connection.addEventListener("message", (ev: {data: string}) => {
-      callback(ev.data);
-    });
+  public onData(callback: (data: string) => void) {
+    this.onDataCallbacks.push(callback);
   }
   public sendData(data: any) {
     this.connection.send(data);
