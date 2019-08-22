@@ -26,6 +26,10 @@ class EventEmitterTransport implements ITransport {
     this.onDataCallbacks.push(callback);
   }
 
+  public onError(callback: (error: Error) => void): void {
+    // noop
+  }
+
   public sendData(data: string) {
     this.connection.emit(this.resUri, data);
   }

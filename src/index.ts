@@ -72,6 +72,16 @@ class Client implements IClient {
     await this.requestManager.connectPromise;
     return this.requestManager.request(method, params);
   }
+
+  /**
+   * onError callbacks get called ONLY when there are transport level errors.
+   * For Application level errors use the [[Client.request]] method.
+   *
+   * @param callback A callback that takes an Error
+   */
+  public onError(callback: (error: Error) => void): void {
+    this.requestManager.onError(callback);
+  }
 }
 
 export default Client;

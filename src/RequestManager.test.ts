@@ -1,6 +1,7 @@
 import RequestManager from "./RequestManager";
 import EventEmitterTransport from "./transports/EventEmitterTransport";
 import { EventEmitter } from "events";
+import HTTPTransport from "./transports/HTTPTransport";
 
 describe("client-js", () => {
 
@@ -209,5 +210,15 @@ describe("client-js", () => {
       c.request("foo", []);
       expect(c.batch.length).toBe(2);
     });
+  });
+
+  it("can handle onError from transport", (done) => {
+    const transport = new HTTPTransport("http://localhost:8545");
+    const c = new RequestManager([transport]);
+    c.onError((e: Error) => {
+      expect(e).toBeInstanceOf(Error);
+      done();
+    });
+    transport.sendData(JSON.stringify({ foo: "non-error-class" }));
   });
 });

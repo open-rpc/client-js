@@ -31,11 +31,25 @@ describe("client-js", () => {
   });
 
   describe("stopBatch", () => {
-    const emitter = new EventEmitter();
-    const rm = new mockedRequestManager([new EventEmitterTransport(emitter, "from1", "to1")]);
-    const c = new Client(rm);
-    c.startBatch();
-    c.stopBatch();
-    expect(mockedRequestManager.mock.instances[0].startBatch).toHaveBeenCalled();
+    it("calls the requestManager.stopBatch", () => {
+      const emitter = new EventEmitter();
+      const rm = new mockedRequestManager([new EventEmitterTransport(emitter, "from1", "to1")]);
+      const c = new Client(rm);
+      c.startBatch();
+      c.stopBatch();
+      expect(mockedRequestManager.mock.instances[0].startBatch).toHaveBeenCalled();
+    });
+  });
+
+  describe("onError", () => {
+    it("should handle onerror", () => {
+      const emitter = new EventEmitter();
+      const rm = new mockedRequestManager([new EventEmitterTransport(emitter, "from1", "to1")]);
+      const c = new Client(rm);
+      c.onError(() => {
+        // noop
+      });
+      expect(mockedRequestManager.mock.instances[0].onError).toHaveBeenCalled();
+    });
   });
 });

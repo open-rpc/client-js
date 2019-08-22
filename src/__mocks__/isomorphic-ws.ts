@@ -14,7 +14,13 @@ class WebSocket {
   public removeEventListener(eventName: string, callback: any) {
     delete this.callbacks[eventName];
   }
-  public send(data: any) {
+  public send(data: string) {
+    if (data.includes("close")) {
+      return this.callbacks.close(new CloseEvent("type", {code: 1002, reason: "Protocol Error"}));
+    }
+    if (data.includes("baz")) {
+      return this.callbacks.error();
+    }
     Object.entries(this.callbacks).forEach(([eventName, callback]: [string, any]) => {
       if (eventName === "message") {
         callback({data});

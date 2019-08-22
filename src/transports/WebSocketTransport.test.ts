@@ -34,4 +34,23 @@ describe("WebSocketTransport", () => {
       done();
     });
   });
+  it("can send and handle errors", (done) => {
+    const wst = new WebSocketTransport("http://localhost:8545");
+    wst.connect().then(() => {
+      wst.sendData(JSON.stringify({ foo: "baz" }));
+    });
+    wst.onError((error: any) => {
+      done();
+    });
+  });
+  it("can send and handle close errors", (done) => {
+    const wst = new WebSocketTransport("http://localhost:8545");
+    wst.connect().then(() => {
+      wst.sendData(JSON.stringify({ foo: "close" }));
+    });
+    wst.onError((error: Error) => {
+      expect(error.message).toEqual("Websocket Close Error: CODE: 1002 REASON: Protocol Error");
+      done();
+    });
+  });
 });

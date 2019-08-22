@@ -55,7 +55,7 @@ class RequestManager {
     const i = (++this.lastId).toString();
 
     // naively grab first transport and use it
-    const transport = this.transports[0];
+    const transport = this.getTransport();
 
     const payload: IJSONRPCRequest = {
       jsonrpc: "2.0",
@@ -106,6 +106,11 @@ class RequestManager {
     this.transports[0].sendData(batch);
   }
 
+  public onError(callback: (error: Error) => void): void {
+    const transport = this.getTransport();
+    transport.onError(callback);
+  }
+
   private onData(data: string): void {
     const parsedData: IJSONRPCResponse[] | IJSONRPCResponse = JSON.parse(data);
     const results = parsedData instanceof Array ? parsedData : [parsedData];
@@ -127,6 +132,10 @@ class RequestManager {
         promiseForResult.reject(new Error(`Malformed JSON-RPC response object: ${JSON.stringify(response)}`));
       }
     });
+  }
+
+  private getTransport(): ITransport {
+    return this.transports[0];
   }
 }
 
