@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/open-rpc/client-js/compare/1.1.0...1.1.1) (2019-08-22)
+
+
+### Bug Fixes
+
+* **transports:** handle multiple onData callback ([b125962](https://github.com/open-rpc/client-js/commit/b125962)), closes [#53](https://github.com/open-rpc/client-js/issues/53)
+
 # [1.1.0](https://github.com/open-rpc/client-js/compare/1.0.1...1.1.0) (2019-07-30)
 
 
