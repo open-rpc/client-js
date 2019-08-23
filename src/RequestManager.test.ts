@@ -172,17 +172,22 @@ describe("client-js", () => {
     });
   });
 
-  it("onData throws if the ID is not found", async () => {
+  it("onData throws if the ID is not found", (done) => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
     const serverTransport = new EventEmitterTransport(emitter, "to1", "from1");
     const c = new RequestManager([transport]);
-    await c.connect();
-    expect(() => serverTransport.sendData(JSON.stringify({
-      jsonrpc: "2.0",
-      id: 10,
-      result: 123,
-    }))).toThrow("Received an unrecognized response id: 10. Valid ids are: ");
+    c.connect().then(() => {
+      c.onError((error) => {
+        expect(error.message).toEqual("Received an unrecognized response id: 10. Valid ids are: ");
+        done();
+      });
+      serverTransport.sendData(JSON.stringify({
+        jsonrpc: "2.0",
+        id: 10,
+        result: 123,
+      }));
+    });
   });
 
   describe("stopBatch", () => {
@@ -215,10 +220,8 @@ describe("client-js", () => {
   it("can handle onError from transport", (done) => {
     const transport = new HTTPTransport("http://localhost:8545");
     const c = new RequestManager([transport]);
-    c.onError((e: Error) => {
-      expect(e).toBeInstanceOf(Error);
+    c.request("foo", ["non-error-class"]).catch(() => {
       done();
     });
-    transport.sendData(JSON.stringify({ foo: "non-error-class" }));
   });
 });

@@ -18,8 +18,8 @@ class WebSocketTransport implements ITransport {
       };
       this.connection.addEventListener("open", cb);
       this.connection.addEventListener("message", (ev: { data: string }) => {
-        this.onDataCallbacks.map((callback: (data: string) => void) => {
-          callback(ev.data);
+        this.onDataCallbacks.map((callback: (data: string, onError: (error: Error) => void) => void) => {
+          callback(ev.data, this.sendError.bind(this));
         });
       });
       this.connection.addEventListener("error", (ev: any) => {
@@ -38,7 +38,8 @@ class WebSocketTransport implements ITransport {
   public onError(callback: (error: Error) => void) {
     this.onErrorCallbacks.push(callback);
   }
-  public onData(callback: (data: string) => void) {
+
+  public onData(callback: (data: string, onError: (error: Error) => void) => void) {
     this.onDataCallbacks.push(callback);
   }
   public sendData(data: any) {
@@ -46,6 +47,11 @@ class WebSocketTransport implements ITransport {
   }
   public close(): void {
     this.connection.close();
+  }
+  public sendError(error: Error) {
+    this.onErrorCallbacks.map((callback: (error: Error) => void) => {
+      callback(error);
+    });
   }
 }
 

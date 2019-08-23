@@ -34,6 +34,15 @@ describe("WebSocketTransport", () => {
       done();
     });
   });
+  it("can send errors", (done) => {
+    const wst = new WebSocketTransport("http://localhost:8545");
+    wst.connect().then(() => {
+      wst.onError((error: any) => {
+        done();
+      });
+      wst.sendError(new Error("test error"));
+    });
+  });
   it("can send and handle errors", (done) => {
     const wst = new WebSocketTransport("http://localhost:8545");
     wst.connect().then(() => {

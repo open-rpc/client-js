@@ -6,8 +6,10 @@ class EventEmitterTransport implements ITransport {
   private reqUri: string;
   private resUri: string;
   private onDataCallbacks: any[];
+  private onErrorCallbacks: any[];
   constructor(emitter: EventEmitter, reqUri: string, resUri: string) {
     this.onDataCallbacks = [];
+    this.onErrorCallbacks = [];
     this.connection = emitter;
     this.reqUri = reqUri;
     this.resUri = resUri;
@@ -15,19 +17,19 @@ class EventEmitterTransport implements ITransport {
 
   public connect(): Promise<any> {
     this.connection.on(this.reqUri, (data: any) => {
-      this.onDataCallbacks.map((callback: (data: string) => void) => {
-        callback(data);
+      this.onDataCallbacks.map((callback: (data: string, onError: (error: Error) => void) => void) => {
+        callback(data, this.sendError.bind(this));
       });
     });
     return Promise.resolve();
   }
 
-  public onData(callback: (data: string) => void) {
+  public onData(callback: (data: string, onError: (error: Error) => void) => void) {
     this.onDataCallbacks.push(callback);
   }
 
   public onError(callback: (error: Error) => void): void {
-    // noop
+    this.onErrorCallbacks.push(callback);
   }
 
   public sendData(data: string) {
@@ -36,6 +38,12 @@ class EventEmitterTransport implements ITransport {
 
   public close() {
     this.connection.removeAllListeners();
+  }
+
+  private sendError(error: Error) {
+    this.onErrorCallbacks.map((callback: (error: Error) => void) => {
+      callback(error);
+    });
   }
 }
 

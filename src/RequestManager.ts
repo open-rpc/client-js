@@ -1,4 +1,5 @@
 import ITransport from "./transports/Transport";
+import { DH_NOT_SUITABLE_GENERATOR } from "constants";
 
 interface IJSONRPCRequest {
   jsonrpc: "2.0";
@@ -103,7 +104,7 @@ class RequestManager {
 
     const batch = JSON.stringify(this.batch);
     this.batch = [];
-    this.transports[0].sendData(batch);
+    this.getTransport().sendData(batch);
   }
 
   public onError(callback: (error: Error) => void): void {
@@ -111,7 +112,7 @@ class RequestManager {
     transport.onError(callback);
   }
 
-  private onData(data: string): void {
+  private onData(data: string, onError: (error: Error) => void): void {
     const parsedData: IJSONRPCResponse[] | IJSONRPCResponse = JSON.parse(data);
     const results = parsedData instanceof Array ? parsedData : [parsedData];
 
@@ -119,9 +120,9 @@ class RequestManager {
       const id = typeof response.id === "string" ? response.id : response.id.toString();
       const promiseForResult = this.requests[id];
       if (promiseForResult === undefined) {
-        throw new Error(
+        return onError(new Error(
           `Received an unrecognized response id: ${response.id}. Valid ids are: ${Object.keys(this.requests)}`,
-        );
+        ));
       }
 
       if (response.error) {

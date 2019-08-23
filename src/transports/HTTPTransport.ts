@@ -13,7 +13,7 @@ class HTTPTransport implements ITransport {
   public connect(): Promise<any> {
     return Promise.resolve();
   }
-  public onData(callback: (data: string) => any) {
+  public onData(callback: (data: string, onError: (error: Error) => void) => void) {
     this.onDataCallbacks.push(callback);
   }
   public sendData(data: string) {
@@ -34,16 +34,30 @@ class HTTPTransport implements ITransport {
         const responseText = await e.text();
         e = new Error(`HTTP ERROR: ${e.status} ${e.statusText}: ${responseText}`);
       }
-      this.onErrorCallbacks.map((callback: (error: any) => void) => {
-        callback(e);
+      this.onDataCallbacks.map((callback: (data: any, onError: (error: Error) => void) => void) => {
+        callback(JSON.stringify({
+          id: JSON.parse(data).id,
+          error: {
+            code: -32000,
+            message: e.message,
+          },
+        }), this.sendError.bind(this));
       });
     });
   }
+
   public onError(callback: (error: Error) => void) {
     this.onErrorCallbacks.push(callback);
   }
+
   public close(): void {
     this.onDataCallbacks = [];
+  }
+
+  public sendError(error: Error) {
+    this.onErrorCallbacks.map((callback: (error: Error) => void) => {
+      callback(error);
+    });
   }
 }
 
