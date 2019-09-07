@@ -2,6 +2,7 @@ import RequestManager from "./RequestManager";
 import EventEmitterTransport from "./transports/EventEmitterTransport";
 import HTTPTransport from "./transports/HTTPTransport";
 import WebSocketTransport from "./transports/WebSocketTransport";
+import { JSONRPCError } from "./Error";
 
 interface IClient {
   request(method: string, params: any): Promise<any>;
@@ -68,9 +69,22 @@ class Client implements IClient {
    * MUST NOT be used for anything else.
    * @param params A Structured value that holds the parameter values to be used during the invocation of the method.
    */
-  public async request(method: string, params: any) {
+  public async request(method: string, params: any, timeout?: number) {
     await this.requestManager.connectPromise;
-    return this.requestManager.request(method, params);
+    return this.requestManager.request(method, params, false, timeout);
+  }
+
+  public async notify(method: string, params: any) {
+    await this.requestManager.connectPromise;
+    return this.requestManager.request(method, params, true);
+  }
+
+  public onNotification(callback: (data: any) => void) {
+    this.requestManager.requestChannel.addListener("notification", callback);
+  }
+
+  public onError(callback: (data: JSONRPCError) => void) {
+    this.requestManager.requestChannel.addListener("error", callback);
   }
 }
 

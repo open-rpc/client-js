@@ -5,5 +5,6 @@ module.exports = {
   "restoreMocks": true,
   "rootDir": "./src",
   "testEnvironment": "jsdom",
-  "preset": "ts-jest"
+  "preset": "ts-jest",
+  "coveragePathIgnorePatterns": ["Error.ts"],
 }

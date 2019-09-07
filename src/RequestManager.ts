@@ -1,78 +1,60 @@
-import ITransport from "./transports/Transport";
+import { Transport } from "./transports/Transport";
+import { IJSONRPCRequest, IJSONRPCNotification, IBatchRequest } from "./Request";
+import { JSONRPCError } from "./Error";
+import StrictEventEmitter from "strict-event-emitter-types";
+import { EventEmitter } from "events";
 
-interface IJSONRPCRequest {
-  jsonrpc: "2.0";
-  id: string | number;
-  method: string;
-  params: any[] | object;
-}
-interface IJSONRPCError {
-  code: number;
-  message: string;
-  data: any;
-}
+export type RequestChannel = StrictEventEmitter<EventEmitter, IRequestEvents>;
 
-interface IJSONRPCResponse {
-  jsonrpc: "2.0";
-  id: string | number; // can also be null
-  result?: any;
-  error?: IJSONRPCError;
+export interface IRequestEvents {
+  "error": (err: JSONRPCError) => void;
+  "notification": (data: any) => void;
 }
-
-interface IJSONRPCNotification {
-  jsonrpc: "2.0";
-  method: string;
-  params: any[] | object;
-}
-
 /*
 ** Naive Request Manager, only use 1st transport.
  * A more complex request manager could try each transport.
  * If a transport fails, or times out, move on to the next.
  */
+
 class RequestManager {
-  public transports: ITransport[];
+  public transports: Transport[];
   public connectPromise: Promise<any>;
-  public batch: IJSONRPCRequest[] = [];
+  public batch: IBatchRequest[] = [];
+  public requestChannel: RequestChannel;
   private requests: any;
   private batchStarted: boolean = false;
   private lastId: number = -1;
 
-  constructor(transports: ITransport[]) {
+  constructor(transports: Transport[]) {
     this.transports = transports;
     this.requests = {};
     this.connectPromise = this.connect();
+    this.requestChannel = new EventEmitter();
   }
 
   public connect(): Promise<any> {
     return Promise.all(this.transports.map(async (transport) => {
-      transport.onData(this.onData.bind(this));
+      transport.subscribe("error", this.handleError.bind(this));
+      transport.subscribe("notification", this.handleNotification.bind(this));
       await transport.connect();
     }));
   }
+  public getPrimaryTransport(): Transport {
+    return this.transports[0];
+  }
 
-  public async request(method: string, params: any): Promise<any> {
-    const i = (++this.lastId).toString();
-
+  public async request(method: string, params: any[], notification: boolean = false, timeout?: number): Promise<any> {
+    const internalID = (++this.lastId).toString();
+    const id = notification ? null : internalID;
     // naively grab first transport and use it
-    const transport = this.transports[0];
-
-    const payload: IJSONRPCRequest = {
-      jsonrpc: "2.0",
-      id: i,
-      method,
-      params,
-    };
-
-    return new Promise((resolve, reject) => {
-      this.requests[i] = { resolve, reject };
-
-      if (this.batchStarted) {
-        this.batch.push(payload);
-      } else {
-        transport.sendData(JSON.stringify(payload));
-      }
-    }).finally(() => this.requests[i] = undefined);
+    const payload = {request: this.makeRequest(method, params, id) , internalID};
+    if (this.batchStarted) {
+      const result = new Promise((resolve, reject) => {
+        this.batch.push({ resolve, reject, request: payload });
+      });
+      return result;
+    }
+    return this.getPrimaryTransport().sendData(payload, timeout);
   }
 
   public close(): void {
@@ -88,7 +70,6 @@ class RequestManager {
    *
    */
   public startBatch(): void {
-    if (this.batchStarted) { return; }
     this.batchStarted = true;
   }
 
@@ -98,36 +79,32 @@ class RequestManager {
     }
 
     if (this.batch.length === 0) {
+      this.batchStarted = false;
       return;
     }
 
-    const batch = JSON.stringify(this.batch);
+    this.getPrimaryTransport().sendData(this.batch);
     this.batch = [];
-    this.transports[0].sendData(batch);
+    this.batchStarted = false;
   }
 
-  private onData(data: string): void {
-    const parsedData: IJSONRPCResponse[] | IJSONRPCResponse = JSON.parse(data);
-    const results = parsedData instanceof Array ? parsedData : [parsedData];
-
-    results.forEach((response) => {
-      const id = typeof response.id === "string" ? response.id : response.id.toString();
-      const promiseForResult = this.requests[id];
-      if (promiseForResult === undefined) {
-        throw new Error(
-          `Received an unrecognized response id: ${response.id}. Valid ids are: ${Object.keys(this.requests)}`,
-        );
-      }
-
-      if (response.error) {
-        promiseForResult.reject(response.error);
-      } else if (response.result) {
-        promiseForResult.resolve(response.result);
-      } else {
-        promiseForResult.reject(new Error(`Malformed JSON-RPC response object: ${JSON.stringify(response)}`));
-      }
-    });
+  private makeRequest( method: string,
+                       params: any[] | object,
+                       id?: number | string | null): IJSONRPCRequest | IJSONRPCNotification {
+    if (id) {
+      return { jsonrpc: "2.0", id, method, params };
+    }
+    return { jsonrpc: "2.0", method, params };
   }
+
+  private handleError(data: JSONRPCError) {
+    this.requestChannel.emit("error", data);
+  }
+
+  private handleNotification(data: any) {
+    this.requestChannel.emit(data);
+  }
+
 }
 
 export default RequestManager;
