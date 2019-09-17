@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/open-rpc/client-js/compare/1.1.1...1.2.0) (2019-09-17)
+
+
+### Features
+
+* refactor clientjs to support err handling ([c3686c9](https://github.com/open-rpc/client-js/commit/c3686c9))
+
 ## [1.1.1](https://github.com/open-rpc/client-js/compare/1.1.0...1.1.1) (2019-08-22)
 
 
