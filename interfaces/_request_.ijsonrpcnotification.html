@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IJSONRPCResponse | @open-rpc/client-js</title>
+	<title>IJSONRPCNotification | @open-rpc/client-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_requestmanager_.html">&quot;RequestManager&quot;</a>
+					<a href="../modules/_request_.html">&quot;Request&quot;</a>
 				</li>
 				<li>
-					<a href="_requestmanager_.ijsonrpcresponse.html">IJSONRPCResponse</a>
+					<a href="_request_.ijsonrpcnotification.html">IJSONRPCNotification</a>
 				</li>
 			</ul>
-			<h1>Interface IJSONRPCResponse</h1>
+			<h1>Interface IJSONRPCNotification</h1>
 		</div>
 	</div>
 </header>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IJSONRPCResponse</span>
+						<span class="target">IJSONRPCNotification</span>
 					</li>
 				</ul>
 			</section>
@@ -81,57 +81,57 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-not-exported">
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#error" class="tsd-kind-icon">error</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_requestmanager_.ijsonrpcresponse.html#result" class="tsd-kind-icon">result</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcnotification.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcnotification.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcnotification.html#method" class="tsd-kind-icon">method</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcnotification.html#params" class="tsd-kind-icon">params</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="error" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error</h3>
-					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <a href="_requestmanager_.ijsonrpcerror.html" class="tsd-signature-type">IJSONRPCError</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L19">RequestManager.ts:19</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L17">RequestManager.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L44">Request.ts:44</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="jsonrpc" class="tsd-anchor"></a>
 					<h3>jsonrpc</h3>
 					<div class="tsd-signature tsd-kind-icon">jsonrpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"2.0"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L16">RequestManager.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L43">Request.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="result" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> result</h3>
-					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="method" class="tsd-anchor"></a>
+					<h3>method</h3>
+					<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L18">RequestManager.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L45">Request.ts:45</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="params" class="tsd-anchor"></a>
+					<h3>params</h3>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L46">Request.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -143,17 +143,32 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_error_.html">"<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_error_test_.html">"<wbr>Error.test"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
+						<a href="../modules/_request_.html">"<wbr>Request"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_requestmanager_.html">"<wbr>Request<wbr>Manager"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_requestmanager_test_.html">"<wbr>Request<wbr>Manager.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/___mocks___eventemitter_.html">"__mocks__/event<wbr>Emitter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/___mocks___isomorphic_fetch_.html">"__mocks__/isomorphic-<wbr>fetch"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/___mocks___isomorphic_ws_.html">"__mocks__/isomorphic-<wbr>ws"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/___mocks___requestdata_.html">"__mocks__/request<wbr>Data"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_example_.html">"example"</a>
@@ -180,6 +195,12 @@
 						<a href="../modules/_transports_transport_.html">"transports/<wbr>Transport"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_transportrequestmanager_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_transportrequestmanager_test_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_transports_websockettransport_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -189,39 +210,66 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_requestmanager_.requestmanager.html" class="tsd-kind-icon">Request<wbr>Manager</a>
-					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_requestmanager_.ijsonrpcerror.html" class="tsd-kind-icon">IJSONRPCError</a>
+						<a href="_request_.ibatchrpcrequest.html" class="tsd-kind-icon">IBatchRPCRequest</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_requestmanager_.ijsonrpcnotification.html" class="tsd-kind-icon">IJSONRPCNotification</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ibatchrequest.html" class="tsd-kind-icon">IBatch<wbr>Request</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_requestmanager_.ijsonrpcrequest.html" class="tsd-kind-icon">IJSONRPCRequest</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcdata.html" class="tsd-kind-icon">IJSONRPCData</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcerror.html" class="tsd-kind-icon">IJSONRPCError</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_requestmanager_.ijsonrpcresponse.html" class="tsd-kind-icon">IJSONRPCResponse</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcnotification.html" class="tsd-kind-icon">IJSONRPCNotification</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_requestmanager_.ijsonrpcresponse.html#error" class="tsd-kind-icon">error</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcnotification.html#id" class="tsd-kind-icon">id</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_requestmanager_.ijsonrpcresponse.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcnotification.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_requestmanager_.ijsonrpcresponse.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcnotification.html#method" class="tsd-kind-icon">method</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_requestmanager_.ijsonrpcresponse.html#result" class="tsd-kind-icon">result</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcnotification.html#params" class="tsd-kind-icon">params</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcnotificationresponse.html" class="tsd-kind-icon">IJSONRPCNotification<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcrequest.html" class="tsd-kind-icon">IJSONRPCRequest</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcresponse.html" class="tsd-kind-icon">IJSONRPCResponse</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_request_.irpcrequest.html" class="tsd-kind-icon">IRPCRequest</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#jsonrpcrequestdata" class="tsd-kind-icon">JSONRPCRequest<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#request" class="tsd-kind-icon">Request</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#getbatchrequests" class="tsd-kind-icon">get<wbr>Batch<wbr>Requests</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#getnotifications" class="tsd-kind-icon">get<wbr>Notifications</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#isnotification" class="tsd-kind-icon">is<wbr>Notification</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

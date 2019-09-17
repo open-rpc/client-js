@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>&quot;__mocks__/isomorphic-fetch&quot; | @open-rpc/client-js</title>
+	<title>IJSONRPCResponse | @open-rpc/client-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,56 +56,84 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="___mocks___isomorphic_fetch_.html">&quot;__mocks__/isomorphic-fetch&quot;</a>
+					<a href="../modules/_request_.html">&quot;Request&quot;</a>
+				</li>
+				<li>
+					<a href="_request_.ijsonrpcresponse.html">IJSONRPCResponse</a>
 				</li>
 			</ul>
-			<h1>External module &quot;__mocks__/isomorphic-fetch&quot;</h1>
+			<h1>Interface IJSONRPCResponse</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">IJSONRPCResponse</span>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Functions</h3>
+							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="___mocks___isomorphic_fetch_.html#fetch" class="tsd-kind-icon">Fetch</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcresponse.html#error" class="tsd-kind-icon">error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcresponse.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcresponse.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_request_.ijsonrpcresponse.html#result" class="tsd-kind-icon">result</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Functions</h2>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
-					<a name="fetch" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> Fetch</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module">
-						<li class="tsd-signature tsd-kind-icon">Fetch<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/__mocks__/isomorphic-fetch.ts#L3">__mocks__/isomorphic-fetch.ts:3</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>url: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>options: <span class="tsd-signature-type">any</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="error" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error</h3>
+					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <a href="_request_.ijsonrpcerror.html" class="tsd-signature-type">IJSONRPCError</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L32">Request.ts:32</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="id" class="tsd-anchor"></a>
+					<h3>id</h3>
+					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L30">Request.ts:30</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="jsonrpc" class="tsd-anchor"></a>
+					<h3>jsonrpc</h3>
+					<div class="tsd-signature tsd-kind-icon">jsonrpc<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"2.0"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L29">Request.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="result" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> result</h3>
+					<div class="tsd-signature tsd-kind-icon">result<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/Request.ts#L31">Request.ts:31</a></li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -116,74 +144,131 @@
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_error_.html">"<wbr>Error"</a>
+						<a href="../modules/_error_.html">"<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_error_test_.html">"<wbr>Error.test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_request_.html">"<wbr>Request"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_requestmanager_.html">"<wbr>Request<wbr>Manager"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="_requestmanager_test_.html">"<wbr>Request<wbr>Manager.test"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="___mocks___eventemitter_.html">"__mocks__/event<wbr>Emitter"</a>
+						<a href="../modules/_error_test_.html">"<wbr>Error.test"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="___mocks___isomorphic_fetch_.html">"__mocks__/isomorphic-<wbr>fetch"</a>
+						<a href="../modules/_request_.html">"<wbr>Request"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="___mocks___isomorphic_ws_.html">"__mocks__/isomorphic-<wbr>ws"</a>
+						<a href="../modules/_requestmanager_.html">"<wbr>Request<wbr>Manager"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="___mocks___requestdata_.html">"__mocks__/request<wbr>Data"</a>
+						<a href="../modules/_requestmanager_test_.html">"<wbr>Request<wbr>Manager.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_example_.html">"example"</a>
+						<a href="../modules/___mocks___eventemitter_.html">"__mocks__/event<wbr>Emitter"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_index_.html">"index"</a>
+						<a href="../modules/___mocks___isomorphic_fetch_.html">"__mocks__/isomorphic-<wbr>fetch"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_index_test_.html">"index.test"</a>
+						<a href="../modules/___mocks___isomorphic_ws_.html">"__mocks__/isomorphic-<wbr>ws"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_eventemittertransport_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport"</a>
+						<a href="../modules/___mocks___requestdata_.html">"__mocks__/request<wbr>Data"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_eventemittertransport_test_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport.test"</a>
+						<a href="../modules/_example_.html">"example"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_httptransport_.html">"transports/HTTPTransport"</a>
+						<a href="../modules/_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_httptransport_test_.html">"transports/HTTPTransport.test"</a>
+						<a href="../modules/_index_test_.html">"index.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_transport_.html">"transports/<wbr>Transport"</a>
+						<a href="../modules/_transports_eventemittertransport_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_transportrequestmanager_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager"</a>
+						<a href="../modules/_transports_eventemittertransport_test_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_transportrequestmanager_test_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager.test"</a>
+						<a href="../modules/_transports_httptransport_.html">"transports/HTTPTransport"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_websockettransport_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport"</a>
+						<a href="../modules/_transports_httptransport_test_.html">"transports/HTTPTransport.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="_transports_websockettransport_test_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport.test"</a>
+						<a href="../modules/_transports_transport_.html">"transports/<wbr>Transport"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_transportrequestmanager_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_transportrequestmanager_test_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_websockettransport_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_websockettransport_test_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport.test"</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_request_.ibatchrpcrequest.html" class="tsd-kind-icon">IBatchRPCRequest</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ibatchrequest.html" class="tsd-kind-icon">IBatch<wbr>Request</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcdata.html" class="tsd-kind-icon">IJSONRPCData</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcerror.html" class="tsd-kind-icon">IJSONRPCError</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcnotification.html" class="tsd-kind-icon">IJSONRPCNotification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcnotificationresponse.html" class="tsd-kind-icon">IJSONRPCNotification<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcrequest.html" class="tsd-kind-icon">IJSONRPCRequest</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_request_.ijsonrpcresponse.html" class="tsd-kind-icon">IJSONRPCResponse</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcresponse.html#error" class="tsd-kind-icon">error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcresponse.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcresponse.html#jsonrpc" class="tsd-kind-icon">jsonrpc</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_request_.ijsonrpcresponse.html#result" class="tsd-kind-icon">result</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_request_.irpcrequest.html" class="tsd-kind-icon">IRPCRequest</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#jsonrpcrequestdata" class="tsd-kind-icon">JSONRPCRequest<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#request" class="tsd-kind-icon">Request</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
-						<a href="___mocks___isomorphic_fetch_.html#fetch" class="tsd-kind-icon">Fetch</a>
+						<a href="../modules/_request_.html#getbatchrequests" class="tsd-kind-icon">get<wbr>Batch<wbr>Requests</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#getnotifications" class="tsd-kind-icon">get<wbr>Notifications</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module">
+						<a href="../modules/_request_.html#isnotification" class="tsd-kind-icon">is<wbr>Notification</a>
 					</li>
 				</ul>
 			</nav>

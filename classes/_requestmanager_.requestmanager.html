@@ -94,6 +94,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#batchstarted" class="tsd-kind-icon">batch<wbr>Started</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#connectpromise" class="tsd-kind-icon">connect<wbr>Promise</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#lastid" class="tsd-kind-icon">last<wbr>Id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#requestchannel" class="tsd-kind-icon">request<wbr>Channel</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#requests" class="tsd-kind-icon">requests</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#transports" class="tsd-kind-icon">transports</a></li>
 							</ul>
@@ -103,7 +104,10 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#close" class="tsd-kind-icon">close</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#connect" class="tsd-kind-icon">connect</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#ondata" class="tsd-kind-icon">on<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#getprimarytransport" class="tsd-kind-icon">get<wbr>Primary<wbr>Transport</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#handleerror" class="tsd-kind-icon">handle<wbr>Error</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#handlenotification" class="tsd-kind-icon">handle<wbr>Notification</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="_requestmanager_.requestmanager.html#makerequest" class="tsd-kind-icon">make<wbr>Request</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#request" class="tsd-kind-icon">request</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#startbatch" class="tsd-kind-icon">start<wbr>Batch</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_requestmanager_.requestmanager.html#stopbatch" class="tsd-kind-icon">stop<wbr>Batch</a></li>
@@ -118,19 +122,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Request<wbr>Manager<span class="tsd-signature-symbol">(</span>transports<span class="tsd-signature-symbol">: </span><a href="../interfaces/_transports_transport_.itransport.html" class="tsd-signature-type">ITransport</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_requestmanager_.requestmanager.html" class="tsd-signature-type">RequestManager</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Request<wbr>Manager<span class="tsd-signature-symbol">(</span>transports<span class="tsd-signature-symbol">: </span><a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_requestmanager_.requestmanager.html" class="tsd-signature-type">RequestManager</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L39">RequestManager.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L26">RequestManager.ts:26</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>transports: <a href="../interfaces/_transports_transport_.itransport.html" class="tsd-signature-type">ITransport</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>transports: <a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_requestmanager_.requestmanager.html" class="tsd-signature-type">RequestManager</a></h4>
@@ -143,10 +147,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="batch" class="tsd-anchor"></a>
 					<h3>batch</h3>
-					<div class="tsd-signature tsd-kind-icon">batch<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_requestmanager_.ijsonrpcrequest.html" class="tsd-signature-type">IJSONRPCRequest</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">batch<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_request_.ibatchrequest.html" class="tsd-signature-type">IBatchRequest</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L36">RequestManager.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L22">RequestManager.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -156,7 +160,7 @@
 					<div class="tsd-signature tsd-kind-icon">batch<wbr>Started<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L38">RequestManager.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L25">RequestManager.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -166,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">connect<wbr>Promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L35">RequestManager.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L21">RequestManager.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,7 +180,17 @@
 					<div class="tsd-signature tsd-kind-icon">last<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;-1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L39">RequestManager.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L26">RequestManager.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="requestchannel" class="tsd-anchor"></a>
+					<h3>request<wbr>Channel</h3>
+					<div class="tsd-signature tsd-kind-icon">request<wbr>Channel<span class="tsd-signature-symbol">:</span> <a href="../modules/_requestmanager_.html#requestchannel" class="tsd-signature-type">RequestChannel</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L23">RequestManager.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -186,17 +200,17 @@
 					<div class="tsd-signature tsd-kind-icon">requests<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L37">RequestManager.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L24">RequestManager.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="transports" class="tsd-anchor"></a>
 					<h3>transports</h3>
-					<div class="tsd-signature tsd-kind-icon">transports<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_transports_transport_.itransport.html" class="tsd-signature-type">ITransport</a><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">transports<span class="tsd-signature-symbol">:</span> <a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L34">RequestManager.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L20">RequestManager.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -213,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L78">RequestManager.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L60">RequestManager.ts:60</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -230,47 +244,87 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L47">RequestManager.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L35">RequestManager.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
-					<a name="ondata" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Data</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getprimarytransport" class="tsd-anchor"></a>
+					<h3>get<wbr>Primary<wbr>Transport</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Primary<wbr>Transport<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L109">RequestManager.ts:109</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L42">RequestManager.ts:42</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="handleerror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> handle<wbr>Error</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">handle<wbr>Error<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="_error_.jsonrpcerror.html" class="tsd-signature-type">JSONRPCError</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L100">RequestManager.ts:100</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>data: <span class="tsd-signature-type">string</span></h5>
+									<h5>data: <a href="_error_.jsonrpcerror.html" class="tsd-signature-type">JSONRPCError</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="request" class="tsd-anchor"></a>
-					<h3>request</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">request<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="handlenotification" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> handle<wbr>Notification</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">handle<wbr>Notification<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L54">RequestManager.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L104">RequestManager.ts:104</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="makerequest" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> make<wbr>Request</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">make<wbr>Request<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span>, id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_request_.ijsonrpcrequest.html" class="tsd-signature-type">IJSONRPCRequest</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_request_.ijsonrpcnotification.html" class="tsd-signature-type">IJSONRPCNotification</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L91">RequestManager.ts:91</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -279,7 +333,45 @@
 									<h5>method: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>params: <span class="tsd-signature-type">any</span></h5>
+									<h5>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> id: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_request_.ijsonrpcrequest.html" class="tsd-signature-type">IJSONRPCRequest</a>
+								<span class="tsd-signature-symbol"> | </span>
+								<a href="../interfaces/_request_.ijsonrpcnotification.html" class="tsd-signature-type">IJSONRPCNotification</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="request" class="tsd-anchor"></a>
+					<h3>request</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">request<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span>, notification<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span>, timeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L46">RequestManager.ts:46</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>method: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>params: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> notification: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> timeout: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -296,7 +388,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L90">RequestManager.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L72">RequestManager.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -319,7 +411,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/8b0c5d9/src/RequestManager.ts#L95">RequestManager.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/RequestManager.ts#L76">RequestManager.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -334,6 +426,15 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_error_.html">"<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_error_test_.html">"<wbr>Error.test"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_request_.html">"<wbr>Request"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_requestmanager_.html">"<wbr>Request<wbr>Manager"</a>
 					</li>
@@ -341,10 +442,16 @@
 						<a href="../modules/_requestmanager_test_.html">"<wbr>Request<wbr>Manager.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/___mocks___eventemitter_.html">"__mocks__/event<wbr>Emitter"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/___mocks___isomorphic_fetch_.html">"__mocks__/isomorphic-<wbr>fetch"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/___mocks___isomorphic_ws_.html">"__mocks__/isomorphic-<wbr>ws"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/___mocks___requestdata_.html">"__mocks__/request<wbr>Data"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_example_.html">"example"</a>
@@ -369,6 +476,12 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_transports_transport_.html">"transports/<wbr>Transport"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_transportrequestmanager_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_transports_transportrequestmanager_test_.html">"transports/<wbr>Transport<wbr>Request<wbr>Manager.test"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_transports_websockettransport_.html">"transports/<wbr>Web<wbr>Socket<wbr>Transport"</a>
@@ -400,6 +513,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_requestmanager_.requestmanager.html#lastid" class="tsd-kind-icon">last<wbr>Id</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_requestmanager_.requestmanager.html#requestchannel" class="tsd-kind-icon">request<wbr>Channel</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_requestmanager_.requestmanager.html#requests" class="tsd-kind-icon">requests</a>
 							</li>
@@ -412,8 +528,17 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_requestmanager_.requestmanager.html#connect" class="tsd-kind-icon">connect</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_requestmanager_.requestmanager.html#getprimarytransport" class="tsd-kind-icon">get<wbr>Primary<wbr>Transport</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
-								<a href="_requestmanager_.requestmanager.html#ondata" class="tsd-kind-icon">on<wbr>Data</a>
+								<a href="_requestmanager_.requestmanager.html#handleerror" class="tsd-kind-icon">handle<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_requestmanager_.requestmanager.html#handlenotification" class="tsd-kind-icon">handle<wbr>Notification</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="_requestmanager_.requestmanager.html#makerequest" class="tsd-kind-icon">make<wbr>Request</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_requestmanager_.requestmanager.html#request" class="tsd-kind-icon">request</a>
@@ -428,17 +553,11 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../interfaces/_requestmanager_.ijsonrpcerror.html" class="tsd-kind-icon">IJSONRPCError</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_requestmanager_.irequestevents.html" class="tsd-kind-icon">IRequest<wbr>Events</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../interfaces/_requestmanager_.ijsonrpcnotification.html" class="tsd-kind-icon">IJSONRPCNotification</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../interfaces/_requestmanager_.ijsonrpcrequest.html" class="tsd-kind-icon">IJSONRPCRequest</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../interfaces/_requestmanager_.ijsonrpcresponse.html" class="tsd-kind-icon">IJSONRPCResponse</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_requestmanager_.html#requestchannel" class="tsd-kind-icon">Request<wbr>Channel</a>
 					</li>
 				</ul>
 			</nav>

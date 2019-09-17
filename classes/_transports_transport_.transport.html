@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EventEmitterTransport | @open-rpc/client-js</title>
+	<title>Transport | @open-rpc/client-js</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_transports_eventemittertransport_.html">&quot;transports/EventEmitterTransport&quot;</a>
+					<a href="../modules/_transports_transport_.html">&quot;transports/Transport&quot;</a>
 				</li>
 				<li>
-					<a href="_transports_eventemittertransport_.eventemittertransport.html">EventEmitterTransport</a>
+					<a href="_transports_transport_.transport.html">Transport</a>
 				</li>
 			</ul>
-			<h1>Class EventEmitterTransport</h1>
+			<h1>Class Transport</h1>
 		</div>
 	</div>
 </header>
@@ -73,10 +73,16 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a>
+						<span class="target">Transport</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">EventEmitterTransport</span>
+								<a href="_transports_eventemittertransport_.eventemittertransport.html" class="tsd-signature-type">EventEmitterTransport</a>
+							</li>
+							<li>
+								<a href="_transports_httptransport_.httptransport.html" class="tsd-signature-type">HTTPTransport</a>
+							</li>
+							<li>
+								<a href="_transports_websockettransport_.websockettransport.html" class="tsd-signature-type">WebSocketTransport</a>
 							</li>
 						</ul>
 					</li>
@@ -89,26 +95,23 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_transports_eventemittertransport_.eventemittertransport.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_transports_transport_.transport.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_transports_eventemittertransport_.eventemittertransport.html#connection" class="tsd-kind-icon">connection</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_transports_eventemittertransport_.eventemittertransport.html#requri" class="tsd-kind-icon">req<wbr>Uri</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_transports_eventemittertransport_.eventemittertransport.html#resuri" class="tsd-kind-icon">res<wbr>Uri</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_transports_eventemittertransport_.eventemittertransport.html#transportrequestmanager" class="tsd-kind-icon">transport<wbr>Request<wbr>Manager</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_transports_transport_.transport.html#transportrequestmanager" class="tsd-kind-icon">transport<wbr>Request<wbr>Manager</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_transports_eventemittertransport_.eventemittertransport.html#close" class="tsd-kind-icon">close</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_transports_eventemittertransport_.eventemittertransport.html#connect" class="tsd-kind-icon">connect</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_transports_eventemittertransport_.eventemittertransport.html#parsedata" class="tsd-kind-icon">parse<wbr>Data</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_transports_eventemittertransport_.eventemittertransport.html#senddata" class="tsd-kind-icon">send<wbr>Data</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_transports_eventemittertransport_.eventemittertransport.html#subscribe" class="tsd-kind-icon">subscribe</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_transports_transport_.transport.html#close" class="tsd-kind-icon">close</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_transports_transport_.transport.html#connect" class="tsd-kind-icon">connect</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_transports_transport_.transport.html#parsedata" class="tsd-kind-icon">parse<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_transports_transport_.transport.html#senddata" class="tsd-kind-icon">send<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_transports_transport_.transport.html#subscribe" class="tsd-kind-icon">subscribe</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,75 +119,31 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Event<wbr>Emitter<wbr>Transport<span class="tsd-signature-symbol">(</span>destEmitter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventEmitter</span>, reqUri<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, resUri<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_transports_eventemittertransport_.eventemittertransport.html" class="tsd-signature-type">EventEmitterTransport</a></li>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Transport<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="_transports_transport_.transport.html">Transport</a>.<a href="_transports_transport_.transport.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/EventEmitterTransport.ts#L9">transports/EventEmitterTransport.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/Transport.ts#L23">transports/Transport.ts:23</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>destEmitter: <span class="tsd-signature-type">EventEmitter</span></h5>
-								</li>
-								<li>
-									<h5>reqUri: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>resUri: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_transports_eventemittertransport_.eventemittertransport.html" class="tsd-signature-type">EventEmitterTransport</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_transports_transport_.transport.html" class="tsd-signature-type">Transport</a></h4>
 						</li>
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="connection" class="tsd-anchor"></a>
-					<h3>connection</h3>
-					<div class="tsd-signature tsd-kind-icon">connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EventEmitter</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/EventEmitterTransport.ts#L7">transports/EventEmitterTransport.ts:7</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="requri" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> req<wbr>Uri</h3>
-					<div class="tsd-signature tsd-kind-icon">req<wbr>Uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/EventEmitterTransport.ts#L8">transports/EventEmitterTransport.ts:8</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="resuri" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> res<wbr>Uri</h3>
-					<div class="tsd-signature tsd-kind-icon">res<wbr>Uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/EventEmitterTransport.ts#L9">transports/EventEmitterTransport.ts:9</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="transportrequestmanager" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> transport<wbr>Request<wbr>Manager</h3>
 					<div class="tsd-signature tsd-kind-icon">transport<wbr>Request<wbr>Manager<span class="tsd-signature-symbol">:</span> <a href="_transports_transportrequestmanager_.transportrequestmanager.html" class="tsd-signature-type">TransportRequestManager</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="_transports_transport_.transport.html">Transport</a>.<a href="_transports_transport_.transport.html#transportrequestmanager">transportRequestManager</a></p>
 						<ul>
 							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/Transport.ts#L23">transports/Transport.ts:23</a></li>
 						</ul>
@@ -193,52 +152,49 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="close" class="tsd-anchor"></a>
-					<h3>close</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> close</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">close<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="_transports_transport_.transport.html">Transport</a>.<a href="_transports_transport_.transport.html#close">close</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/EventEmitterTransport.ts#L40">transports/EventEmitterTransport.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/Transport.ts#L32">transports/Transport.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="connect" class="tsd-anchor"></a>
-					<h3>connect</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> connect</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">connect<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="_transports_transport_.transport.html">Transport</a>.<a href="_transports_transport_.transport.html#connect">connect</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/EventEmitterTransport.ts#L18">transports/EventEmitterTransport.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/Transport.ts#L31">transports/Transport.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="parsedata" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> parse<wbr>Data</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">parse<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/_request_.html#jsonrpcrequestdata" class="tsd-signature-type">JSONRPCRequestData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_request_.ijsonrpcrequest.html" class="tsd-signature-type">IJSONRPCRequest</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_request_.ijsonrpcnotification.html" class="tsd-signature-type">IJSONRPCNotification</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><a href="../interfaces/_request_.ijsonrpcrequest.html" class="tsd-signature-type">IJSONRPCRequest</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_request_.ijsonrpcnotification.html" class="tsd-signature-type">IJSONRPCNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_transports_transport_.transport.html">Transport</a>.<a href="_transports_transport_.transport.html#parsedata">parseData</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/Transport.ts#L38">transports/Transport.ts:38</a></li>
 								</ul>
@@ -258,18 +214,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="senddata" class="tsd-anchor"></a>
-					<h3>send<wbr>Data</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> send<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">send<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="../modules/_request_.html#jsonrpcrequestdata" class="tsd-signature-type">JSONRPCRequestData</a>, timeout<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="_transports_transport_.transport.html">Transport</a>.<a href="_transports_transport_.transport.html#senddata">sendData</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/EventEmitterTransport.ts#L25">transports/EventEmitterTransport.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/Transport.ts#L33">transports/Transport.ts:33</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -285,16 +240,15 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="subscribe" class="tsd-anchor"></a>
 					<h3>subscribe</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">subscribe<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="../modules/_transports_transport_.html#transporteventname" class="tsd-signature-type">TransportEventName</a>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_transports_transport_.transport.html">Transport</a>.<a href="_transports_transport_.transport.html#subscribe">subscribe</a></p>
 								<ul>
 									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/c19b661/src/transports/Transport.ts#L35">transports/Transport.ts:35</a></li>
 								</ul>
@@ -356,7 +310,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_index_test_.html">"index.test"</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_transports_eventemittertransport_.html">"transports/<wbr>Event<wbr>Emitter<wbr>Transport"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -368,7 +322,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_transports_httptransport_test_.html">"transports/HTTPTransport.test"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_transports_transport_.html">"transports/<wbr>Transport"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -390,42 +344,72 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_transports_eventemittertransport_.eventemittertransport.html" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Transport</a>
+						<a href="_transports_transport_.transport.html" class="tsd-kind-icon">Transport</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="_transports_transport_.transport.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#connection" class="tsd-kind-icon">connection</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_transports_transport_.transport.html#transportrequestmanager" class="tsd-kind-icon">transport<wbr>Request<wbr>Manager</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#requri" class="tsd-kind-icon">req<wbr>Uri</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_transports_transport_.transport.html#close" class="tsd-kind-icon">close</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#resuri" class="tsd-kind-icon">res<wbr>Uri</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_transports_transport_.transport.html#connect" class="tsd-kind-icon">connect</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#transportrequestmanager" class="tsd-kind-icon">transport<wbr>Request<wbr>Manager</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
+								<a href="_transports_transport_.transport.html#parsedata" class="tsd-kind-icon">parse<wbr>Data</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#close" class="tsd-kind-icon">close</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_transports_transport_.transport.html#senddata" class="tsd-kind-icon">send<wbr>Data</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#connect" class="tsd-kind-icon">connect</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#parsedata" class="tsd-kind-icon">parse<wbr>Data</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#senddata" class="tsd-kind-icon">send<wbr>Data</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_transports_eventemittertransport_.eventemittertransport.html#subscribe" class="tsd-kind-icon">subscribe</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_transports_transport_.transport.html#subscribe" class="tsd-kind-icon">subscribe</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_transports_transport_.ihttptransportresponse.html" class="tsd-kind-icon">IHttp<wbr>Transport<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="../interfaces/_transports_transport_.irequestpromise.html" class="tsd-kind-icon">IRequest<wbr>Promise</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_transports_transport_.itransportevents.html" class="tsd-kind-icon">ITransport<wbr>Events</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_transports_transport_.iwstransportresponse.html" class="tsd-kind-icon">IWSTransport<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#badresponse" class="tsd-kind-icon">Bad<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#notificationresponse" class="tsd-kind-icon">Notification<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#requestresponse" class="tsd-kind-icon">Request<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#transporteventchannel" class="tsd-kind-icon">Transport<wbr>Event<wbr>Channel</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_transports_transport_.html#transporteventname" class="tsd-kind-icon">Transport<wbr>Event<wbr>Name</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#transportresponse" class="tsd-kind-icon">Transport<wbr>Response</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#transportresponsedata" class="tsd-kind-icon">Transport<wbr>Response<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#promisereject" class="tsd-kind-icon">promise<wbr>Reject</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_transports_transport_.html#promiseresolve" class="tsd-kind-icon">promise<wbr>Resolve</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
