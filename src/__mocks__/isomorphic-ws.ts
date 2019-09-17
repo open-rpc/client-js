@@ -1,7 +1,11 @@
+import * as req from "./requestData";
+
 class WebSocket {
   private callbacks: any;
-  constructor(uri: string, props: any) {
+  private url: string;
+  constructor(url: string, props: any) {
     this.callbacks = {};
+    this.url = url;
   }
   public addEventListener(eventName: string, callback: any) {
     this.callbacks[eventName] = callback;
@@ -14,10 +18,21 @@ class WebSocket {
   public removeEventListener(eventName: string, callback: any) {
     delete this.callbacks[eventName];
   }
-  public send(data: any) {
-    Object.entries(this.callbacks).forEach(([eventName, callback]: [string, any]) => {
+  public send(data: any, callback: (err?: Error) => void) {
+
+    if (this.url.match(/crash-null/)) {
+      callback();
+      return;
+    }
+    if (this.url.match(/crash/)) {
+      callback(new Error("Random Segfault that crashes fetch"));
+      return;
+    }
+
+    Object.entries(this.callbacks).forEach(([eventName, cb]: [string, any]) => {
       if (eventName === "message") {
-        callback({data});
+        cb({ data: req.generateMockResponseData(this.url, data) });
+        callback();
       }
     });
   }
@@ -25,4 +40,5 @@ class WebSocket {
     this.callbacks = {};
   }
 }
+
 export default WebSocket;

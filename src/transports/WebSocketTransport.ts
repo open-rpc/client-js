@@ -1,12 +1,16 @@
 import WS from "isomorphic-ws";
-import ITransport from "./Transport";
+import { Transport } from "./Transport";
+import { JSONRPCRequestData, getNotifications, getBatchRequests } from "../Request";
+import { JSONRPCError, ERR_UNKNOWN } from "../Error";
 
-class WebSocketTransport implements ITransport {
+class WebSocketTransport extends Transport {
   public connection: WS;
-  private onDataCallbacks: any[];
+  public uri: string;
+
   constructor(uri: string) {
+    super();
+    this.uri = uri;
     this.connection = new WS(uri);
-    this.onDataCallbacks = [];
   }
   public connect(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -15,19 +19,28 @@ class WebSocketTransport implements ITransport {
         resolve();
       };
       this.connection.addEventListener("open", cb);
-      this.connection.addEventListener("message", (ev: { data: string }) => {
-        this.onDataCallbacks.map((callback: (data: string) => void) => {
-          callback(ev.data);
-        });
+      this.connection.addEventListener("message", (message: { data: string }) => {
+        const { data } = message;
+        this.transportRequestManager.resolveResponse(data);
       });
     });
   }
-  public onData(callback: (data: string) => void) {
-    this.onDataCallbacks.push(callback);
+
+  public async sendData(data: JSONRPCRequestData, timeout: number | undefined = 5000): Promise<any> {
+    let prom = this.transportRequestManager.addRequest(data, timeout);
+    const notifications = getNotifications(data);
+    this.connection.send(this.parseData(data), (err?: Error) => {
+      if (err) {
+        const jsonError = new JSONRPCError(err.message, ERR_UNKNOWN, err);
+        this.transportRequestManager.settlePendingRequest(notifications, jsonError);
+        this.transportRequestManager.settlePendingRequest(getBatchRequests(data), jsonError);
+        prom = Promise.reject(jsonError);
+      }
+      this.transportRequestManager.settlePendingRequest(notifications);
+    });
+    return prom;
   }
-  public sendData(data: any) {
-    this.connection.send(data);
-  }
+
   public close(): void {
     this.connection.close();
   }
