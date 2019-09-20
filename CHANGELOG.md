@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/open-rpc/client-js/compare/1.2.0...1.2.1) (2019-09-20)
+
+
+### Bug Fixes
+
+* error handling on error response without id ([cdecef1](https://github.com/open-rpc/client-js/commit/cdecef1))
+
 # [1.2.0](https://github.com/open-rpc/client-js/compare/1.1.1...1.2.0) (2019-09-17)
 
 
