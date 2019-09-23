@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/open-rpc/client-js/compare/1.2.1...1.2.2) (2019-09-23)
+
+
+### Bug Fixes
+
+* expose JSONRPCError type ([6258256](https://github.com/open-rpc/client-js/commit/6258256))
+
 ## [1.2.1](https://github.com/open-rpc/client-js/compare/1.2.0...1.2.1) (2019-09-20)
 
 
