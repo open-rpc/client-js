@@ -84,10 +84,10 @@
 					<li>WebSocket</li>
 					<li>Event Emitter</li>
 				</ul>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, HTTPTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">'@open-rpc/client-js'</span>;
-<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">'http://localhost:8545'</span>);
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, HTTPTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">"@open-rpc/client-js"</span>;
+<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">"http://localhost:8545"</span>);
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-keyword">new</span> RequestManager([transport]));
-<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(‘addition’, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">"addition"</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
 <span class="hljs-comment">// =&gt; { jsonrpc: '2.0', id: 1, result: 4 }</span></code></pre>
 				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
 					<h3>Contributing</h3>
