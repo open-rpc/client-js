@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/open-rpc/client-js/compare/1.2.2...1.2.3) (2019-09-30)
+
+
+### Bug Fixes
+
+* readme single quote to double quote ([aa0e8b2](https://github.com/open-rpc/client-js/commit/aa0e8b2))
+* websocket transport to serialize string prior to sending ([adee025](https://github.com/open-rpc/client-js/commit/adee025))
+
 ## [1.2.2](https://github.com/open-rpc/client-js/compare/1.2.1...1.2.2) (2019-09-23)
 
 
