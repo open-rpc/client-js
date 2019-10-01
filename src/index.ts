@@ -95,4 +95,5 @@ export {
   HTTPTransport,
   EventEmitterTransport,
   WebSocketTransport,
+  JSONRPCError,
 };

@@ -1,3 +1,32 @@
+## [1.2.3](https://github.com/open-rpc/client-js/compare/1.2.2...1.2.3) (2019-09-30)
+
+
+### Bug Fixes
+
+* readme single quote to double quote ([aa0e8b2](https://github.com/open-rpc/client-js/commit/aa0e8b2))
+* websocket transport to serialize string prior to sending ([adee025](https://github.com/open-rpc/client-js/commit/adee025))
+
+## [1.2.2](https://github.com/open-rpc/client-js/compare/1.2.1...1.2.2) (2019-09-23)
+
+
+### Bug Fixes
+
+* expose JSONRPCError type ([6258256](https://github.com/open-rpc/client-js/commit/6258256))
+
+## [1.2.1](https://github.com/open-rpc/client-js/compare/1.2.0...1.2.1) (2019-09-20)
+
+
+### Bug Fixes
+
+* error handling on error response without id ([cdecef1](https://github.com/open-rpc/client-js/commit/cdecef1))
+
+# [1.2.0](https://github.com/open-rpc/client-js/compare/1.1.1...1.2.0) (2019-09-17)
+
+
+### Features
+
+* refactor clientjs to support err handling ([c3686c9](https://github.com/open-rpc/client-js/commit/c3686c9))
+
 ## [1.1.1](https://github.com/open-rpc/client-js/compare/1.1.0...1.1.1) (2019-08-22)
 
 

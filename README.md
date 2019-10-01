@@ -19,10 +19,10 @@ A browser-compatible JSON-RPC client with multiple transports:
 - Event Emitter
 
 ```javascript
-import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
-const transport = new HTTPTransport('http://localhost:8545');
+import { RequestManager, HTTPTransport, Client } from "@open-rpc/client-js";
+const transport = new HTTPTransport("http://localhost:8545");
 const client = new Client(new RequestManager([transport]));
-const result = await client.request(‘addition’, [2, 2]);
+const result = await client.request("addition", [2, 2]);
 // => { jsonrpc: '2.0', id: 1, result: 4 }
 ```
 

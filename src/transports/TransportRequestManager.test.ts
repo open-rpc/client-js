@@ -44,6 +44,14 @@ describe("Transport Request Manager", () => {
     expect(err.message).toContain("Could not resolve");
   });
 
+  it("should error on missing id but error response", () => {
+    const errPayload = reqData.generateMockErrorResponse(9, "haha");
+    delete errPayload.id;
+    const payload = JSON.stringify(errPayload);
+    const err = transportReqMan.resolveResponse(payload, false) as Error;
+    expect(err.message).toContain("Error message");
+  });
+
   it("should error on missing id to resolve and emit error", (done) => {
     transportReqMan.transportEventChannel.on("error", (e) => {
       expect(e.message).toContain("Could not resolve");
