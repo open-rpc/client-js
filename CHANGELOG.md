@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/open-rpc/client-js/compare/1.2.3...1.2.4) (2019-10-07)
+
+
+### Bug Fixes
+
+* corrects handling for response payloads ([e762764](https://github.com/open-rpc/client-js/commit/e762764)), closes [#75](https://github.com/open-rpc/client-js/issues/75)
+
 ## [1.2.3](https://github.com/open-rpc/client-js/compare/1.2.2...1.2.3) (2019-09-30)
 
 
