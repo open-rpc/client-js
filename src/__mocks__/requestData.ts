@@ -36,7 +36,7 @@ export const generateMockNotificationResponse = (result: any, error?: any): req.
   };
 };
 
-export const generateMockErrorResponse = (id: number, data: any): req.IJSONRPCResponse => {
+export const generateMockErrorResponse = (id: number | undefined, data: any): req.IJSONRPCResponse => {
   return {
     id,
     jsonrpc: "2.0",

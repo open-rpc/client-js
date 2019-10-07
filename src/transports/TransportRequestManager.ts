@@ -88,7 +88,7 @@ export class TransportRequestManager {
     if (data instanceof Array) {
       payload = data;
     }
-    return payload.every((datum) => (datum.result || datum.error));
+    return payload.every((datum) => (datum.result !== undefined || datum.error !== undefined));
   }
 
   private processResult(payload: any, prom: IRequestPromise) {
