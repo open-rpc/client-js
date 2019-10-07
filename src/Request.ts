@@ -27,7 +27,7 @@ export interface IJSONRPCError {
 
 export interface IJSONRPCResponse {
   jsonrpc: "2.0";
-  id: string | number; // can also be null
+  id?: string | number; // can also be null
   result?: any;
   error?: IJSONRPCError;
 }
