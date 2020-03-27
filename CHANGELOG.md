@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/open-rpc/client-js/compare/1.2.4...1.2.5) (2020-03-27)
+
+
+### Bug Fixes
+
+* update npm vulns ([eaa935b](https://github.com/open-rpc/client-js/commit/eaa935bcb8bbf470bddae26b7e3ce7bd6d638015))
+
 ## [1.2.4](https://github.com/open-rpc/client-js/compare/1.2.3...1.2.4) (2019-10-07)
 
 
