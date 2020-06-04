@@ -43,55 +43,76 @@ window.open = () => {
 
 describe("PostMessageTransport", () => {
 
-  it("can connect", () => {
-    const wst = new PostMessageTransport("http://localhost:8545");
-    return wst.connect();
-  });
-
-  it("can close", () => {
-    const wst = new PostMessageTransport("http://localhost:8545");
-    wst.close();
-  });
-
-  it("can send and receive data", async () => {
-    const wst = new PostMessageTransport("http://localhost:8545/rpc-request");
-    await wst.connect();
-    const result = await wst.sendData({
-      request: generateMockRequest(0, "foo", ["bar"]),
-      internalID: 0
+  describe("window", () => {
+    it("can connect", () => {
+      const pmt = new PostMessageTransport("http://localhost:8545", "window");
+      return pmt.connect();
     });
-    expect(result).toEqual("bar");
-    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    it("can error connect with bad uri", () => {
+      const pmt = new PostMessageTransport("foo://localhost:8545", "window");
+      expect(pmt.connect()).rejects.toThrowError("Bad URI");
+    });
+
+    it("can close", () => {
+      const pmt = new PostMessageTransport("http://localhost:8545", "window");
+      pmt.close();
+    });
+
+    it("can send and receive data", async () => {
+      const pmt = new PostMessageTransport("http://localhost:8545/rpc-request", "window");
+      await pmt.connect();
+      const result = await pmt.sendData({
+        request: generateMockRequest(0, "foo", ["bar"]),
+        internalID: 0
+      });
+      expect(result).toEqual("bar");
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    });
+
+    it("can send and receive data against potential timeout", async () => {
+      const pmt = new PostMessageTransport("http://localhost:8545/rpc-request", "window");
+      await pmt.connect();
+      const result = await pmt.sendData({
+        request: generateMockRequest(0, "foo", ["bar"]),
+        internalID: 0
+      }, 10000);
+      expect(result).toEqual("bar");
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    });
+
+    it("can send and receive errors", async () => {
+      const pmt = new PostMessageTransport("http://localhost:8545/rpc-error", "window");
+      await pmt.connect();
+      await expect(pmt.sendData({
+        request: generateMockRequest(1, "foo", ["bar"]),
+        internalID: 1,
+      })).rejects.toThrowError("Error message");
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    });
+
+    it("can handle underlying transport crash", async () => {
+      const pmt = new PostMessageTransport("http://localhost:8545/crash", "window");
+      await pmt.connect();
+      await expect(pmt.sendData({
+        request: generateMockRequest(2, "foo", ["bar"]),
+        internalID: 2,
+      })).rejects.toThrowError("Random Segfault that crashes fetch");
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    });
+
+  })
+
+  describe("iframe", () => {
+    it("can connect", () => {
+      const pmt = new PostMessageTransport("http://localhost:8545", "iframe");
+      return pmt.connect();
+    });
+
+    it("can close", () => {
+      const pmt = new PostMessageTransport("http://localhost:8545", "iframe");
+      pmt.close();
+    });
   });
 
-  it("can send and receive data against potential timeout", async () => {
-    const wst = new PostMessageTransport("http://localhost:8545/rpc-request");
-    await wst.connect();
-    const result = await wst.sendData({
-      request: generateMockRequest(0, "foo", ["bar"]),
-      internalID: 0
-    }, 10000);
-    expect(result).toEqual("bar");
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  });
-
-  it("can send and receive errors", async () => {
-    const wst = new PostMessageTransport("http://localhost:8545/rpc-error");
-    await wst.connect();
-    await expect(wst.sendData({
-      request: generateMockRequest(1, "foo", ["bar"]),
-      internalID: 1,
-    })).rejects.toThrowError("Error message");
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  });
-
-  it("can handle underlying transport crash", async () => {
-    const wst = new PostMessageTransport("http://localhost:8545/crash");
-    await wst.connect();
-    await expect(wst.sendData({
-      request: generateMockRequest(2, "foo", ["bar"]),
-      internalID: 2,
-    })).rejects.toThrowError("Random Segfault that crashes fetch");
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  });
 });
