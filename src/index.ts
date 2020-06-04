@@ -2,6 +2,7 @@ import RequestManager from "./RequestManager";
 import EventEmitterTransport from "./transports/EventEmitterTransport";
 import HTTPTransport from "./transports/HTTPTransport";
 import WebSocketTransport from "./transports/WebSocketTransport";
+import PostMessageTransport from "./transports/PostMessageTransport";
 import { JSONRPCError } from "./Error";
 
 interface IClient {
@@ -96,4 +97,5 @@ export {
   EventEmitterTransport,
   WebSocketTransport,
   JSONRPCError,
+  PostMessageTransport,
 };
