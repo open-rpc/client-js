@@ -105,7 +105,7 @@ describe("PostMessageTransport", () => {
 
   describe("iframe", () => {
     it("can connect", () => {
-      const pmt = new PostMessageTransport("http://localhost:8545", "iframe");
+      const pmt = new PostMessageTransport("https://open-rpc.org/", "iframe");
       return pmt.connect();
     });
 
