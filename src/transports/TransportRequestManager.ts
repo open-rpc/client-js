@@ -1,6 +1,7 @@
-import { JSONRPCRequestData, IJSONRPCRequest,
+import {
+  JSONRPCRequestData, IJSONRPCRequest,
   IJSONRPCNotification, IJSONRPCNotificationResponse,
-   IJSONRPCResponse, IBatchRequest, IJSONRPCData,
+  IJSONRPCResponse, IBatchRequest, IJSONRPCData,
 } from "../Request";
 import { EventEmitter } from "events";
 import { JSONRPCError, ERR_TIMEOUT, ERR_UNKNOWN, ERR_MISSIING_ID, convertJSONToRPCError } from "../Error";
@@ -47,23 +48,23 @@ export class TransportRequestManager {
   }
 
   public resolveResponse(payload: string, emitError: boolean = true): TransportResponse {
-      let data: any = payload;
-      try {
-        data = JSON.parse(payload);
-        if (this.checkJSONRPC(data) === false) {
-          throw new Error("Bad response format");
-        }
-        if (data instanceof Array) {
-          return this.resolveBatch(data, emitError);
-        }
-        return this.resolveRes(data, emitError);
-      } catch (e) {
-        const err = new JSONRPCError("Bad response format", ERR_UNKNOWN, payload);
-        if (emitError) {
-          this.transportEventChannel.emit("error", err);
-        }
-        return err;
+    let data: any = payload;
+    try {
+      data = JSON.parse(payload);
+      if (this.checkJSONRPC(data) === false) {
+        throw new Error("Bad response format");
       }
+      if (data instanceof Array) {
+        return this.resolveBatch(data, emitError);
+      }
+      return this.resolveRes(data, emitError);
+    } catch (e) {
+      const err = new JSONRPCError("Bad response format", ERR_UNKNOWN, payload);
+      if (emitError) {
+        this.transportEventChannel.emit("error", err);
+      }
+      return err;
+    }
   }
 
   private addBatchReq(batches: IBatchRequest[], timeout: number | undefined) {
@@ -99,7 +100,7 @@ export class TransportRequestManager {
     }
     prom.resolve(payload.result);
   }
-  private resolveBatch(payload: Array<IJSONRPCRequest | IJSONRPCNotification>, emitError: boolean): TransportResponse {
+  private resolveBatch(payload: (IJSONRPCRequest | IJSONRPCNotification)[], emitError: boolean): TransportResponse {
     const results = payload.map((datum) => {
       return this.resolveRes(datum, emitError);
     });
@@ -111,7 +112,7 @@ export class TransportRequestManager {
   }
 
   private resolveRes(data: IJSONRPCNotificationResponse | IJSONRPCResponse, emitError: boolean): TransportResponse {
-    const { id, error} = data;
+    const { id, error } = data;
 
     const status = this.pendingRequest[id as string];
     if (status) {

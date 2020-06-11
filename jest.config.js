@@ -7,4 +7,11 @@ module.exports = {
   "testEnvironment": "jsdom",
   "preset": "ts-jest",
   "coveragePathIgnorePatterns": ["Error.ts"],
+  "testEnvironmentOptions": {
+    "resources": "usable",
+    "features": {
+      "FetchExternalResources": ["script", "iframe"],
+      "ProcessExternalResources": ["script", "iframe"],
+    }
+  }
 }
