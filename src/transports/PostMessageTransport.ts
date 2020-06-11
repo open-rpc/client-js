@@ -39,7 +39,6 @@ class PostMessageTransport extends Transport {
       } else {
         const iframe = document.createElement("iframe");
         iframe.addEventListener("load", () => {
-          console.log("loadEvent");  //tslint:disable-line
           resolve(frame);
         });
         iframe.setAttribute("width", "0px");
@@ -47,10 +46,8 @@ class PostMessageTransport extends Transport {
         iframe.setAttribute("style", "visiblity:hidden;border:none;outline:none;");
         iframe.setAttribute("src", uri);
         iframe.setAttribute("id", this.postMessageID);
-        const el = window.document.body;
-        el?.appendChild(iframe);
+        window.document.body.appendChild(iframe);
         frame = iframe.contentWindow;
-        console.log("setFrame"); //tslint:disable-line
       }
     });
   }
