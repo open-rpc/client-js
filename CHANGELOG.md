@@ -1,3 +1,18 @@
+# [1.3.0](https://github.com/open-rpc/client-js/compare/1.2.5...1.3.0) (2020-06-11)
+
+
+### Bug Fixes
+
+* **postmessage:** add iframe support ([893c0b8](https://github.com/open-rpc/client-js/commit/893c0b8cd3820ccb56561974b17b04704ec5fab7))
+* **PostMessage:** exports ([0df7146](https://github.com/open-rpc/client-js/commit/0df71464c5b63f65aa19a1a497595a7ddbf2c577))
+* latest wip ([bce6627](https://github.com/open-rpc/client-js/commit/bce66278a6d872c93a60370def60234f90552809))
+* refactor to createWindow + get tests passing ([6b61cac](https://github.com/open-rpc/client-js/commit/6b61caca951927ea154ad4720be3e119809f5db4))
+
+
+### Features
+
+* postmessage transport ([0d9e646](https://github.com/open-rpc/client-js/commit/0d9e64604f3a96967e55070c87787547f6f0d049))
+
 ## [1.2.5](https://github.com/open-rpc/client-js/compare/1.2.4...1.2.5) (2020-03-27)
 
 
