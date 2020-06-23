@@ -14,41 +14,23 @@ const openPopup = (url: string) => {
   );
 };
 
-type PostMessageType = "window" | "iframe";
-
 class PostMessageTransport extends Transport {
   public uri: string;
   public frame: undefined | null | Window;
-  public type: PostMessageType;
   public postMessageID: string;
 
-  constructor(uri: string, type: PostMessageType) {
+  constructor(uri: string) {
     super();
-    this.type = type;
     this.uri = uri;
     this.postMessageID = `post-message-transport-${Math.random()}`;
   }
   public createWindow(uri: string): Promise<Window | null> {
     return new Promise((resolve, reject) => {
       let frame: Window | null;
-      if (this.type === "window") {
-        frame = openPopup(uri);
-        setTimeout(() => {
-          resolve(frame);
-        }, 3000);
-      } else {
-        const iframe = document.createElement("iframe");
-        iframe.addEventListener("load", () => {
-          resolve(frame);
-        });
-        iframe.setAttribute("width", "0px");
-        iframe.setAttribute("height", "0px");
-        iframe.setAttribute("style", "visiblity:hidden;border:none;outline:none;");
-        iframe.setAttribute("src", uri);
-        iframe.setAttribute("id", this.postMessageID);
-        window.document.body.appendChild(iframe);
-        frame = iframe.contentWindow;
-      }
+      frame = openPopup(uri);
+      setTimeout(() => {
+        resolve(frame);
+      }, 3000);
     });
   }
   public connect(): Promise<any> {
@@ -77,10 +59,7 @@ class PostMessageTransport extends Transport {
   }
 
   public close(): void {
-    if (this.type === "iframe") {
-      const el = document.getElementById(this.postMessageID);
-      el?.remove();
-    } else if (this.frame) {
+    if (this.frame) {
       (this.frame as Window).close();
     }
   }

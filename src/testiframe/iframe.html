@@ -1,0 +1,39 @@
+<html>
+
+<body>
+  <script>
+    window.addEventListener("message", (ev) => {
+      if (!ev.data.method) {
+        return;
+      }
+      let data = {
+        jsonrpc: "2.0",
+        result: "bar",
+        id: 0,
+      };
+      if (ev.data.id === 1) {
+        data = {
+          jsonrpc: "2.0",
+          error: {
+            code: 32009,
+            message: "Error message",
+          },
+          id: 1,
+        }
+      }
+      if (ev.data.id === 2) {
+        data = {
+          jsonrpc: "2.0",
+          error: {
+            code: 32009,
+            message: "Random Segfault that crashes fetch",
+          },
+          id: 2,
+        }
+      }
+      window.parent.postMessage(data, "*");
+    }, false);
+  </script>
+</body>
+
+</html>
