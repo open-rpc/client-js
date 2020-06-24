@@ -1,5 +1,5 @@
 
-import PostMessageTransport from "./PostMessageWindowTransport";
+import PostMessageWindowTransport from "./PostMessageWindowTransport";
 import { generateMockRequest } from "../__mocks__/requestData";
 
 (window as any).open = () => {
@@ -45,27 +45,27 @@ import { generateMockRequest } from "../__mocks__/requestData";
   }
 }
 
-describe("PostMessageTransport", () => {
+describe("PostMessageWindowTransport", () => {
 
   describe("window", () => {
     it("can connect", () => {
-      const pmt = new PostMessageTransport("http://open-rpc.org");
+      const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       return pmt.connect();
     });
 
     it("can error connect with bad uri", () => {
-      const pmt = new PostMessageTransport("foo://open-rpc.org");
+      const pmt = new PostMessageWindowTransport("foo://open-rpc.org");
       expect(pmt.connect()).rejects.toThrowError("Bad URI");
     });
 
     it("can close", async () => {
-      const pmt = new PostMessageTransport("http://open-rpc.org");
+      const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       await pmt.connect();
       pmt.close();
     });
 
     it("can send and receive data", async () => {
-      const pmt = new PostMessageTransport("http://open-rpc.org");
+      const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       await pmt.connect();
       const result = await pmt.sendData({
         request: generateMockRequest(0, "foo", ["bar"]),
@@ -76,7 +76,7 @@ describe("PostMessageTransport", () => {
     });
 
     it("can send and receive data against potential timeout", async () => {
-      const pmt = new PostMessageTransport("http://open-rpc.org");
+      const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       await pmt.connect();
       const result = await pmt.sendData({
         request: generateMockRequest(0, "foo", ["bar"]),
@@ -87,7 +87,7 @@ describe("PostMessageTransport", () => {
     });
 
     it("can send and receive errors", async () => {
-      const pmt = new PostMessageTransport("http://open-rpc.org/rpc-error");
+      const pmt = new PostMessageWindowTransport("http://open-rpc.org/rpc-error");
       await pmt.connect();
       await expect(pmt.sendData({
         request: generateMockRequest(1, "foo", ["bar"]),
@@ -97,7 +97,7 @@ describe("PostMessageTransport", () => {
     });
 
     it("can handle underlying transport crash", async () => {
-      const pmt = new PostMessageTransport("http://open-rpc.org");
+      const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       await pmt.connect();
       await expect(pmt.sendData({
         request: generateMockRequest(2, "foo", ["bar"]),
@@ -110,12 +110,12 @@ describe("PostMessageTransport", () => {
 
   describe("iframe", () => {
     it("can connect", () => {
-      const pmt = new PostMessageTransport("https://open-rpc.org/");
+      const pmt = new PostMessageWindowTransport("https://open-rpc.org/");
       return pmt.connect();
     });
 
     it("can close", () => {
-      const pmt = new PostMessageTransport("http://open-rpc.org");
+      const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       pmt.close();
     });
   });
