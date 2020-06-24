@@ -1,3 +1,11 @@
+## [1.3.1](https://github.com/open-rpc/client-js/compare/1.3.0...1.3.1) (2020-06-24)
+
+
+### Bug Fixes
+
+* break out postmessage into 2 transports ([2db3289](https://github.com/open-rpc/client-js/commit/2db32895e0909c24ae09250b5774b0b59cdd9555))
+* naming + use random port for tests/ci ([6b7ad0c](https://github.com/open-rpc/client-js/commit/6b7ad0c2600d23229a0094c0a2204a87db2ad8aa))
+
 # [1.3.0](https://github.com/open-rpc/client-js/compare/1.2.5...1.3.0) (2020-06-11)
 
 
