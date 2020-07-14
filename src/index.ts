@@ -5,10 +5,7 @@ import WebSocketTransport from "./transports/WebSocketTransport";
 import PostMessageWindowTransport from "./transports/PostMessageWindowTransport";
 import PostMessageIframeTransport from "./transports/PostMessageIframeTransport";
 import { JSONRPCError } from "./Error";
-
-interface IClient {
-  request(method: string, params: any): Promise<any>;
-}
+import { Provider, ProviderRequestArguments } from "./ProviderInterface";
 
 /**
  * OpenRPC Client JS is a browser-compatible JSON-RPC client with multiple transports and
@@ -19,12 +16,12 @@ interface IClient {
  * import { RequestManager, HTTPTransport, Client } from '@open-rpc/client-js';
  * const transport = new HTTPTransport('http://localhost:3333');
  * const client = new Client(new RequestManager([transport]));
- * const result = await client.request(‘addition’, [2, 2]);
+ * const result = await client.request({method: 'addition', params: [2, 2]});
  * // => { jsonrpc: '2.0', id: 1, result: 4 }
  * ```
  *
  */
-class Client implements IClient {
+class Client implements Provider {
   public requestManager: RequestManager;
   constructor(requestManager: RequestManager) {
     this.requestManager = requestManager;
@@ -39,8 +36,8 @@ class Client implements IClient {
    *
    * @example
    * myClient.startBatch();
-   * myClient.request("foo", ["bar"]).then(() => console.log('foobar'));
-   * myClient.request("foo", ["baz"]).then(() => console.log('foobaz'));
+   * myClient.request({method: "foo", params: ["bar"]}).then(() => console.log('foobar'));
+   * myClient.request({method: "foo", params: ["baz"]}).then(() => console.log('foobaz'));
    * myClient.stopBatch();
    */
   public startBatch(): void {
@@ -55,8 +52,8 @@ class Client implements IClient {
    *
    * @example
    * myClient.startBatch();
-   * myClient.request("foo", ["bar"]).then(() => console.log('foobar'));
-   * myClient.request("foo", ["baz"]).then(() => console.log('foobaz'));
+   * myClient.request({method: "foo", params: ["bar"]}).then(() => console.log('foobar'));
+   * myClient.request({method: "foo", params: ["baz"]}).then(() => console.log('foobaz'));
    * myClient.stopBatch();
    */
   public stopBatch(): void {
@@ -66,19 +63,22 @@ class Client implements IClient {
   /**
    * A JSON-RPC call is represented by sending a Request object to a Server.
    *
-   * @param method A String containing the name of the method to be invoked. Method names that begin with the word rpc
+   * @param requestObject.method A String containing the name of the method to be invoked. Method names that begin with the word rpc
    * followed by a period character (U+002E or ASCII 46) are reserved for rpc-internal methods and extensions and
    * MUST NOT be used for anything else.
-   * @param params A Structured value that holds the parameter values to be used during the invocation of the method.
+   * @param requestObject.params A Structured value that holds the parameter values to be used during the invocation of the method.
+   *
+   * @example
+   * myClient.request({method: "foo", params: ["bar"]}).then(() => console.log('foobar'));
    */
-  public async request(method: string, params: any, timeout?: number) {
+  public async request(requestObject: ProviderRequestArguments, timeout?: number) {
     await this.requestManager.connectPromise;
-    return this.requestManager.request(method, params, false, timeout);
+    return this.requestManager.request(requestObject, false, timeout);
   }
 
-  public async notify(method: string, params: any) {
+  public async notify(requestObject: ProviderRequestArguments) {
     await this.requestManager.connectPromise;
-    return this.requestManager.request(method, params, true);
+    return this.requestManager.request(requestObject, true);
   }
 
   public onNotification(callback: (data: any) => void) {

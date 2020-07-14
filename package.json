@@ -4,7 +4,7 @@
   "description": " A browser-compatible JSON-RPC client with multiple transports.",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc && typedoc --out docs",
+    "build": "tsc && typedoc --out docs --includeDeclarations --excludeExternals  --excludeNotExported --excludePrivate --hideGenerator --mode file --readme none",
     "lint": "tslint --fix -p .",
     "test": "npm run lint && jest --coverage"
   },
