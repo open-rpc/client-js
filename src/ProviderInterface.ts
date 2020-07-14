@@ -4,7 +4,7 @@ export interface ProviderRequestArguments {
 }
 
 export interface Provider {
-  request(args: ProviderRequestArguments): Promise<any>;
+  request(args: ProviderRequestArguments): Promise<unknown>;
 }
 
 export interface ProviderRpcError extends Error {
