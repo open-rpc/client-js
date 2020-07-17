@@ -14,9 +14,10 @@
 
 A browser-compatible JSON-RPC client with multiple transports:
 
+- Event Emitter
 - HTTP/HTTPS
 - WebSocket
-- Event Emitter
+
 
 ```javascript
 import { RequestManager, HTTPTransport, Client } from "@open-rpc/client-js";
