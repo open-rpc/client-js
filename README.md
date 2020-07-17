@@ -71,10 +71,8 @@ main().then(() => {
   <summary>HTTP</summary>
 
 ```javascript
-import { EventEmitter } from "events";
 import { RequestManager, Client, HTTPTransport } from "@open-rpc/client-js";
 
-const emitter = new EventEmitter();
 const transport = new HTTPTransport("http://localhost:3333");
 const requestManager = new RequestManager([transport]);
 const client = new Client(requestManager);
