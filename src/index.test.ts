@@ -2,6 +2,8 @@ import Client from ".";
 import RequestManager from "./RequestManager";
 import EventEmitterTransport from "./transports/EventEmitterTransport";
 import { EventEmitter } from "events";
+import { addMockServerTransport } from "./__mocks__/eventEmitter";
+import { generateMockNotificationRequest } from "./__mocks__/requestData";
 
 describe("client-js", () => {
   it("can be constructed", () => {
@@ -22,6 +24,14 @@ describe("client-js", () => {
     const c = new Client(new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]));
     expect(typeof c.request).toEqual("function");
     expect(typeof c.notify("my_method", null).then).toEqual("function");
+  });
+
+  it("can recieve notifications", (done) => {
+    const emitter = new EventEmitter();
+    const c = new Client(new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]));
+    addMockServerTransport(emitter, "from1", "to1://asdf/rpc-notification");
+    c.onNotification(done);
+    emitter.emit("to1", generateMockNotificationRequest("foo", ["bar"]));
   });
 
   it("can register error and subscription handlers", () => {
