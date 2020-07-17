@@ -90,32 +90,9 @@ main().then(() => {
 
 </details>
 
-<details>
-  <summary>Websocket</summary>
 
 <details>
   <summary>Websocket</summary>
-```javascript
-import { RequestManager, Client, HTTPTransport } from "@open-rpc/client-js";
-
-const transport = new HTTPTransport("http://localhost:3333");
-const requestManager = new RequestManager([transport]);
-const client = new Client(requestManager);
-
-const main = async () => {
-  const result = await client.request("addition", [2, 2]);
-  console.log(result);
-};
-
-main().then(() => {
-  console.log("DONE");
-});
-```
-
-</details>
-
-
-
 
 ```javascript
 import { RequestManager, Client, WebSocketTransport } from "@open-rpc/client-js";
@@ -136,8 +113,6 @@ main().then(() => {
 ```
 
 </details>
-
-
 
 
 ### Contributing
