@@ -30,8 +30,8 @@ describe("client-js", () => {
     const emitter = new EventEmitter();
     const c = new Client(new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]));
     addMockServerTransport(emitter, "from1", "to1://asdf/rpc-notification");
-    c.onNotification(done);
-    emitter.emit("to1", generateMockNotificationRequest("foo", ["bar"]));
+    c.onNotification(() => done());
+    emitter.emit("to1", JSON.stringify(generateMockNotificationRequest("foo", ["bar"])));
   });
 
   it("can register error and subscription handlers", () => {

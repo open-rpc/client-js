@@ -102,7 +102,7 @@ class RequestManager {
   }
 
   private handleNotification(data: any) {
-    this.requestChannel.emit(data);
+    this.requestChannel.emit("notification", data);
   }
 
 }
