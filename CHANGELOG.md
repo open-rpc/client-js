@@ -1,3 +1,13 @@
+## [1.3.3](https://github.com/open-rpc/client-js/compare/1.3.2...1.3.3) (2020-07-17)
+
+
+### Bug Fixes
+
+* **README:** add collapsed examples ([588bcba](https://github.com/open-rpc/client-js/commit/588bcbaa7bbb6f019fff6ed654c122212b8e360f))
+* **README:** example formatting ([840857f](https://github.com/open-rpc/client-js/commit/840857f02c064bd9f8a96227c628eaabca7a8b29))
+* add failing notification test ([a638062](https://github.com/open-rpc/client-js/commit/a638062d3870b2c93307db6dccc778265596f4f8))
+* onNotification not firing bug ([0b62f9c](https://github.com/open-rpc/client-js/commit/0b62f9cdb431e1cd2d79c6b2ff0fadd38426e918))
+
 ## [1.3.2](https://github.com/open-rpc/client-js/compare/1.3.1...1.3.2) (2020-07-17)
 
 
