@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/open-rpc/client-js/compare/1.3.1...1.3.2) (2020-07-17)
+
+
+### Bug Fixes
+
+* correct order of req/res uri for event emitter ([0e5ca00](https://github.com/open-rpc/client-js/commit/0e5ca00075b26007d570aa35299c49e3c46f8dde)), closes [#190](https://github.com/open-rpc/client-js/issues/190) [#188](https://github.com/open-rpc/client-js/issues/188)
+
 ## [1.3.1](https://github.com/open-rpc/client-js/compare/1.3.0...1.3.1) (2020-06-24)
 
 
