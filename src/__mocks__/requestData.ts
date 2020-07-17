@@ -3,7 +3,6 @@ import url from "url";
 
 export const generateMockNotificationRequest = (method: string, params: any[]): req.IJSONRPCNotification => {
   return {
-    id: null,
     jsonrpc: "2.0",
     method,
     params,
