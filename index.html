@@ -89,6 +89,78 @@
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-keyword">new</span> RequestManager([transport]));
 <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
 <span class="hljs-comment">// =&gt; { jsonrpc: &#x27;2.0&#x27;, id: 1, result: 4 }</span></code></pre>
+				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+					<h4>Examples</h4>
+				</a>
+				<details>
+					<summary>EventEmitter</summary>
+					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;events&quot;</span>;
+<span class="hljs-keyword">import</span> { RequestManager, EventEmitterTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@open-rpc/client-js&quot;</span>;
+
+<span class="hljs-keyword">const</span> chan1 = <span class="hljs-string">&quot;chan1&quot;</span>;
+<span class="hljs-keyword">const</span> chan2 = <span class="hljs-string">&quot;chan2&quot;</span>;
+
+<span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> EventEmitter();
+<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> EventEmitterTransport(emitter, chan1, chan2);
+<span class="hljs-keyword">const</span> requestManager = <span class="hljs-keyword">new</span> RequestManager([transport]);
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(requestManager);
+
+<span class="hljs-comment">// event emitter server code</span>
+emitter.on(chan1, <span class="hljs-function">(<span class="hljs-params">jsonrpcRequest</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> res = {
+    <span class="hljs-attr">jsonrpc</span>: <span class="hljs-string">&quot;2.0&quot;</span>,
+    <span class="hljs-attr">result</span>: <span class="hljs-string">&quot;potato&quot;</span>,
+    <span class="hljs-attr">id</span>: jsonrpcRequest.id,
+  };
+  emitter.emit(chan2, <span class="hljs-built_in">JSON</span>.stringify(res));
+});
+
+<span class="hljs-keyword">const</span> main = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
+  <span class="hljs-built_in">console</span>.log(result);
+};
+
+main().then(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;DONE&quot;</span>);
+});</code></pre>
+				</details>
+				<details>
+					<summary>HTTP</summary>
+					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;events&quot;</span>;
+<span class="hljs-keyword">import</span> { RequestManager, Client, HTTPTransport } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@open-rpc/client-js&quot;</span>;
+
+<span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> EventEmitter();
+<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">&quot;http://localhost:3333&quot;</span>);
+<span class="hljs-keyword">const</span> requestManager = <span class="hljs-keyword">new</span> RequestManager([transport]);
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(requestManager);
+
+<span class="hljs-keyword">const</span> main = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
+  <span class="hljs-built_in">console</span>.log(result);
+};
+
+main().then(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;DONE&quot;</span>);
+});</code></pre>
+				</details>
+				<details>
+					<summary>Websocket</summary>
+					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, Client, WebSocketTransport } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@open-rpc/client-js&quot;</span>;
+
+<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> WebSocketTransport(<span class="hljs-string">&quot;ws://localhost:3333&quot;</span>);
+<span class="hljs-keyword">const</span> requestManager = <span class="hljs-keyword">new</span> RequestManager([transport]);
+<span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(requestManager);
+
+<span class="hljs-keyword">const</span> main = <span class="hljs-keyword">async</span> () =&gt; {
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
+  <span class="hljs-built_in">console</span>.log(result);
+};
+
+main().then(<span class="hljs-function">() =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;DONE&quot;</span>);
+});
+</code></pre>
+				</details>
 				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
 					<h3>Contributing</h3>
 				</a>
