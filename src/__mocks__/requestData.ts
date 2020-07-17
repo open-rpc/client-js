@@ -52,10 +52,11 @@ export const generateMockResponseData = (uri: string, data: any) => {
   const parsedUrl = url.parse(uri);
   const path = parsedUrl.path || "";
   const rpcNotification = path.search("rpc-notification");
+  const rpcResponse = path.search("rpc-response");
   const rpcRequest = path.search("rpc-request");
   const rpcError = path.search("rpc-error");
   const rpcGarbage = path.search("rpc-garbage");
-  if (rpcRequest > 0) {
+  if (rpcResponse > 0 || rpcRequest > 0) {
     return generateRequestResponse(false, data);
   }
   if (rpcError > 0) {

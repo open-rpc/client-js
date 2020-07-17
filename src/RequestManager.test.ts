@@ -22,8 +22,8 @@ describe("client-js", () => {
 
   it("can send a request", async () => {
     const emitter = new EventEmitter();
-    addMockServerTransport(emitter, "to1://local/rpc-request", "from1");
-    const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-request");
+    addMockServerTransport(emitter, "from1", "to1://local/rpc-response");
+    const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-response");
     const c = new RequestManager([transport]);
     const result = await c.request("foo", ["bar"]);
     expect(result.method).toEqual("foo");
@@ -32,7 +32,7 @@ describe("client-js", () => {
 
   it("can error on error response", async () => {
     const emitter = new EventEmitter();
-    addMockServerTransport(emitter, "to1://local/rpc-error", "from1");
+    addMockServerTransport(emitter, "from1", "to1://local/rpc-error");
     const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-error");
     const c = new RequestManager([transport]);
     await expect(c.request("foo", ["bar"])).rejects.toThrowError("Error message");
@@ -40,7 +40,7 @@ describe("client-js", () => {
 
   it("can error on malformed response and recieve error", async () => {
     const emitter = new EventEmitter();
-    addMockServerTransport(emitter, "to1://local/rpc-garbage", "from1");
+    addMockServerTransport(emitter, "from1", "to1://local/rpc-garbage");
     const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-garbage");
     const c = new RequestManager([transport]);
     const unknownError = new Promise((resolve) => {
@@ -54,7 +54,7 @@ describe("client-js", () => {
     expect(formatError.message).toContain("Bad response format");
   });
 
-  it("can error on batchng a request", async () => {
+  it("can error on batching a request", async () => {
     const emitter = new EventEmitter();
     const transport = new EventEmitterTransport(emitter, "from1", "to1");
     const c = new RequestManager([transport]);
@@ -63,7 +63,7 @@ describe("client-js", () => {
 
   it("can return errors on batch requests", async () => {
     const emitter = new EventEmitter();
-    addMockServerTransport(emitter, "to1://local/rpc-error", "from1");
+    addMockServerTransport(emitter, "from1", "to1://local/rpc-error");
     const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-error");
 
     const c = new RequestManager([transport]);
@@ -79,8 +79,8 @@ describe("client-js", () => {
   it("can batch a request", async () => {
 
     const emitter = new EventEmitter();
-    addMockServerTransport(emitter, "to1://local/rpc-request", "from1");
-    const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-request");
+    addMockServerTransport(emitter, "from1", "to1://local/rpc-response");
+    const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-response");
 
     const c = new RequestManager([transport]);
     c.startBatch();
@@ -99,8 +99,8 @@ describe("client-js", () => {
   it("can batch a notifications", async () => {
 
     const emitter = new EventEmitter();
-    addMockServerTransport(emitter, "to1://local/rpc-request", "from1");
-    const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-request");
+    addMockServerTransport(emitter, "from1", "to1://local/rpc-response");
+    const transport = new EventEmitterTransport(emitter, "from1", "to1://local/rpc-response");
 
     const c = new RequestManager([transport]);
     c.startBatch();
