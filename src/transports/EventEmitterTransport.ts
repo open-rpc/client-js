@@ -16,7 +16,7 @@ class EventEmitterTransport extends Transport {
   }
 
   public connect(): Promise<any> {
-    this.connection.on(this.reqUri, (data: any) => {
+    this.connection.on(this.resUri, (data: any) => {
       this.transportRequestManager.resolveResponse(data);
     });
     return Promise.resolve();
@@ -27,7 +27,7 @@ class EventEmitterTransport extends Transport {
     const notifications = getNotifications(data);
     const parsedData = this.parseData(data);
     try {
-      this.connection.emit(this.resUri, parsedData);
+      this.connection.emit(this.reqUri, parsedData);
       this.transportRequestManager.settlePendingRequest(notifications);
       return prom;
     } catch (e) {
