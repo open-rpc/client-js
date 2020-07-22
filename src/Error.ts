@@ -1,10 +1,10 @@
-import { ProviderRpcError } from "./ProviderInterface";
+import { JSONRpcError } from "./ClientInterface";
 
 export const ERR_TIMEOUT = 7777;
 export const ERR_MISSIING_ID = 7878;
 export const ERR_UNKNOWN = 7979;
 
-export class JSONRPCError extends Error implements ProviderRpcError{
+export class JSONRPCError extends Error implements JSONRpcError {
   public message: string;
   public code: number;
   public data: any;

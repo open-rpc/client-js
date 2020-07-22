@@ -5,7 +5,7 @@ import WebSocketTransport from "./transports/WebSocketTransport";
 import PostMessageWindowTransport from "./transports/PostMessageWindowTransport";
 import PostMessageIframeTransport from "./transports/PostMessageIframeTransport";
 import { JSONRPCError } from "./Error";
-import { Provider, ProviderRequestArguments } from "./ProviderInterface";
+import { IClient, RequestArguments, NotificationArguments } from "./ClientInterface";
 
 /**
  * OpenRPC Client JS is a browser-compatible JSON-RPC client with multiple transports and
@@ -21,7 +21,7 @@ import { Provider, ProviderRequestArguments } from "./ProviderInterface";
  * ```
  *
  */
-class Client implements Provider {
+class Client implements IClient {
   public requestManager: RequestManager;
   constructor(requestManager: RequestManager) {
     this.requestManager = requestManager;
@@ -71,13 +71,17 @@ class Client implements Provider {
    * @example
    * myClient.request({method: "foo", params: ["bar"]}).then(() => console.log('foobar'));
    */
-  public async request(requestObject: ProviderRequestArguments, timeout?: number) {
-    await this.requestManager.connectPromise;
+  public async request(requestObject: RequestArguments, timeout?: number) {
+    if (this.requestManager.connectPromise) {
+      await this.requestManager.connectPromise;
+    }
     return this.requestManager.request(requestObject, false, timeout);
   }
 
-  public async notify(requestObject: ProviderRequestArguments) {
-    await this.requestManager.connectPromise;
+  public async notify(requestObject: NotificationArguments) {
+    if (this.requestManager.connectPromise) {
+      await this.requestManager.connectPromise;
+    }
     return this.requestManager.request(requestObject, true);
   }
 

@@ -3,7 +3,7 @@ import { IJSONRPCRequest, IJSONRPCNotification, IBatchRequest } from "./Request"
 import { JSONRPCError } from "./Error";
 import StrictEventEmitter from "strict-event-emitter-types";
 import { EventEmitter } from "events";
-import { ProviderRequestArguments, Provider } from "./ProviderInterface";
+import { RequestArguments } from "./ClientInterface";
 
 export type RequestChannel = StrictEventEmitter<EventEmitter, IRequestEvents>;
 
@@ -17,7 +17,7 @@ export interface IRequestEvents {
  * If a transport fails, or times out, move on to the next.
  */
 
-class RequestManager implements Provider {
+class RequestManager {
   public transports: Transport[];
   public connectPromise: Promise<any>;
   public batch: IBatchRequest[] = [];
@@ -44,11 +44,11 @@ class RequestManager implements Provider {
     return this.transports[0];
   }
 
-  public async request(args: ProviderRequestArguments, notification: boolean = false, timeout?: number): Promise<any> {
+  public async request(requestObject: RequestArguments, notification: boolean = false, timeout?: number): Promise<any> {
     const internalID = (++this.lastId).toString();
     const id = notification ? null : internalID;
     // naively grab first transport and use it
-    const payload = {request: this.makeRequest(args.method, args.params || [], id) , internalID};
+    const payload = {request: this.makeRequest(requestObject.method, requestObject.params || [], id) , internalID};
     if (this.batchStarted) {
       const result = new Promise((resolve, reject) => {
         this.batch.push({ resolve, reject, request: payload });
