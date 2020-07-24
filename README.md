@@ -55,7 +55,7 @@ emitter.on(chan1, (jsonrpcRequest) => {
 });
 
 const main = async () => {
-  const result = await client.request("addition", [2, 2]);
+  const result = await client.request({method: "addition", params: [2, 2]});
   console.log(result);
 };
 
@@ -78,7 +78,7 @@ const requestManager = new RequestManager([transport]);
 const client = new Client(requestManager);
 
 const main = async () => {
-  const result = await client.request("addition", [2, 2]);
+  const result = await client.request({method: "addition", params: [2, 2]});
   console.log(result);
 };
 
@@ -101,7 +101,7 @@ const requestManager = new RequestManager([transport]);
 const client = new Client(requestManager);
 
 const main = async () => {
-  const result = await client.request("addition", [2, 2]);
+  const result = await client.request({method: "addition", params: [2, 2]});
   console.log(result);
 };
 
