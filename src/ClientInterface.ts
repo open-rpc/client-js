@@ -13,9 +13,3 @@ export interface IClient {
   request(args: RequestArguments): Promise<unknown>;
   notify(args: NotificationArguments): Promise<unknown>;
 }
-
-export interface JSONRpcError extends Error {
-  message: string;
-  code: number;
-  data?: unknown;
-}
