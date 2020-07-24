@@ -7,6 +7,7 @@ import PostMessageIframeTransport from "./transports/PostMessageIframeTransport"
 import { JSONRPCError } from "./Error";
 import Client from "./Client";
 
+export default Client;
 export {
   Client,
   RequestManager,
