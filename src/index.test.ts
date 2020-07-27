@@ -1,4 +1,4 @@
-import Client from ".";
+import { Client } from ".";
 import RequestManager from "./RequestManager";
 import EventEmitterTransport from "./transports/EventEmitterTransport";
 import { EventEmitter } from "events";
@@ -16,14 +16,14 @@ describe("client-js", () => {
     const emitter = new EventEmitter();
     const c = new Client(new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]));
     expect(typeof c.request).toEqual("function");
-    expect(typeof c.request("my_method", null).then).toEqual("function");
+    expect(typeof c.request({ method: "my_method" }).then).toEqual("function");
   });
 
   it("has a notify method that returns a promise", () => {
     const emitter = new EventEmitter();
     const c = new Client(new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]));
     expect(typeof c.request).toEqual("function");
-    expect(typeof c.notify("my_method", null).then).toEqual("function");
+    expect(typeof c.notify({ method: "my_method" }).then).toEqual("function");
   });
 
   it("can recieve notifications", (done) => {

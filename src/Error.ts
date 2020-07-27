@@ -5,7 +5,7 @@ export const ERR_UNKNOWN = 7979;
 export class JSONRPCError extends Error {
   public message: string;
   public code: number;
-  public data: any;
+  public data?: unknown;
   constructor(message: string, code: number, data?: any) {
     super(message);
     this.message = message;
