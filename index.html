@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>@open-rpc/client-js</title>
-	<meta name="description" content="Documentation for @open-rpc/client-js">
+	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -80,25 +80,25 @@
 				</center>
 				<p>A browser-compatible JSON-RPC client with multiple transports:</p>
 				<ul>
+					<li>EventEmitter</li>
 					<li>HTTP/HTTPS</li>
 					<li>WebSocket</li>
-					<li>Event Emitter</li>
 				</ul>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, HTTPTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@open-rpc/client-js&quot;</span>;
-<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">&quot;http://localhost:8545&quot;</span>);
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, HTTPTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">"@open-rpc/client-js"</span>;
+<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">"http://localhost:8545"</span>);
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(<span class="hljs-keyword">new</span> RequestManager([transport]));
-<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
-<span class="hljs-comment">// =&gt; { jsonrpc: &#x27;2.0&#x27;, id: 1, result: 4 }</span></code></pre>
+<span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request({<span class="hljs-attr">method</span>: <span class="hljs-string">"addition"</span>, <span class="hljs-attr">params</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]});
+<span class="hljs-comment">// =&gt; { jsonrpc: '2.0', id: 1, result: 4 }</span></code></pre>
 				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
 					<h4>Examples</h4>
 				</a>
 				<details>
 					<summary>EventEmitter</summary>
-					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;events&quot;</span>;
-<span class="hljs-keyword">import</span> { RequestManager, EventEmitterTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@open-rpc/client-js&quot;</span>;
+					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">"events"</span>;
+<span class="hljs-keyword">import</span> { RequestManager, EventEmitterTransport, Client } <span class="hljs-keyword">from</span> <span class="hljs-string">"@open-rpc/client-js"</span>;
 
-<span class="hljs-keyword">const</span> chan1 = <span class="hljs-string">&quot;chan1&quot;</span>;
-<span class="hljs-keyword">const</span> chan2 = <span class="hljs-string">&quot;chan2&quot;</span>;
+<span class="hljs-keyword">const</span> chan1 = <span class="hljs-string">"chan1"</span>;
+<span class="hljs-keyword">const</span> chan2 = <span class="hljs-string">"chan2"</span>;
 
 <span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> EventEmitter();
 <span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> EventEmitterTransport(emitter, chan1, chan2);
@@ -106,58 +106,56 @@
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(requestManager);
 
 <span class="hljs-comment">// event emitter server code</span>
-emitter.on(chan1, <span class="hljs-function">(<span class="hljs-params">jsonrpcRequest</span>) =&gt;</span> {
+emitter.on(chan1, (jsonrpcRequest) =&gt; {
   <span class="hljs-keyword">const</span> res = {
-    <span class="hljs-attr">jsonrpc</span>: <span class="hljs-string">&quot;2.0&quot;</span>,
-    <span class="hljs-attr">result</span>: <span class="hljs-string">&quot;potato&quot;</span>,
+    <span class="hljs-attr">jsonrpc</span>: <span class="hljs-string">"2.0"</span>,
+    <span class="hljs-attr">result</span>: <span class="hljs-string">"potato"</span>,
     <span class="hljs-attr">id</span>: jsonrpcRequest.id,
   };
   emitter.emit(chan2, <span class="hljs-built_in">JSON</span>.stringify(res));
 });
 
 <span class="hljs-keyword">const</span> main = <span class="hljs-keyword">async</span> () =&gt; {
-  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request({<span class="hljs-attr">method</span>: <span class="hljs-string">"addition"</span>, <span class="hljs-attr">params</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]});
   <span class="hljs-built_in">console</span>.log(result);
 };
 
-main().then(<span class="hljs-function">() =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;DONE&quot;</span>);
+main().then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"DONE"</span>);
 });</code></pre>
 				</details>
 				<details>
 					<summary>HTTP</summary>
-					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;events&quot;</span>;
-<span class="hljs-keyword">import</span> { RequestManager, Client, HTTPTransport } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@open-rpc/client-js&quot;</span>;
+					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, Client, HTTPTransport } <span class="hljs-keyword">from</span> <span class="hljs-string">"@open-rpc/client-js"</span>;
 
-<span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> EventEmitter();
-<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">&quot;http://localhost:3333&quot;</span>);
+<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> HTTPTransport(<span class="hljs-string">"http://localhost:3333"</span>);
 <span class="hljs-keyword">const</span> requestManager = <span class="hljs-keyword">new</span> RequestManager([transport]);
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(requestManager);
 
 <span class="hljs-keyword">const</span> main = <span class="hljs-keyword">async</span> () =&gt; {
-  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request({<span class="hljs-attr">method</span>: <span class="hljs-string">"addition"</span>, <span class="hljs-attr">params</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]});
   <span class="hljs-built_in">console</span>.log(result);
 };
 
-main().then(<span class="hljs-function">() =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;DONE&quot;</span>);
+main().then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"DONE"</span>);
 });</code></pre>
 				</details>
 				<details>
-					<summary>Websocket</summary>
-					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, Client, WebSocketTransport } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@open-rpc/client-js&quot;</span>;
+					<summary>WebSocket</summary>
+					<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { RequestManager, Client, WebSocketTransport } <span class="hljs-keyword">from</span> <span class="hljs-string">"@open-rpc/client-js"</span>;
 
-<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> WebSocketTransport(<span class="hljs-string">&quot;ws://localhost:3333&quot;</span>);
+<span class="hljs-keyword">const</span> transport = <span class="hljs-keyword">new</span> WebSocketTransport(<span class="hljs-string">"ws://localhost:3333"</span>);
 <span class="hljs-keyword">const</span> requestManager = <span class="hljs-keyword">new</span> RequestManager([transport]);
 <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> Client(requestManager);
 
 <span class="hljs-keyword">const</span> main = <span class="hljs-keyword">async</span> () =&gt; {
-  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">&quot;addition&quot;</span>, [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]);
+  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">await</span> client.request({<span class="hljs-attr">method</span>: <span class="hljs-string">"addition"</span>, <span class="hljs-attr">params</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]});
   <span class="hljs-built_in">console</span>.log(result);
 };
 
-main().then(<span class="hljs-function">() =&gt;</span> {
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;DONE&quot;</span>);
+main().then(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"DONE"</span>);
 });
 </code></pre>
 				</details>
@@ -173,85 +171,34 @@ main().then(<span class="hljs-function">() =&gt;</span> {
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_error_.html">&quot;<wbr>Error&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_error_test_.html">&quot;<wbr>Error.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_request_.html">&quot;<wbr>Request&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_requestmanager_.html">&quot;<wbr>Request<wbr>Manager&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_requestmanager_test_.html">&quot;<wbr>Request<wbr>Manager.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/___mocks___eventemitter_.html">&quot;__mocks__/event<wbr>Emitter&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/___mocks___isomorphic_fetch_.html">&quot;__mocks__/isomorphic-<wbr>fetch&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/___mocks___isomorphic_ws_.html">&quot;__mocks__/isomorphic-<wbr>ws&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/___mocks___requestdata_.html">&quot;__mocks__/request<wbr>Data&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_example_.html">&quot;example&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_index_.html">&quot;index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_index_test_.html">&quot;index.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_eventemittertransport_.html">&quot;transports/<wbr>Event<wbr>Emitter<wbr>Transport&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_eventemittertransport_test_.html">&quot;transports/<wbr>Event<wbr>Emitter<wbr>Transport.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_httptransport_.html">&quot;transports/HTTPTransport&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_httptransport_test_.html">&quot;transports/HTTPTransport.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_postmessageiframetransport_.html">&quot;transports/<wbr>Post<wbr>Message<wbr>Iframe<wbr>Transport&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_postmessageiframetransport_test_.html">&quot;transports/<wbr>Post<wbr>Message<wbr>Iframe<wbr>Transport.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_postmessagewindowtransport_.html">&quot;transports/<wbr>Post<wbr>Message<wbr>Window<wbr>Transport&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_postmessagewindowtransport_test_.html">&quot;transports/<wbr>Post<wbr>Message<wbr>Window<wbr>Transport.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_transport_.html">&quot;transports/<wbr>Transport&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_transportrequestmanager_.html">&quot;transports/<wbr>Transport<wbr>Request<wbr>Manager&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_transportrequestmanager_test_.html">&quot;transports/<wbr>Transport<wbr>Request<wbr>Manager.test&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_websockettransport_.html">&quot;transports/<wbr>Web<wbr>Socket<wbr>Transport&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_transports_websockettransport_test_.html">&quot;transports/<wbr>Web<wbr>Socket<wbr>Transport.test&quot;</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/client.html" class="tsd-kind-icon">Client</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/eventemittertransport.html" class="tsd-kind-icon">Event<wbr>Emitter<wbr>Transport</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/httptransport.html" class="tsd-kind-icon">HTTPTransport</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/jsonrpcerror.html" class="tsd-kind-icon">JSONRPCError</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/postmessageiframetransport.html" class="tsd-kind-icon">Post<wbr>Message<wbr>Iframe<wbr>Transport</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/postmessagetransport.html" class="tsd-kind-icon">Post<wbr>Message<wbr>Transport</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/requestmanager.html" class="tsd-kind-icon">Request<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/websockettransport.html" class="tsd-kind-icon">Web<wbr>Socket<wbr>Transport</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -262,15 +209,57 @@ main().then(<span class="hljs-function">() =&gt;</span> {
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -280,5 +269,6 @@ main().then(<span class="hljs-function">() =&gt;</span> {
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
