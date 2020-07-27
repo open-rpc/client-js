@@ -3,7 +3,7 @@ import { IJSONRPCRequest, IJSONRPCNotification, IBatchRequest } from "./Request"
 import { JSONRPCError } from "./Error";
 import StrictEventEmitter from "strict-event-emitter-types";
 import { EventEmitter } from "events";
-import { RequestArguments } from "./ClientInterface";
+import { JSONRPCMessage } from "./ClientInterface";
 
 export type RequestChannel = StrictEventEmitter<EventEmitter, IRequestEvents>;
 
@@ -44,7 +44,7 @@ class RequestManager {
     return this.transports[0];
   }
 
-  public async request(requestObject: RequestArguments, notification: boolean = false, timeout?: number): Promise<any> {
+  public async request(requestObject: JSONRPCMessage, notification: boolean = false, timeout?: number): Promise<any> {
     const internalID = (++this.lastId).toString();
     const id = notification ? null : internalID;
     // naively grab first transport and use it
