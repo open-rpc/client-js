@@ -1,3 +1,23 @@
+# [1.4.0](https://github.com/open-rpc/client-js/compare/1.3.3...1.4.0) (2020-07-27)
+
+
+### Bug Fixes
+
+* **provider:** rename to ClientInterface ([3bfe849](https://github.com/open-rpc/client-js/commit/3bfe84981aa6e37395a732269085d744cef05f68))
+* **provider:** type ([2124382](https://github.com/open-rpc/client-js/commit/21243827b0f6a8b035a117c86ef6a4946fef442b))
+* add default export back ([d2b4dc2](https://github.com/open-rpc/client-js/commit/d2b4dc2d4b7e12d38b6b9947467e3a11d7f6ca22))
+* remove duplicate JSONRpcError type ([be1669f](https://github.com/open-rpc/client-js/commit/be1669fc548b5e542c2b92a24730dfeecbefc4fe))
+* **README:** change example interfaces ([6904bab](https://github.com/open-rpc/client-js/commit/6904bab4b534336778e117dd0a41abb22700b147))
+* **README:** consistent naming ([40242fe](https://github.com/open-rpc/client-js/commit/40242fec0c4c4126744e748fe526bccea729ecb3))
+* **README:** transport ordering ([5b52a17](https://github.com/open-rpc/client-js/commit/5b52a17a4c4271b1856b9abede7343ef5f1cc922))
+* **typdoc:** add typedoc.jsosn and use library mode ([7f7c94c](https://github.com/open-rpc/client-js/commit/7f7c94cd793ca7441087ef1ddc91db8bef87205c))
+* request manager requestObject type should be JSONRPCMessage ([5a3c194](https://github.com/open-rpc/client-js/commit/5a3c1949a7e03363c4c5809082ea304274817245))
+
+
+### Features
+
+* change public `request` interface to match provider ([bd33563](https://github.com/open-rpc/client-js/commit/bd33563e40e40464d94028f567f76bb5b297bd22))
+
 ## [1.3.3](https://github.com/open-rpc/client-js/compare/1.3.2...1.3.3) (2020-07-17)
 
 
