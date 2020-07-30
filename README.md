@@ -17,7 +17,7 @@ A browser-compatible JSON-RPC client with multiple transports:
 - EventEmitter
 - HTTP/HTTPS
 - WebSocket
-- PostmessageWindow
+- PostMessageWindow
 - PostMessageIframe
 
 
