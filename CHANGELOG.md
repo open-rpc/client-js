@@ -1,3 +1,15 @@
+# [1.5.0](https://github.com/open-rpc/client-js/compare/1.4.0...1.5.0) (2020-08-03)
+
+
+### Bug Fixes
+
+* **README:** add postmessage transports to list ([adfa4b6](https://github.com/open-rpc/client-js/commit/adfa4b680c6b3f0010ed2d36ef622da4cc574d5b))
+
+
+### Features
+
+* add options to HTTPTransport constructor ([6f26276](https://github.com/open-rpc/client-js/commit/6f26276ff39b1544a378a8928b83c1a5531759d9))
+
 # [1.4.0](https://github.com/open-rpc/client-js/compare/1.3.3...1.4.0) (2020-07-27)
 
 
