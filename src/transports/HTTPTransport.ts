@@ -2,11 +2,23 @@ import fetch from "isomorphic-fetch";
 import { Transport } from "./Transport";
 import { JSONRPCRequestData, getNotifications, getBatchRequests } from "../Request";
 import { ERR_UNKNOWN, JSONRPCError } from "../Error";
+
+type CredentialsOption = "omit" | "same-origin" | "include"
+
+interface HTTPTransportOptions {
+  credentials?: CredentialsOption
+  headers?: Record<string, string>
+}
+
 class HTTPTransport extends Transport {
   public uri: string;
-  constructor(uri: string) {
+  private readonly credentials?: CredentialsOption;
+  private readonly headers: Headers
+  constructor(uri: string, options?: HTTPTransportOptions) {
     super();
     this.uri = uri;
+    this.credentials = options && options.credentials;
+    this.headers = HTTPTransport.setupHeaders(options && options.headers)
   }
   public connect(): Promise<any> {
     return Promise.resolve();
@@ -19,10 +31,9 @@ class HTTPTransport extends Transport {
     try {
       const result = await fetch(this.uri, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: this.headers,
         body: JSON.stringify(this.parseData(data)),
+        credentials: this.credentials,
       });
       // requirements are that notifications are successfully sent
       this.transportRequestManager.settlePendingRequest(notifications);
@@ -56,6 +67,13 @@ class HTTPTransport extends Transport {
     return (data.request.id === null || data.request.id === undefined);
   }
 
+  private static setupHeaders(headerOptions?: Record<string, string>): Headers {
+    const headers = new Headers(headerOptions)
+    // Overwrite header options to ensure correct content type.
+    headers.set("Content-Type", "application/json")
+    return headers
+  }
 }
 
 export default HTTPTransport;
+export {HTTPTransport, HTTPTransportOptions, CredentialsOption}

@@ -1,5 +1,7 @@
-import HTTPTransport from "./HTTPTransport";
+import {HTTPTransport, HTTPTransportOptions} from "./HTTPTransport";
 import * as reqMocks from "../__mocks__/requestData";
+import _fetchMock  from "isomorphic-fetch"
+const fetchMock = _fetchMock as jest.Mock<Promise<any>>;
 
 describe("HTTPTransport", () => {
   it("can connect", () => {
@@ -58,4 +60,30 @@ describe("HTTPTransport", () => {
     await expect(httpTransport.sendData(data)).rejects.toThrowError("Random Segfault that crashes fetch");
   });
 
+  async function callFetch(options?: HTTPTransportOptions): Promise<void> {
+    const httpTransport = new HTTPTransport("http://localhost:8545", options);
+    const data = reqMocks.generateMockRequest(1, "foo", ["bar"]);
+    await httpTransport.sendData({request: data, internalID: 1});
+  }
+
+  it("sets content type to application/json", async () => {
+    await callFetch({headers: {"Content-Type": "image/png"}})
+    const headers = fetchMock.mock.calls[0][1].headers
+    expect(headers.get("Content-Type")).toEqual("application/json")
+  });
+
+  it("sets header passed from options", async () => {
+    const headerName = "Authorization"
+    const headerValue = "Basic credentials"
+    await callFetch({headers: {[headerName]: headerValue}})
+    const headers = fetchMock.mock.calls[0][1].headers
+    expect(headers.get(headerName)).toEqual(headerValue)
+  });
+
+  it("sets credentials argument passed from options", async () => {
+    const credentials = "include"
+    await callFetch({credentials})
+    expect(fetchMock.mock.calls[0][1].credentials).toEqual(credentials)
+  });
 });
+
