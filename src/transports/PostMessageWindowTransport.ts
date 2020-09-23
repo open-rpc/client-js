@@ -24,6 +24,7 @@ class PostMessageTransport extends Transport {
     this.uri = uri;
     this.postMessageID = `post-message-transport-${Math.random()}`;
   }
+
   public createWindow(uri: string): Promise<Window | null> {
     return new Promise((resolve, reject) => {
       let frame: Window | null;
@@ -33,6 +34,14 @@ class PostMessageTransport extends Transport {
       }, 3000);
     });
   }
+
+  private messageHandler = (ev: MessageEvent) => {
+    if (ev.origin === window.origin) {
+      return;
+    }
+    this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
+  }
+
   public connect(): Promise<any> {
     const urlRegex = /^(http|https):\/\/.*$/;
     return new Promise(async (resolve, reject) => {
@@ -40,12 +49,7 @@ class PostMessageTransport extends Transport {
         reject(new Error("Bad URI"));
       }
       this.frame = await this.createWindow(this.uri);
-      window.addEventListener("message", (ev: MessageEvent) => {
-        if (ev.origin === window.origin) {
-          return;
-        }
-        this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
-      });
+      window.addEventListener("message", this.messageHandler);
       resolve();
     });
   }
@@ -60,6 +64,7 @@ class PostMessageTransport extends Transport {
 
   public close(): void {
     if (this.frame) {
+      window.removeEventListener("message", this.messageHandler);
       (this.frame as Window).close();
     }
   }
