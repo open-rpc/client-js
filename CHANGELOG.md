@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/open-rpc/client-js/compare/1.5.0...1.5.1) (2020-09-25)
+
+
+### Bug Fixes
+
+* remove PostMessage EventListener on close ([844af19](https://github.com/open-rpc/client-js/commit/844af195ac1098002630b68a309f03fe1a8e519c))
+
 # [1.5.0](https://github.com/open-rpc/client-js/compare/1.4.0...1.5.0) (2020-08-03)
 
 
