@@ -33,7 +33,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
+    "isomorphic-fetch": "^3.0.0",
     "isomorphic-ws": "^4.0.1",
     "strict-event-emitter-types": "^2.0.0",
     "ws": "^7.0.0"
