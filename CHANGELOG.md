@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/open-rpc/client-js/compare/1.5.1...1.5.2) (2020-10-09)
+
+
+### Bug Fixes
+
+* npm audit fix ([6202a28](https://github.com/open-rpc/client-js/commit/6202a28d09846b6a74eeebe0e009a802721cd182))
+
 ## [1.5.1](https://github.com/open-rpc/client-js/compare/1.5.0...1.5.1) (2020-09-25)
 
 
