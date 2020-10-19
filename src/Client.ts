@@ -1,6 +1,7 @@
 import RequestManager from "./RequestManager";
 import { JSONRPCError } from "./Error";
 import { IClient, RequestArguments, NotificationArguments } from "./ClientInterface";
+import { IJSONRPCNotification } from "./Request";
 
 /**
  * OpenRPC Client JS is a browser-compatible JSON-RPC client with multiple transports and
@@ -80,12 +81,19 @@ class Client implements IClient {
     return this.requestManager.request(requestObject, true);
   }
 
-  public onNotification(callback: (data: any) => void) {
+  public onNotification(callback: (data: IJSONRPCNotification) => void) {
     this.requestManager.requestChannel.addListener("notification", callback);
   }
 
   public onError(callback: (data: JSONRPCError) => void) {
     this.requestManager.requestChannel.addListener("error", callback);
+  }
+
+  /**
+   * Close connection
+   */
+  public close() {
+    this.requestManager.close();
   }
 }
 

@@ -35,6 +35,14 @@ export abstract class Transport {
   public subscribe(event: TransportEventName, handler: ITransportEvents[TransportEventName]) {
     this.transportRequestManager.transportEventChannel.addListener(event, handler);
   }
+  public unsubscribe(event?: TransportEventName, handler?: ITransportEvents[TransportEventName]) {
+    if (!event) {
+      return this.transportRequestManager.transportEventChannel.removeAllListeners();
+    }
+    if (event && handler) {
+      this.transportRequestManager.transportEventChannel.removeListener(event, handler);
+    }
+  }
   protected parseData(data: JSONRPCRequestData) {
     if (data instanceof Array) {
       return data.map((batch) => batch.request.request);

@@ -61,4 +61,11 @@ describe("client-js", () => {
     c.stopBatch();
   });
 
+  describe("can close", () => {
+    const emitter = new EventEmitter();
+    const rm = new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]);
+    const c = new Client(rm);
+    c.close();
+  });
+
 });

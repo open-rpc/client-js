@@ -109,6 +109,7 @@ const main = async () => {
 
 main().then(() => {
   console.log("DONE");
+  client.close();
 });
 
 ```
