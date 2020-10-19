@@ -105,6 +105,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="websockettransport.html#parsedata" class="tsd-kind-icon">parse<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="websockettransport.html#senddata" class="tsd-kind-icon">send<wbr>Data</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="websockettransport.html#subscribe" class="tsd-kind-icon">subscribe</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="websockettransport.html#unsubscribe" class="tsd-kind-icon">unsubscribe</a></li>
 							</ul>
 						</section>
 					</div>
@@ -123,7 +124,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Transport.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/WebSocketTransport.ts#L8">src/transports/WebSocketTransport.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/WebSocketTransport.ts#L8">src/transports/WebSocketTransport.ts:8</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -145,7 +146,7 @@
 					<div class="tsd-signature tsd-kind-icon">connection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WS</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/WebSocketTransport.ts#L7">src/transports/WebSocketTransport.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/WebSocketTransport.ts#L7">src/transports/WebSocketTransport.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -156,7 +157,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="httptransport.html">HTTPTransport</a>.<a href="httptransport.html#transportrequestmanager">transportRequestManager</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/Transport.ts#L23">src/transports/Transport.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/Transport.ts#L23">src/transports/Transport.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -166,7 +167,7 @@
 					<div class="tsd-signature tsd-kind-icon">uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/WebSocketTransport.ts#L8">src/transports/WebSocketTransport.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/WebSocketTransport.ts#L8">src/transports/WebSocketTransport.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -184,7 +185,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Transport.close</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/WebSocketTransport.ts#L44">src/transports/WebSocketTransport.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/WebSocketTransport.ts#L44">src/transports/WebSocketTransport.ts:44</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -202,7 +203,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Transport.connect</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/WebSocketTransport.ts#L15">src/transports/WebSocketTransport.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/WebSocketTransport.ts#L15">src/transports/WebSocketTransport.ts:15</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -213,14 +214,14 @@
 					<a name="parsedata" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> parse<wbr>Data</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">parse<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">JSONRPCRequestData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Data<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">JSONRPCRequestData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="httptransport.html">HTTPTransport</a>.<a href="httptransport.html#parsedata">parseData</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/Transport.ts#L38">src/transports/Transport.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/Transport.ts#L46">src/transports/Transport.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -229,7 +230,7 @@
 									<h5>data: <span class="tsd-signature-type">JSONRPCRequestData</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">IJSONRPCNotification</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">IJSONRPCRequest</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -244,7 +245,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Transport.sendData</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/WebSocketTransport.ts#L29">src/transports/WebSocketTransport.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/WebSocketTransport.ts#L29">src/transports/WebSocketTransport.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -271,7 +272,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="httptransport.html">HTTPTransport</a>.<a href="httptransport.html#subscribe">subscribe</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/6579e35/src/transports/Transport.ts#L35">src/transports/Transport.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/Transport.ts#L35">src/transports/Transport.ts:35</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -284,6 +285,33 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="unsubscribe" class="tsd-anchor"></a>
+					<h3>unsubscribe</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">unsubscribe<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">TransportEventName</span>, handler<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">ITransportEvents</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TransportEventName</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">EventEmitter</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="httptransport.html">HTTPTransport</a>.<a href="httptransport.html#unsubscribe">unsubscribe</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/open-rpc/client-js/blob/2986b68/src/transports/Transport.ts#L38">src/transports/Transport.ts:38</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> event: <span class="tsd-signature-type">TransportEventName</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> handler: <span class="tsd-signature-type">ITransportEvents</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">TransportEventName</span><span class="tsd-signature-symbol">]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">EventEmitter</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -351,6 +379,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="websockettransport.html#subscribe" class="tsd-kind-icon">subscribe</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="websockettransport.html#unsubscribe" class="tsd-kind-icon">unsubscribe</a>
 							</li>
 						</ul>
 					</li>
