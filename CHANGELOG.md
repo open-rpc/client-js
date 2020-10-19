@@ -1,3 +1,15 @@
+# [1.6.0](https://github.com/open-rpc/client-js/compare/1.5.2...1.6.0) (2020-10-19)
+
+
+### Bug Fixes
+
+* **Client:** add close test ([0139391](https://github.com/open-rpc/client-js/commit/01393916731d12195a7719784467aee8ef48cb4c))
+
+
+### Features
+
+* add `close` method Client to close connection and cleanup event listeners ([0155c81](https://github.com/open-rpc/client-js/commit/0155c8109edf1ffc6508de3125072afc418de8b4))
+
 ## [1.5.2](https://github.com/open-rpc/client-js/compare/1.5.1...1.5.2) (2020-10-09)
 
 
