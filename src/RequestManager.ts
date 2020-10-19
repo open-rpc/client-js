@@ -59,7 +59,9 @@ class RequestManager {
   }
 
   public close(): void {
+    this.requestChannel.removeAllListeners();
     this.transports.forEach((transport) => {
+      transport.unsubscribe();
       transport.close();
     });
   }
