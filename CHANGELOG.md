@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/open-rpc/client-js/compare/1.6.0...1.6.1) (2020-12-07)
+
+
+### Bug Fixes
+
+* remove postemsasgeiframe listener on close ([907dd0d](https://github.com/open-rpc/client-js/commit/907dd0ded8c34925052559f9c5b2c3659e4f437e))
+
 # [1.6.0](https://github.com/open-rpc/client-js/compare/1.5.2...1.6.0) (2020-10-19)
 
 
