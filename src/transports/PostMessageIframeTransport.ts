@@ -27,6 +27,12 @@ class PostMessageIframeTransport extends Transport {
       frame = iframe.contentWindow;
     });
   }
+  private messageHandler = (ev: MessageEvent) => {
+    if (ev.origin === window.origin) {
+      return;
+    }
+    this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
+  }
   public connect(): Promise<any> {
     const urlRegex = /^(http|https):\/\/.*$/;
     return new Promise(async (resolve, reject) => {
@@ -34,12 +40,7 @@ class PostMessageIframeTransport extends Transport {
         reject(new Error("Bad URI"));
       }
       this.frame = await this.createWindow(this.uri);
-      window.addEventListener("message", (ev: MessageEvent) => {
-        if (ev.origin === window.origin) {
-          return;
-        }
-        this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
-      });
+      window.addEventListener("message", this.messageHandler);
       resolve();
     });
   }
@@ -55,6 +56,7 @@ class PostMessageIframeTransport extends Transport {
   public close(): void {
     const el = document.getElementById(this.postMessageID);
     el?.remove();
+    window.removeEventListener("message", this.messageHandler);
   }
 
 }
