@@ -26,7 +26,7 @@ class WebSocketTransport extends Transport {
     });
   }
 
-  public async sendData(data: JSONRPCRequestData, timeout: number | undefined = 5000): Promise<any> {
+  public async sendData(data: JSONRPCRequestData, timeout: number | null = 5000): Promise<any> {
     let prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
     this.connection.send(JSON.stringify(this.parseData(data)), (err?: Error) => {

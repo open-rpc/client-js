@@ -13,7 +13,7 @@ describe("Transport Request Manager", () => {
       expect(data).toBeDefined();
       done();
     });
-    transportReqMan.addRequest({ request: reqData.generateMockRequest(1, "foo", ["bar"]), internalID: 1 }, undefined);
+    transportReqMan.addRequest({ request: reqData.generateMockRequest(1, "foo", ["bar"]), internalID: 1 }, null);
   });
 
   it("should timeout pending request after 1s", async () => {
@@ -35,7 +35,7 @@ describe("Transport Request Manager", () => {
     // tslint:disable-next-line:no-empty
     const reject = () => { };
     const request: IBatchRequest[] = [{ resolve, reject, request: req }];
-    transportReqMan.addRequest(request, undefined);
+    transportReqMan.addRequest(request, null);
   });
 
   it("should error on missing id to resolve", () => {
@@ -72,7 +72,7 @@ describe("Transport Request Manager", () => {
 
   it("should add and reject pending requests", async () => {
     const request = { request: reqData.generateMockRequest(1, "foo", ["bar"]), internalID: 1 };
-    const prom = transportReqMan.addRequest(request, undefined);
+    const prom = transportReqMan.addRequest(request, null);
     transportReqMan.settlePendingRequest([request], new Error("rejecting"));
     await expect(prom).rejects.toThrowError("rejecting");
   });
@@ -101,7 +101,7 @@ describe("Transport Request Manager", () => {
     const prom = transportReqMan.addRequest({
       request: reqData.generateMockRequest(1, "foo", ["bar"]),
       internalID: 1,
-    }, undefined);
+    }, null);
 
     // Verify that the response resolves the pending request and the response event fires
     transportReqMan.transportEventChannel.on("response", async (responseData) => {
@@ -130,7 +130,7 @@ describe("Transport Request Manager", () => {
     // tslint:disable-next-line:no-empty
     const reject = () => {
     };
-    const prom = transportReqMan.addRequest([{ request: requestData, resolve, reject }], undefined);
+    const prom = transportReqMan.addRequest([{ request: requestData, resolve, reject }], null);
 
     // Verify that the response resolves the pending request and the response event fires
     transportReqMan.transportEventChannel.on("response", (responseData) => {
@@ -158,7 +158,7 @@ describe("Transport Request Manager", () => {
     // tslint:disable-next-line:no-empty
     const reject = () => { };
 
-    transportReqMan.addRequest([{ request: requestData, resolve, reject }], undefined);
+    transportReqMan.addRequest([{ request: requestData, resolve, reject }], null);
 
     // Resolve pending request;
     const err = transportReqMan.resolveResponse(JSON.stringify([res]), false) as Error;
@@ -184,7 +184,7 @@ describe("Transport Request Manager", () => {
     const prom = transportReqMan.addRequest({
       request: reqData.generateMockRequest(1, "foo", ["bar"]),
       internalID: 1,
-    }, undefined);
+    }, null);
     transportReqMan.transportEventChannel.on("response", async (data) => {
       if (data.error === undefined) {
         throw new Error("Missing error");

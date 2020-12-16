@@ -22,7 +22,7 @@ class EventEmitterTransport extends Transport {
     return Promise.resolve();
   }
 
-  public sendData(data: JSONRPCRequestData, timeout?: number): Promise<any> {
+  public sendData(data: JSONRPCRequestData, timeout: number | null = null): Promise<any> {
     const prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
     const parsedData = this.parseData(data);

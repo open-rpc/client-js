@@ -23,7 +23,7 @@ export class TransportRequestManager {
     this.pendingBatchRequest = {};
     this.transportEventChannel = new EventEmitter();
   }
-  public addRequest(data: JSONRPCRequestData, timeout: number | undefined): Promise<any> {
+  public addRequest(data: JSONRPCRequestData, timeout: number | null): Promise<any> {
     this.transportEventChannel.emit("pending", data);
     if (data instanceof Array) {
       this.addBatchReq(data, timeout);
@@ -67,7 +67,7 @@ export class TransportRequestManager {
     }
   }
 
-  private addBatchReq(batches: IBatchRequest[], timeout: number | undefined) {
+  private addBatchReq(batches: IBatchRequest[], timeout: number | null) {
     batches.forEach((batch) => {
       const { resolve, reject } = batch;
       const { internalID } = batch.request;
@@ -76,9 +76,9 @@ export class TransportRequestManager {
     });
     return Promise.resolve();
   }
-  private addReq(id: string | number, timeout?: number) {
+  private addReq(id: string | number, timeout: number | null) {
     return new Promise((resolve, reject) => {
-      if (timeout) {
+      if (timeout !== null && timeout) {
         this.setRequestTimeout(id, timeout, reject);
       }
       this.pendingRequest[id] = { resolve, reject };

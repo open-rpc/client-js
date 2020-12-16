@@ -30,7 +30,7 @@ export abstract class Transport {
 
   public abstract connect(): Promise<any>;
   public abstract close(): void;
-  public abstract async sendData(data: JSONRPCRequestData, timeout?: number): Promise<any>;
+  public abstract async sendData(data: JSONRPCRequestData, timeout?: number | null): Promise<any>;
 
   public subscribe(event: TransportEventName, handler: ITransportEvents[TransportEventName]) {
     this.transportRequestManager.transportEventChannel.addListener(event, handler);

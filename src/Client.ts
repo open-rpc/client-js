@@ -78,7 +78,7 @@ class Client implements IClient {
     if (this.requestManager.connectPromise) {
       await this.requestManager.connectPromise;
     }
-    return this.requestManager.request(requestObject, true);
+    return this.requestManager.request(requestObject, true, null);
   }
 
   public onNotification(callback: (data: IJSONRPCNotification) => void) {

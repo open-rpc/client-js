@@ -24,7 +24,7 @@ class HTTPTransport extends Transport {
     return Promise.resolve();
   }
 
-  public async sendData(data: JSONRPCRequestData, timeout?: number): Promise<any> {
+  public async sendData(data: JSONRPCRequestData, timeout: number | null = null): Promise<any> {
     const prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
     const batch = getBatchRequests(data);
