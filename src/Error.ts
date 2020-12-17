@@ -11,6 +11,7 @@ export class JSONRPCError extends Error {
     this.message = message;
     this.code = code;
     this.data = data;
+    Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain: see https://github.com/open-rpc/client-js/issues/209
   }
 }
 

@@ -16,4 +16,9 @@ describe("Error test", () => {
     const err2 = new JSONRPCError("test", 9999, "testdata");
   });
 
+  it("should be able to use instanceof", () => {
+    const err = new JSONRPCError("test", 9999);
+    expect(err instanceof JSONRPCError).toBe(true);
+  });
+
 });
