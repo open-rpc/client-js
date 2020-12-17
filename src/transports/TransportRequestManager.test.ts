@@ -38,10 +38,10 @@ describe("Transport Request Manager", () => {
     transportReqMan.addRequest(request, null);
   });
 
-  it("should error on missing id to resolve", () => {
+  it("should not error on missing id to resolve", () => {
     const payload = JSON.stringify(reqData.generateMockResponse(9, "haha"));
-    const err = transportReqMan.resolveResponse(payload, false) as Error;
-    expect(err.message).toContain("Could not resolve");
+    const res = transportReqMan.resolveResponse(payload, false);
+    expect(res).toBeUndefined();
   });
 
   it("should error on missing id but error response", () => {
@@ -60,14 +60,10 @@ describe("Transport Request Manager", () => {
     expect(err.message).toContain("Error message");
   });
 
-  it("should error on missing id to resolve and emit error", (done) => {
-    transportReqMan.transportEventChannel.on("error", (e) => {
-      expect(e.message).toContain("Could not resolve");
-      done();
-    });
+  it("should ignore on missing id", () => {
     const payload = JSON.stringify(reqData.generateMockResponse(9, "haha"));
     const err = transportReqMan.resolveResponse(payload) as Error;
-    expect(err.message).toContain("Could not resolve");
+    expect(err).toBeUndefined();
   });
 
   it("should add and reject pending requests", async () => {
@@ -143,7 +139,7 @@ describe("Transport Request Manager", () => {
     transportReqMan.resolveResponse(JSON.stringify(res), false);
   });
 
-  it("should emit response on batch request &&  reject invalid response", () => {
+  it("should emit response on batch request &&  ignore invalid response", () => {
     const res = reqData.generateMockResponse(2, "hello");
     // Add request to queue
     const requestData = {
@@ -162,7 +158,7 @@ describe("Transport Request Manager", () => {
 
     // Resolve pending request;
     const err = transportReqMan.resolveResponse(JSON.stringify([res]), false) as Error;
-    expect(err.message).toContain("Could not resolve");
+    expect(err).toBeUndefined();
   });
 
   it("should emit notification on notification response", (done) => {

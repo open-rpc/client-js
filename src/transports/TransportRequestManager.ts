@@ -125,11 +125,11 @@ export class TransportRequestManager {
       this.transportEventChannel.emit("notification", data as IJSONRPCNotificationResponse);
       return;
     }
-    let err = new JSONRPCError(`Could not resolve ${id}`, ERR_MISSIING_ID);
+    let err;
     if (error) {
       err = convertJSONToRPCError(data);
     }
-    if (emitError) {
+    if (emitError && error && err) {
       this.transportEventChannel.emit("error", err);
     }
     return err;
