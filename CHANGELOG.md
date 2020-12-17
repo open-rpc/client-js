@@ -1,3 +1,12 @@
+## [1.6.2](https://github.com/open-rpc/client-js/compare/1.6.1...1.6.2) (2020-12-17)
+
+
+### Bug Fixes
+
+* **RequestManager:** ignore missing id ([6bc8116](https://github.com/open-rpc/client-js/commit/6bc811608a362ab8dfa17280de731284a141f4fd))
+* jsonrpc error instanceof ([c85f501](https://github.com/open-rpc/client-js/commit/c85f501f7e19c5313f388f8a2bcaf36cf491fea2)), closes [#209](https://github.com/open-rpc/client-js/issues/209)
+* this corrects default timeout to be disabled by specifing null. ([c79d213](https://github.com/open-rpc/client-js/commit/c79d2130dfd204a535103ec0082540e4c11669a7)), closes [#231](https://github.com/open-rpc/client-js/issues/231)
+
 ## [1.6.1](https://github.com/open-rpc/client-js/compare/1.6.0...1.6.1) (2020-12-07)
 
 
