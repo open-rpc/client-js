@@ -55,7 +55,7 @@ class PostMessageTransport extends Transport {
   }
 
   public async sendData(data: JSONRPCRequestData, timeout: number | undefined = 5000): Promise<any> {
-    const prom = this.transportRequestManager.addRequest(data, undefined);
+    const prom = this.transportRequestManager.addRequest(data, null);
     if (this.frame) {
       this.frame.postMessage((data as IJSONRPCData).request, this.uri);
     }

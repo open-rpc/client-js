@@ -44,7 +44,7 @@ class RequestManager {
     return this.transports[0];
   }
 
-  public async request(requestObject: JSONRPCMessage, notification: boolean = false, timeout?: number): Promise<any> {
+  public async request(requestObject: JSONRPCMessage, notification: boolean = false, timeout?: number | null): Promise<any> {
     const internalID = (++this.lastId).toString();
     const id = notification ? null : internalID;
     // naively grab first transport and use it
