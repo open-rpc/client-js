@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/open-rpc/client-js/compare/1.6.2...1.6.3) (2021-04-08)
+
+
+### Bug Fixes
+
+* remove ev origin guard for postmessage + ignore non JSON-RPC messages ([ef2dc2f](https://github.com/open-rpc/client-js/commit/ef2dc2fb92b4d67a2f03a040112c09e5dc47d48d))
+
 ## [1.6.2](https://github.com/open-rpc/client-js/compare/1.6.1...1.6.2) (2020-12-17)
 
 
