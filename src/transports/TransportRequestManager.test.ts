@@ -78,17 +78,9 @@ describe("Transport Request Manager", () => {
     transportReqMan.settlePendingRequest([request], new Error("rejecting"));
   });
 
-  it("should emit error on bad format for resolving a response", (done) => {
-    transportReqMan.transportEventChannel.on("error", (err) => {
-      expect(err.message).toContain("Bad response format");
-      done();
-    });
+  it("should not error on bad format for resolving a response", (done) => {
     transportReqMan.resolveResponse("{}");
-  });
-
-  it("should not emit error on bad format for resolving a response", () => {
-    const err = transportReqMan.resolveResponse("{}", false) as Error;
-    expect(err.message).toContain("Bad response format");
+    done();
   });
 
   it("should emit response on response && resolve response", (done) => {

@@ -36,9 +36,6 @@ class PostMessageTransport extends Transport {
   }
 
   private messageHandler = (ev: MessageEvent) => {
-    if (ev.origin === window.origin) {
-      return;
-    }
     this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
   }
 
