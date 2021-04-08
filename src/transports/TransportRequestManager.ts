@@ -52,7 +52,7 @@ export class TransportRequestManager {
     try {
       data = JSON.parse(payload);
       if (this.checkJSONRPC(data) === false) {
-        throw new Error("Bad response format");
+        return; // ignore messages that are not conforming to JSON-RPC
       }
       if (data instanceof Array) {
         return this.resolveBatch(data, emitError);
