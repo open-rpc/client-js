@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/open-rpc/client-js/compare/1.6.3...1.7.0) (2021-05-28)
+
+
+### Features
+
+* support custom requestID generation ([e512bd5](https://github.com/open-rpc/client-js/commit/e512bd579b7a342609f842b7e60eb17d217816b7)), closes [#277](https://github.com/open-rpc/client-js/issues/277) [#279](https://github.com/open-rpc/client-js/issues/279)
+
 ## [1.6.3](https://github.com/open-rpc/client-js/compare/1.6.2...1.6.3) (2021-04-08)
 
 
