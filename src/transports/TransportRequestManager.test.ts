@@ -153,6 +153,14 @@ describe("Transport Request Manager", () => {
     expect(err).toBeUndefined();
   });
 
+  it("should allow notification to clean up after itself", ()=> {
+    const req = { request: reqData.generateMockNotificationRequest("foobar",[]), internalID: 99 }
+    transportReqMan.addRequest(req, null);
+    expect(transportReqMan.isPendingRequest(99)).toEqual(true);
+    transportReqMan.settlePendingRequest([req]);
+    expect(transportReqMan.isPendingRequest(99)).toEqual(false);
+  })
+
   it("should emit notification on notification response", (done) => {
     transportReqMan.transportEventChannel.on("notification", (data: IJSONRPCNotificationResponse) => {
       expect(data.result).toEqual("hello");
