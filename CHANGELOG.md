@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/open-rpc/client-js/compare/1.7.0...1.7.1) (2021-08-20)
+
+
+### Bug Fixes
+
+* correct mem leaks caused by notification promise resolution ([5e425e0](https://github.com/open-rpc/client-js/commit/5e425e06c845e207420c73d8d23963330b9b4ab9)), closes [#294](https://github.com/open-rpc/client-js/issues/294)
+
 # [1.7.0](https://github.com/open-rpc/client-js/compare/1.6.3...1.7.0) (2021-05-28)
 
 
