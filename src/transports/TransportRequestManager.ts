@@ -44,7 +44,15 @@ export class TransportRequestManager {
         return;
       }
       resolver.resolve();
+      // Notifications have no response and should clear their own pending requests
+      if(req.request.id === null || req.request.id === undefined){
+        delete this.pendingRequest[req.internalID];
+      }
     });
+  }
+
+  public isPendingRequest(id: string | number): boolean {
+    return this.pendingRequest.hasOwnProperty(id)
   }
 
   public resolveResponse(payload: string, emitError: boolean = true): TransportResponse {

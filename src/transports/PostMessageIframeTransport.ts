@@ -1,5 +1,5 @@
 import { Transport } from "./Transport";
-import { JSONRPCRequestData, IJSONRPCData } from "../Request";
+import { JSONRPCRequestData, IJSONRPCData, getNotifications } from "../Request";
 
 class PostMessageIframeTransport extends Transport {
   public uri: string;
@@ -44,8 +44,10 @@ class PostMessageIframeTransport extends Transport {
 
   public async sendData(data: JSONRPCRequestData, timeout: number | null = 5000): Promise<any> {
     const prom = this.transportRequestManager.addRequest(data, null);
+    const notifications = getNotifications(data);
     if (this.frame) {
       this.frame.postMessage((data as IJSONRPCData).request, "*");
+      this.transportRequestManager.settlePendingRequest(notifications);
     }
     return prom;
   }

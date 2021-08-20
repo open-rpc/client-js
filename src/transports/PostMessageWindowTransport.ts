@@ -1,5 +1,5 @@
 import { Transport } from "./Transport";
-import { JSONRPCRequestData, IJSONRPCData } from "../Request";
+import { JSONRPCRequestData, IJSONRPCData, getNotifications } from "../Request";
 
 const openPopup = (url: string) => {
   const width = 400;
@@ -53,8 +53,10 @@ class PostMessageTransport extends Transport {
 
   public async sendData(data: JSONRPCRequestData, timeout: number | undefined = 5000): Promise<any> {
     const prom = this.transportRequestManager.addRequest(data, null);
+    const notifications = getNotifications(data);
     if (this.frame) {
       this.frame.postMessage((data as IJSONRPCData).request, this.uri);
+      this.transportRequestManager.settlePendingRequest(notifications);
     }
     return prom;
   }
