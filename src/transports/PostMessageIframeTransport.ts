@@ -28,7 +28,8 @@ class PostMessageIframeTransport extends Transport {
     });
   }
   private messageHandler = (ev: MessageEvent) => {
-    this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
+    if (ev.origin === this.uri)
+      this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
   }
   public connect(): Promise<any> {
     const urlRegex = /^(http|https):\/\/.*$/;
@@ -46,7 +47,7 @@ class PostMessageIframeTransport extends Transport {
     const prom = this.transportRequestManager.addRequest(data, null);
     const notifications = getNotifications(data);
     if (this.frame) {
-      this.frame.postMessage((data as IJSONRPCData).request, "*");
+      this.frame.postMessage((data as IJSONRPCData).request, this.uri);
       this.transportRequestManager.settlePendingRequest(notifications);
     }
     return prom;

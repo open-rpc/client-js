@@ -36,7 +36,8 @@ class PostMessageTransport extends Transport {
   }
 
   private messageHandler = (ev: MessageEvent) => {
-    this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
+    if (ev.origin === this.uri)
+      this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
   }
 
   public connect(): Promise<any> {
