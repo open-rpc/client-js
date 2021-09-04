@@ -18,10 +18,12 @@ class PostMessageTransport extends Transport {
   public uri: string;
   public frame: undefined | null | Window;
   public postMessageID: string;
+  public origin: string;
 
   constructor(uri: string) {
     super();
     this.uri = uri;
+    this.origin = new URL(uri).origin;
     this.postMessageID = `post-message-transport-${Math.random()}`;
   }
 
@@ -36,7 +38,7 @@ class PostMessageTransport extends Transport {
   }
 
   private messageHandler = (ev: MessageEvent) => {
-    if (ev.origin === this.uri)
+    if (ev.origin === this.origin)
       this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
   }
 
@@ -56,7 +58,7 @@ class PostMessageTransport extends Transport {
     const prom = this.transportRequestManager.addRequest(data, null);
     const notifications = getNotifications(data);
     if (this.frame) {
-      this.frame.postMessage((data as IJSONRPCData).request, this.uri);
+      this.frame.postMessage((data as IJSONRPCData).request, this.origin);
       this.transportRequestManager.settlePendingRequest(notifications);
     }
     return prom;
