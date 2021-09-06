@@ -20,10 +20,10 @@ class PostMessageTransport extends Transport {
   public postMessageID: string;
   public origin: string;
 
-  constructor(uri: string) {
+  constructor(uri: string, origin?: string) {
     super();
     this.uri = uri;
-    this.origin = new URL(uri).origin;
+    this.origin = origin || new URL(uri).origin;
     this.postMessageID = `post-message-transport-${Math.random()}`;
   }
 
