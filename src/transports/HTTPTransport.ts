@@ -8,14 +8,14 @@ type CredentialsOption = "omit" | "same-origin" | "include"
 interface HTTPTransportOptions {
   credentials?: CredentialsOption
   headers?: Record<string, string>
-  fetch?: any
+  fetch?: () => {}
 }
 
 class HTTPTransport extends Transport {
   public uri: string;
   private readonly credentials?: CredentialsOption;
   private readonly headers: Headers;
-  private readonly fetch: Function;
+  private readonly fetch: () => {};
   constructor(uri: string, options?: HTTPTransportOptions) {
     super();
     this.uri = uri;
