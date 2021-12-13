@@ -8,7 +8,7 @@ type CredentialsOption = "omit" | "same-origin" | "include"
 interface HTTPTransportOptions {
   credentials?: CredentialsOption
   headers?: Record<string, string>
-  fetch?: Function
+  fetch?: any
 }
 
 class HTTPTransport extends Transport {
