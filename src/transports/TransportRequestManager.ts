@@ -67,7 +67,9 @@ export class TransportRequestManager {
       }
       return this.resolveRes(data, emitError);
     } catch (e) {
-      const err = new JSONRPCError("Bad response format", ERR_UNKNOWN, payload);
+      const err = e instanceof JSONRPCError
+        ? e
+        : new JSONRPCError("Bad response format", ERR_UNKNOWN, payload);
       if (emitError) {
         this.transportEventChannel.emit("error", err);
       }
