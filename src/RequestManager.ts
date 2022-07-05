@@ -11,6 +11,13 @@ export interface IRequestEvents {
   "error": (err: JSONRPCError) => void;
   "notification": (data: any) => void;
 }
+export type RequestID = string | number;
+
+export type INextRequestID = () => RequestID;
+export const defaultNextRequest = () => {
+  let lastId = -1;
+  return () => ++lastId;
+}
 /*
 ** Naive Request Manager, only use 1st transport.
  * A more complex request manager could try each transport.
@@ -25,12 +32,14 @@ class RequestManager {
   private requests: any;
   private batchStarted: boolean = false;
   private lastId: number = -1;
+  private nextID: INextRequestID;
 
-  constructor(transports: Transport[]) {
+  constructor(transports: Transport[], nextID:INextRequestID = defaultNextRequest()) {
     this.transports = transports;
     this.requests = {};
     this.connectPromise = this.connect();
     this.requestChannel = new EventEmitter();
+    this.nextID = nextID;
   }
 
   public connect(): Promise<any> {
@@ -45,7 +54,7 @@ class RequestManager {
   }
 
   public async request(requestObject: JSONRPCMessage, notification: boolean = false, timeout?: number | null): Promise<any> {
-    const internalID = (++this.lastId).toString();
+    const internalID = this.nextID().toString();
     const id = notification ? null : internalID;
     // naively grab first transport and use it
     const payload = {request: this.makeRequest(requestObject.method, requestObject.params || [], id) , internalID};
