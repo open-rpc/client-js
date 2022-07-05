@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "isomorphic-fetch": "^3.0.0",
-    "isomorphic-ws": "^4.0.1",
+    "isomorphic-ws": "^5.0.0",
     "strict-event-emitter-types": "^2.0.0",
     "ws": "^7.0.0"
   }
