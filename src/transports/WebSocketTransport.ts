@@ -29,15 +29,18 @@ class WebSocketTransport extends Transport {
   public async sendData(data: JSONRPCRequestData, timeout: number | null = 5000): Promise<any> {
     let prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
-    this.connection.send(JSON.stringify(this.parseData(data)), (err?: Error) => {
-      if (err) {
-        const jsonError = new JSONRPCError(err.message, ERR_UNKNOWN, err);
-        this.transportRequestManager.settlePendingRequest(notifications, jsonError);
-        this.transportRequestManager.settlePendingRequest(getBatchRequests(data), jsonError);
-        prom = Promise.reject(jsonError);
-      }
+    try {
+      this.connection.send(JSON.stringify(this.parseData(data)));
       this.transportRequestManager.settlePendingRequest(notifications);
-    });
+    } catch (err) {
+      const jsonError = new JSONRPCError((err as any).message, ERR_UNKNOWN, err);
+
+      this.transportRequestManager.settlePendingRequest(notifications, jsonError);
+      this.transportRequestManager.settlePendingRequest(getBatchRequests(data), jsonError);
+
+      prom = Promise.reject(jsonError);
+    }
+
     return prom;
   }
 
