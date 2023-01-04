@@ -1,3 +1,15 @@
+# [1.8.0](https://github.com/open-rpc/client-js/compare/1.7.1...1.8.0) (2023-01-04)
+
+
+### Bug Fixes
+
+* general updates ([1395a54](https://github.com/open-rpc/client-js/commit/1395a545912d64b2516d8f53d1ad564612379653))
+
+
+### Features
+
+* **httptransport:** injected fetcher ([cd68627](https://github.com/open-rpc/client-js/commit/cd686279a98df680e0ac293532c71486235f71cb))
+
 ## [1.7.1](https://github.com/open-rpc/client-js/compare/1.7.0...1.7.1) (2021-08-20)
 
 
