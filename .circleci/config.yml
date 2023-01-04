@@ -24,12 +24,12 @@ aliases:
 
 defaults: &defaults
   working_directory: ~/client-js
+  docker:
+    - image: cimg/node:16.17.0
 
 jobs:
   test:
     <<: *defaults
-    docker:
-      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache: *restore-deps-cache
@@ -41,8 +41,6 @@ jobs:
 
   build:
     <<: *defaults
-    docker:
-      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache: *restore-deps-cache
@@ -52,8 +50,6 @@ jobs:
 
   release:
     <<: *defaults
-    docker:
-      - image: circleci/node:10
     steps:
       - checkout
       - restore_cache: *restore-deps-cache
@@ -87,5 +83,6 @@ workflows:
             - build
       - release:
           filters: *filter-only-master
+          context: open-rpc-deployer
           requires:
             - hold
