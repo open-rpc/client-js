@@ -18,21 +18,18 @@ class WebSocket {
   public removeEventListener(eventName: string, callback: any) {
     delete this.callbacks[eventName];
   }
-  public send(data: any, callback: (err?: Error) => void) {
+  public send(data: any) {
 
     if (this.url.match(/crash-null/)) {
-      callback();
       return;
     }
     if (this.url.match(/crash/)) {
-      callback(new Error("Random Segfault that crashes fetch"));
-      return;
+      throw new Error("Random Segfault that crashes fetch");
     }
 
     Object.entries(this.callbacks).forEach(([eventName, cb]: [string, any]) => {
       if (eventName === "message") {
         cb({ data: req.generateMockResponseData(this.url, data) });
-        callback();
       }
     });
   }
