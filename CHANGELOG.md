@@ -1,3 +1,12 @@
+## [1.8.1](https://github.com/open-rpc/client-js/compare/1.8.0...1.8.1) (2023-01-18)
+
+
+### Bug Fixes
+
+* bump node version ([0348af2](https://github.com/open-rpc/client-js/commit/0348af2f392eed74a6160fe6403aac49fd6c9b84))
+* get tests to pass without callback fn for ws.send ([7489794](https://github.com/open-rpc/client-js/commit/74897942167c2909d12f95c76fe0ea61a0534380))
+* websocket notifications now can be awaited ([1ff6217](https://github.com/open-rpc/client-js/commit/1ff62177f4c7503c4302452f112618f498ad1587))
+
 # [1.8.0](https://github.com/open-rpc/client-js/compare/1.7.1...1.8.0) (2023-01-04)
 
 
