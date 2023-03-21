@@ -64,6 +64,9 @@ class HTTPTransport extends Transport {
       const responseErr = e instanceof JSONRPCError
         ? e
         : new JSONRPCError(e.message, ERR_UNKNOWN, e);
+      responseErr.response = result
+        || (e?.response instanceof Response && e.response)
+        || undefined;
       this.transportRequestManager.settlePendingRequest(
         notifications,
         responseErr
