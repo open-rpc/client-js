@@ -67,7 +67,9 @@ export class TransportRequestManager {
       }
       return this.resolveRes(data, emitError);
     } catch (e) {
-      const err = new JSONRPCError("Bad response format", ERR_UNKNOWN, payload);
+      const err = e instanceof JSONRPCError
+        ? e
+        : new JSONRPCError("Bad response format", ERR_UNKNOWN, payload);
       if (emitError) {
         this.transportEventChannel.emit("error", err);
       }
@@ -122,16 +124,18 @@ export class TransportRequestManager {
   private resolveRes(data: IJSONRPCNotificationResponse | IJSONRPCResponse, emitError: boolean): TransportResponse {
     const { id, error } = data;
 
-    const status = this.pendingRequest[id as string];
-    if (status) {
-      delete this.pendingRequest[id as string];
-      this.processResult(data, status);
-      this.transportEventChannel.emit("response", data as IJSONRPCResponse);
-      return;
-    }
     if (id === undefined && error === undefined) {
       this.transportEventChannel.emit("notification", data as IJSONRPCNotificationResponse);
       return;
+    }
+    const status = this.pendingRequest[id as string];
+    if (status) {
+      delete this.pendingRequest[id as string];
+      if (error === undefined) {
+        this.processResult(data, status);
+        this.transportEventChannel.emit("response", data as IJSONRPCResponse);
+        return;
+      }
     }
     let err;
     if (error) {

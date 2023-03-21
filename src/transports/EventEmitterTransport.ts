@@ -31,7 +31,9 @@ class EventEmitterTransport extends Transport {
       this.transportRequestManager.settlePendingRequest(notifications);
       return prom;
     } catch (e) {
-      const responseErr = new JSONRPCError(e.message, ERR_UNKNOWN, e);
+      const responseErr = e instanceof JSONRPCError
+        ? e
+        : new JSONRPCError(e.message, ERR_UNKNOWN, e);
       this.transportRequestManager.settlePendingRequest(notifications, responseErr);
       return Promise.reject(responseErr);
     }

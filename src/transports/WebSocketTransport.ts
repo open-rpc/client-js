@@ -33,8 +33,9 @@ class WebSocketTransport extends Transport {
       this.connection.send(JSON.stringify(this.parseData(data)));
       this.transportRequestManager.settlePendingRequest(notifications);
     } catch (err) {
-      const jsonError = new JSONRPCError((err as any).message, ERR_UNKNOWN, err);
-
+      const jsonError = err instanceof JSONRPCError
+        ? err
+        : new JSONRPCError(e.message, ERR_UNKNOWN, err);
       this.transportRequestManager.settlePendingRequest(notifications, jsonError);
       this.transportRequestManager.settlePendingRequest(getBatchRequests(data), jsonError);
 

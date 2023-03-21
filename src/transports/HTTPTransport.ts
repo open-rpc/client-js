@@ -39,8 +39,9 @@ class HTTPTransport extends Transport {
     const notifications = getNotifications(data);
     const batch = getBatchRequests(data);
     const fetcher = this.injectedFetcher || fetch;
+    let result;
     try {
-      const result = await fetcher(this.uri, {
+      result = await fetcher(this.uri, {
         method: "POST",
         headers: this.headers,
         body: JSON.stringify(this.parseData(data)),
@@ -54,13 +55,18 @@ class HTTPTransport extends Transport {
       const body = await result.text();
       const responseErr = this.transportRequestManager.resolveResponse(body);
       if (responseErr) {
-        // requirements are that batch requuests are successfully resolved
+        // requirements are that batch requests are successfully resolved
         // this ensures that individual requests within the batch request are settled
         this.transportRequestManager.settlePendingRequest(batch, responseErr);
         return Promise.reject(responseErr);
       }
     } catch (e) {
-      const responseErr = new JSONRPCError(e.message, ERR_UNKNOWN, e);
+      const responseErr = e instanceof JSONRPCError
+        ? e
+        : new JSONRPCError(e.message, ERR_UNKNOWN, e);
+      responseErr.response = result
+        || (e?.response instanceof Response && e.response)
+        || undefined;
       this.transportRequestManager.settlePendingRequest(
         notifications,
         responseErr
