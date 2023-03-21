@@ -6,6 +6,8 @@ export class JSONRPCError extends Error {
   public message: string;
   public code: number;
   public data?: unknown;
+  // For transports that run over Fetch.
+  public response?: Response;
   constructor(message: string, code: number, data?: any) {
     super(message);
     this.message = message;
