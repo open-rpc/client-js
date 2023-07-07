@@ -2,6 +2,7 @@ import RequestManager from "./RequestManager";
 import { JSONRPCError } from "./Error";
 import { IClient, RequestArguments, NotificationArguments } from "./ClientInterface";
 import { IJSONRPCNotification } from "./Request";
+import { TransportRequestOptions } from "./transports/Transport";
 
 /**
  * OpenRPC Client JS is a browser-compatible JSON-RPC client with multiple transports and
@@ -67,11 +68,11 @@ class Client implements IClient {
    * @example
    * myClient.request({method: "foo", params: ["bar"]}).then(() => console.log('foobar'));
    */
-  public async request(requestObject: RequestArguments, timeout?: number) {
+  public async request(requestObject: RequestArguments, timeout?: number, transportOptions?: TransportRequestOptions) {
     if (this.requestManager.connectPromise) {
       await this.requestManager.connectPromise;
     }
-    return this.requestManager.request(requestObject, false, timeout);
+    return this.requestManager.request(requestObject, false, timeout, transportOptions);
   }
 
   public async notify(requestObject: NotificationArguments) {

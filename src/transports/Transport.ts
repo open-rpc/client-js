@@ -16,6 +16,11 @@ interface ITransportEvents {
   error: (data: JSONRPCError) => void;
 }
 
+export type HTTPTransportRequestOptions = {
+  method: "GET" | "POST";
+}
+export type TransportRequestOptions = HTTPTransportRequestOptions;
+
 type TransportEventName = keyof ITransportEvents;
 export type TransportEventChannel = StrictEventEmitter<EventEmitter, ITransportEvents>;
 
@@ -30,7 +35,7 @@ export abstract class Transport {
 
   public abstract connect(): Promise<any>;
   public abstract close(): void;
-  public abstract async sendData(data: JSONRPCRequestData, timeout?: number | null): Promise<any>;
+  public abstract async sendData(data: JSONRPCRequestData, timeout?: number | null, transportOptions?: TransportRequestOptions): Promise<any>;
 
   public subscribe(event: TransportEventName, handler: ITransportEvents[TransportEventName]) {
     this.transportRequestManager.transportEventChannel.addListener(event, handler);
