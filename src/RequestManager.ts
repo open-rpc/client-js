@@ -1,4 +1,4 @@
-import { Transport } from "./transports/Transport";
+import { Transport, TransportRequestOptions } from "./transports/Transport";
 import { IJSONRPCRequest, IJSONRPCNotification, IBatchRequest } from "./Request";
 import { JSONRPCError } from "./Error";
 import StrictEventEmitter from "strict-event-emitter-types";
@@ -53,7 +53,7 @@ class RequestManager {
     return this.transports[0];
   }
 
-  public async request(requestObject: JSONRPCMessage, notification: boolean = false, timeout?: number | null): Promise<any> {
+  public async request(requestObject: JSONRPCMessage, notification: boolean = false, timeout?: number | null, transportOptions?: TransportRequestOptions): Promise<any> {
     const internalID = this.nextID().toString();
     const id = notification ? null : internalID;
     // naively grab first transport and use it
@@ -64,7 +64,7 @@ class RequestManager {
       });
       return result;
     }
-    return this.getPrimaryTransport().sendData(payload, timeout);
+    return this.getPrimaryTransport().sendData(payload, timeout, transportOptions);
   }
 
   public close(): void {
