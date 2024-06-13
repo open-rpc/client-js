@@ -33,7 +33,8 @@ class HTTPTransport extends Transport {
 
   public async sendData(
     data: JSONRPCRequestData,
-    timeout: number | null = null
+    timeout: number | null = null,
+    headers?: Record<string, string> 
   ): Promise<any> {
     const prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
@@ -42,7 +43,7 @@ class HTTPTransport extends Transport {
     try {
       const result = await fetcher(this.uri, {
         method: "POST",
-        headers: this.headers,
+        headers: {...this.headers, ...headers},
         body: JSON.stringify(this.parseData(data)),
         credentials: this.credentials,
       });
