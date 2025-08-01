@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-import { Transport } from "./Transport";
+import { Transport, HTTPTransportRequestOptions } from "./Transport";
 import {
   JSONRPCRequestData,
   getNotifications,
@@ -13,6 +13,7 @@ interface HTTPTransportOptions {
   credentials?: CredentialsOption;
   headers?: Record<string, string>;
   fetcher?: typeof fetch;
+  getQueryParamName?: string;
 }
 
 class HTTPTransport extends Transport {
@@ -20,12 +21,14 @@ class HTTPTransport extends Transport {
   private readonly credentials?: CredentialsOption;
   private readonly headers: Headers;
   private readonly injectedFetcher?: typeof fetch;
+  private readonly getQueryParamName: string;
   constructor(uri: string, options?: HTTPTransportOptions) {
     super();
     this.uri = uri;
     this.credentials = options && options.credentials;
     this.headers = HTTPTransport.setupHeaders(options && options.headers);
     this.injectedFetcher = options?.fetcher;
+    this.getQueryParamName = (options && options?.getQueryParamName) || "query";
   }
   public connect(): Promise<any> {
     return Promise.resolve();
@@ -33,19 +36,33 @@ class HTTPTransport extends Transport {
 
   public async sendData(
     data: JSONRPCRequestData,
-    timeout: number | null = null
+    timeout: number | null = null,
+    requestOptions?: HTTPTransportRequestOptions,
   ): Promise<any> {
+    if (requestOptions === undefined) {
+      requestOptions = {method: "POST"};
+    }
     const prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
     const batch = getBatchRequests(data);
     const fetcher = this.injectedFetcher || fetch;
     try {
-      const result = await fetcher(this.uri, {
-        method: "POST",
+      const parsedData = JSON.stringify(this.parseData(data));
+      let uri = this.uri;
+      const params = {
+        method: requestOptions.method,
         headers: this.headers,
-        body: JSON.stringify(this.parseData(data)),
         credentials: this.credentials,
-      });
+      } as RequestInit;
+      if (requestOptions.method === 'GET') {
+        const q = new URLSearchParams();
+        q.set(this.getQueryParamName, parsedData);
+        uri += "?" + q.toString();
+      }
+      else {
+        params.body = parsedData;
+      }
+      const result = await fetcher(uri, params);
       // requirements are that notifications are successfully sent
       this.transportRequestManager.settlePendingRequest(notifications);
       if (this.onlyNotifications(data)) {
