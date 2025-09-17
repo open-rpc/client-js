@@ -2,12 +2,12 @@ import {
   JSONRPCRequestData,
   IJSONRPCNotificationResponse,
   IJSONRPCResponse,
-} from "../Request";
+} from "../Request.js";
 
-import StrictEventEmitter from "strict-event-emitter-types";
+import { StrictEventEmitter } from "strict-event-emitter-types";
 import { EventEmitter } from "events";
-import { JSONRPCError } from "../Error";
-import { TransportRequestManager } from "./TransportRequestManager";
+import { JSONRPCError } from "../Error.js";
+import { TransportRequestManager } from "./TransportRequestManager.js";
 
 interface ITransportEvents {
   pending: (data: JSONRPCRequestData) => void;
@@ -17,7 +17,10 @@ interface ITransportEvents {
 }
 
 type TransportEventName = keyof ITransportEvents;
-export type TransportEventChannel = StrictEventEmitter<EventEmitter, ITransportEvents>;
+export type TransportEventChannel = StrictEventEmitter<
+  EventEmitter,
+  ITransportEvents
+>;
 
 export abstract class Transport {
   protected transportRequestManager: TransportRequestManager;
@@ -25,22 +28,38 @@ export abstract class Transport {
     this.transportRequestManager = new TransportRequestManager();
     // add a noop for the error event to not require handling the error event
     // tslint:disable-next-line:no-empty
-    this.transportRequestManager.transportEventChannel.on("error", () => { });
+    this.transportRequestManager.transportEventChannel.on("error", () => {});
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public abstract connect(): Promise<any>;
   public abstract close(): void;
-  public abstract async sendData(data: JSONRPCRequestData, timeout?: number | null): Promise<any>;
+  public abstract sendData(
+    data: JSONRPCRequestData,
+    timeout?: number | null, // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Promise<any>;
 
-  public subscribe(event: TransportEventName, handler: ITransportEvents[TransportEventName]) {
-    this.transportRequestManager.transportEventChannel.addListener(event, handler);
+  public subscribe(
+    event: TransportEventName,
+    handler: ITransportEvents[TransportEventName],
+  ) {
+    this.transportRequestManager.transportEventChannel.addListener(
+      event,
+      handler,
+    );
   }
-  public unsubscribe(event?: TransportEventName, handler?: ITransportEvents[TransportEventName]) {
+  public unsubscribe(
+    event?: TransportEventName,
+    handler?: ITransportEvents[TransportEventName],
+  ) {
     if (!event) {
       return this.transportRequestManager.transportEventChannel.removeAllListeners();
     }
     if (event && handler) {
-      this.transportRequestManager.transportEventChannel.removeListener(event, handler);
+      this.transportRequestManager.transportEventChannel.removeListener(
+        event,
+        handler,
+      );
     }
   }
   protected parseData(data: JSONRPCRequestData) {
@@ -50,8 +69,10 @@ export abstract class Transport {
     return data.request;
   }
 }
-
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type promiseResolve = (r?: {} | PromiseLike<{}> | undefined) => void;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type promiseReject = (r?: any) => void;
 export interface IRequestPromise {
   resolve: promiseResolve;
@@ -76,4 +97,6 @@ interface IWSTransportResponse {
   payload: string;
 }
 
-export type TransportResponseData = IHttpTransportResponse | IWSTransportResponse;
+export type TransportResponseData =
+  | IHttpTransportResponse
+  | IWSTransportResponse;

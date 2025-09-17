@@ -6,6 +6,7 @@ export class JSONRPCError extends Error {
   public message: string;
   public code: number;
   public data?: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(message: string, code: number, data?: any) {
     super(message);
     this.message = message;
@@ -15,6 +16,7 @@ export class JSONRPCError extends Error {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const convertJSONToRPCError = (payload: any): JSONRPCError => {
   if (payload.error) {
     const { message, code, data } = payload.error;

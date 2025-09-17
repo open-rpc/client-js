@@ -1,5 +1,7 @@
 {
   "name": "@open-rpc/client-js",
   "out": "docs",
-  "mode": "library"
+  "entryPoints": [
+    "src/index.ts"
+  ]
 }

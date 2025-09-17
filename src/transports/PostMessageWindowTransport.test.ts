@@ -1,13 +1,16 @@
+import PostMessageWindowTransport from "./PostMessageWindowTransport.js";
+import { generateMockRequest } from "../__mocks__/requestData.js";
 
-import PostMessageWindowTransport from "./PostMessageWindowTransport";
-import { generateMockRequest } from "../__mocks__/requestData";
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).open = () => {
   return {
     close: () => {
       //
     },
-    postMessage: (message: any, targetOrigin: any) => {
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    postMessage: (message: any, _targetOrigin: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let data: any = {
         jsonrpc: "2.0",
         result: "bar",
@@ -21,7 +24,7 @@ import { generateMockRequest } from "../__mocks__/requestData";
             message: "Error message",
           },
           id: 1,
-        }
+        };
       }
       if (message.id === 2) {
         data = {
@@ -31,7 +34,7 @@ import { generateMockRequest } from "../__mocks__/requestData";
             message: "Random Segfault that crashes fetch",
           },
           id: 2,
-        }
+        };
       }
 
       const event = new window.MessageEvent("message", {
@@ -42,11 +45,10 @@ import { generateMockRequest } from "../__mocks__/requestData";
         window.dispatchEvent(event);
       }, 0);
     },
-  }
-}
+  };
+};
 
 describe("PostMessageWindowTransport", () => {
-
   describe("window", () => {
     it("can connect", () => {
       const pmt = new PostMessageWindowTransport("http://open-rpc.org");
@@ -69,7 +71,7 @@ describe("PostMessageWindowTransport", () => {
       await pmt.connect();
       const result = await pmt.sendData({
         request: generateMockRequest(0, "foo", ["bar"]),
-        internalID: 0
+        internalID: 0,
       });
       expect(result).toEqual("bar");
       await new Promise((resolve) => setTimeout(resolve, 100));
@@ -78,35 +80,43 @@ describe("PostMessageWindowTransport", () => {
     it("can send and receive data against potential timeout", async () => {
       const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       await pmt.connect();
-      const result = await pmt.sendData({
-        request: generateMockRequest(0, "foo", ["bar"]),
-        internalID: 0
-      }, 10000);
+      const result = await pmt.sendData(
+        {
+          request: generateMockRequest(0, "foo", ["bar"]),
+          internalID: 0,
+        },
+        10000,
+      );
       expect(result).toEqual("bar");
       await new Promise((resolve) => setTimeout(resolve, 100));
     });
 
     it("can send and receive errors", async () => {
-      const pmt = new PostMessageWindowTransport("http://open-rpc.org/rpc-error");
+      const pmt = new PostMessageWindowTransport(
+        "http://open-rpc.org/rpc-error",
+      );
       await pmt.connect();
-      await expect(pmt.sendData({
-        request: generateMockRequest(1, "foo", ["bar"]),
-        internalID: 1,
-      })).rejects.toThrowError("Error message");
+      await expect(
+        pmt.sendData({
+          request: generateMockRequest(1, "foo", ["bar"]),
+          internalID: 1,
+        }),
+      ).rejects.toThrowError("Error message");
       await new Promise((resolve) => setTimeout(resolve, 100));
     });
 
     it("can handle underlying transport crash", async () => {
       const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       await pmt.connect();
-      await expect(pmt.sendData({
-        request: generateMockRequest(2, "foo", ["bar"]),
-        internalID: 2,
-      })).rejects.toThrowError("Random Segfault that crashes fetch");
+      await expect(
+        pmt.sendData({
+          request: generateMockRequest(2, "foo", ["bar"]),
+          internalID: 2,
+        }),
+      ).rejects.toThrowError("Random Segfault that crashes fetch");
       await new Promise((resolve) => setTimeout(resolve, 100));
     });
-
-  })
+  });
 
   describe("iframe", () => {
     it("can connect", () => {
@@ -119,5 +129,4 @@ describe("PostMessageWindowTransport", () => {
       pmt.close();
     });
   });
-
 });

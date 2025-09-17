@@ -1,5 +1,9 @@
-import { Transport } from "./Transport";
-import { JSONRPCRequestData, IJSONRPCData, getNotifications } from "../Request";
+import { Transport } from "./Transport.js";
+import {
+  JSONRPCRequestData,
+  IJSONRPCData,
+  getNotifications,
+} from "../Request.js";
 
 const openPopup = (url: string) => {
   const width = 400;
@@ -26,7 +30,7 @@ class PostMessageTransport extends Transport {
   }
 
   public createWindow(uri: string): Promise<Window | null> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       let frame: Window | null;
       frame = openPopup(uri);
       setTimeout(() => {
@@ -37,21 +41,23 @@ class PostMessageTransport extends Transport {
 
   private messageHandler = (ev: MessageEvent) => {
     this.transportRequestManager.resolveResponse(JSON.stringify(ev.data));
-  }
+  };
 
-  public connect(): Promise<any> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public async connect(): Promise<any> {
     const urlRegex = /^(http|https):\/\/.*$/;
-    return new Promise(async (resolve, reject) => {
-      if (!urlRegex.test(this.uri)) {
-        reject(new Error("Bad URI"));
-      }
-      this.frame = await this.createWindow(this.uri);
-      window.addEventListener("message", this.messageHandler);
-      resolve();
-    });
+    if (!urlRegex.test(this.uri)) {
+      throw new Error("Bad URI");
+    }
+    this.frame = await this.createWindow(this.uri);
+    window.addEventListener("message", this.messageHandler);
   }
 
-  public async sendData(data: JSONRPCRequestData, timeout: number | undefined = 5000): Promise<any> {
+  public async sendData(
+    data: JSONRPCRequestData,
+    _timeout: number | undefined = 5000,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Promise<any> {
     const prom = this.transportRequestManager.addRequest(data, null);
     const notifications = getNotifications(data);
     if (this.frame) {
@@ -67,7 +73,6 @@ class PostMessageTransport extends Transport {
       (this.frame as Window).close();
     }
   }
-
 }
 
 export default PostMessageTransport;
