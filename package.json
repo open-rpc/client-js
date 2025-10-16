@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/open-rpc/client-js#readme",
   "devDependencies": {
-    "@types/isomorphic-fetch": "0.0.36",
+    "@types/isomorphic-fetch": "0.0.39",
     "@types/jest": "^26.0.3",
     "@types/serve-handler": "^6.1.0",
     "@types/websocket": "1.0.5",
