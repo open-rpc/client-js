@@ -22,7 +22,7 @@
     "@types/isomorphic-fetch": "0.0.36",
     "@types/jest": "^26.0.3",
     "@types/serve-handler": "^6.1.0",
-    "@types/websocket": "1.0.5",
+    "@types/websocket": "1.0.10",
     "@types/ws": "^7.2.0",
     "jest": "^25.1.0",
     "minimist": ">=1.2.2",
