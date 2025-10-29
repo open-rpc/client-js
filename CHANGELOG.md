@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/open-rpc/client-js/compare/1.8.1...2.0.0) (2025-10-29)
+
+
+### Features
+
+* This change is breaking introduces ESM builds, ES2022 and bundling to ([1096a86](https://github.com/open-rpc/client-js/commit/1096a869d146306fb76411a9af3992b62e2696f7))
+
+
+### BREAKING CHANGES
+
+* CommonJS and ES5 no longer supported
+
 ## [1.8.1](https://github.com/open-rpc/client-js/compare/1.8.0...1.8.1) (2023-01-18)
 
 
