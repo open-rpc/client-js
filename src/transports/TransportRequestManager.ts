@@ -1,11 +1,26 @@
 import {
-  JSONRPCRequestData, IJSONRPCRequest,
-  IJSONRPCNotification, IJSONRPCNotificationResponse,
-  IJSONRPCResponse, IBatchRequest, IJSONRPCData,
-} from "../Request";
+  JSONRPCRequestData,
+  IJSONRPCRequest,
+  IJSONRPCNotification,
+  IJSONRPCNotificationResponse,
+  IJSONRPCResponse,
+  IBatchRequest,
+  IJSONRPCData,
+} from "../Request.js";
 import { EventEmitter } from "events";
-import { JSONRPCError, ERR_TIMEOUT, ERR_UNKNOWN, ERR_MISSIING_ID, convertJSONToRPCError } from "../Error";
-import { promiseResolve, promiseReject, TransportEventChannel, TransportResponse, IRequestPromise } from "./Transport";
+import {
+  JSONRPCError,
+  ERR_TIMEOUT,
+  ERR_UNKNOWN,
+  convertJSONToRPCError,
+} from "../Error.js";
+import {
+  promiseResolve,
+  promiseReject,
+  TransportEventChannel,
+  TransportResponse,
+  IRequestPromise,
+} from "./Transport.js";
 export interface IPendingRequest {
   resolve: promiseResolve;
   reject: promiseReject;
@@ -23,7 +38,11 @@ export class TransportRequestManager {
     this.pendingBatchRequest = {};
     this.transportEventChannel = new EventEmitter();
   }
-  public addRequest(data: JSONRPCRequestData, timeout: number | null): Promise<any> {
+  public addRequest(
+    data: JSONRPCRequestData,
+    timeout: number | null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Promise<any> {
     this.transportEventChannel.emit("pending", data);
     if (data instanceof Array) {
       this.addBatchReq(data, timeout);
@@ -45,17 +64,21 @@ export class TransportRequestManager {
       }
       resolver.resolve();
       // Notifications have no response and should clear their own pending requests
-      if(req.request.id === null || req.request.id === undefined){
+      if (req.request.id === null || req.request.id === undefined) {
         delete this.pendingRequest[req.internalID];
       }
     });
   }
 
   public isPendingRequest(id: string | number): boolean {
-    return this.pendingRequest.hasOwnProperty(id)
+    return Object.prototype.hasOwnProperty.call(this.pendingRequest, id);
   }
 
-  public resolveResponse(payload: string, emitError: boolean = true): TransportResponse {
+  public resolveResponse(
+    payload: string,
+    emitError: boolean = true,
+  ): TransportResponse {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any = payload;
     try {
       data = JSON.parse(payload);
@@ -66,6 +89,7 @@ export class TransportRequestManager {
         return this.resolveBatch(data, emitError);
       }
       return this.resolveRes(data, emitError);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       const err = new JSONRPCError("Bad response format", ERR_UNKNOWN, payload);
       if (emitError) {
@@ -75,7 +99,7 @@ export class TransportRequestManager {
     }
   }
 
-  private addBatchReq(batches: IBatchRequest[], timeout: number | null) {
+  private addBatchReq(batches: IBatchRequest[], _timeout: number | null) {
     batches.forEach((batch) => {
       const { resolve, reject } = batch;
       const { internalID } = batch.request;
@@ -92,14 +116,22 @@ export class TransportRequestManager {
       this.pendingRequest[id] = { resolve, reject };
     });
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private checkJSONRPC(data: any) {
     let payload = [data];
     if (data instanceof Array) {
       payload = data;
     }
-    return payload.every((datum) => (datum.result !== undefined || datum.error !== undefined || datum.method !== undefined));
+    return payload.every(
+      (datum) =>
+        datum.result !== undefined ||
+        datum.error !== undefined ||
+        datum.method !== undefined,
+    );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private processResult(payload: any, prom: IRequestPromise) {
     if (payload.error) {
       const err = convertJSONToRPCError(payload);
@@ -108,7 +140,10 @@ export class TransportRequestManager {
     }
     prom.resolve(payload.result);
   }
-  private resolveBatch(payload: (IJSONRPCRequest | IJSONRPCNotification)[], emitError: boolean): TransportResponse {
+  private resolveBatch(
+    payload: (IJSONRPCRequest | IJSONRPCNotification)[],
+    emitError: boolean,
+  ): TransportResponse {
     const results = payload.map((datum) => {
       return this.resolveRes(datum, emitError);
     });
@@ -119,7 +154,10 @@ export class TransportRequestManager {
     return undefined;
   }
 
-  private resolveRes(data: IJSONRPCNotificationResponse | IJSONRPCResponse, emitError: boolean): TransportResponse {
+  private resolveRes(
+    data: IJSONRPCNotificationResponse | IJSONRPCResponse,
+    emitError: boolean,
+  ): TransportResponse {
     const { id, error } = data;
 
     const status = this.pendingRequest[id as string];
@@ -130,7 +168,10 @@ export class TransportRequestManager {
       return;
     }
     if (id === undefined && error === undefined) {
-      this.transportEventChannel.emit("notification", data as IJSONRPCNotificationResponse);
+      this.transportEventChannel.emit(
+        "notification",
+        data as IJSONRPCNotificationResponse,
+      );
       return;
     }
     let err;
@@ -143,10 +184,19 @@ export class TransportRequestManager {
     return err;
   }
 
-  private setRequestTimeout(id: string | number, timeout: number, reject: promiseReject) {
+  private setRequestTimeout(
+    id: string | number,
+    timeout: number,
+    reject: promiseReject,
+  ) {
     setTimeout(() => {
       delete this.pendingRequest[id];
-      reject(new JSONRPCError(`Request timeout request took longer than ${timeout} ms to resolve`, ERR_TIMEOUT));
+      reject(
+        new JSONRPCError(
+          `Request timeout request took longer than ${timeout} ms to resolve`,
+          ERR_TIMEOUT,
+        ),
+      );
     }, timeout);
   }
 }

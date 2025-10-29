@@ -1,11 +1,10 @@
-import fetch from "isomorphic-fetch";
-import { Transport } from "./Transport";
+import { Transport } from "./Transport.js";
 import {
   JSONRPCRequestData,
   getNotifications,
   getBatchRequests,
-} from "../Request";
-import { ERR_UNKNOWN, JSONRPCError } from "../Error";
+} from "../Request.js";
+import { ERR_UNKNOWN, JSONRPCError } from "../Error.js";
 
 type CredentialsOption = "omit" | "same-origin" | "include";
 
@@ -27,13 +26,15 @@ class HTTPTransport extends Transport {
     this.headers = HTTPTransport.setupHeaders(options && options.headers);
     this.injectedFetcher = options?.fetcher;
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public connect(): Promise<any> {
     return Promise.resolve();
   }
 
   public async sendData(
     data: JSONRPCRequestData,
-    timeout: number | null = null
+    timeout: number | null = null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     const prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
@@ -60,14 +61,15 @@ class HTTPTransport extends Transport {
         return Promise.reject(responseErr);
       }
     } catch (e) {
-      const responseErr = new JSONRPCError(e.message, ERR_UNKNOWN, e);
+      const error = e as Error;
+      const responseErr = new JSONRPCError(error.message, ERR_UNKNOWN, error);
       this.transportRequestManager.settlePendingRequest(
         notifications,
-        responseErr
+        responseErr,
       );
       this.transportRequestManager.settlePendingRequest(
         getBatchRequests(data),
-        responseErr
+        responseErr,
       );
       return Promise.reject(responseErr);
     }
@@ -82,7 +84,7 @@ class HTTPTransport extends Transport {
       return data.every(
         (datum) =>
           datum.request.request.id === null ||
-          datum.request.request.id === undefined
+          datum.request.request.id === undefined,
       );
     }
     return data.request.id === null || data.request.id === undefined;

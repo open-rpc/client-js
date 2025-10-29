@@ -20,12 +20,11 @@ A browser-compatible JSON-RPC client with multiple transports:
 - PostMessageWindow
 - PostMessageIframe
 
-
 ```javascript
 import { RequestManager, HTTPTransport, Client } from "@open-rpc/client-js";
 const transport = new HTTPTransport("http://localhost:8545");
 const client = new Client(new RequestManager([transport]));
-const result = await client.request({method: "addition", params: [2, 2]});
+const result = await client.request({ method: "addition", params: [2, 2] });
 // => { jsonrpc: '2.0', id: 1, result: 4 }
 ```
 
@@ -36,7 +35,11 @@ const result = await client.request({method: "addition", params: [2, 2]});
 
 ```javascript
 import { EventEmitter } from "events";
-import { RequestManager, EventEmitterTransport, Client } from "@open-rpc/client-js";
+import {
+  RequestManager,
+  EventEmitterTransport,
+  Client,
+} from "@open-rpc/client-js";
 
 const chan1 = "chan1";
 const chan2 = "chan2";
@@ -57,7 +60,7 @@ emitter.on(chan1, (jsonrpcRequest) => {
 });
 
 const main = async () => {
-  const result = await client.request({method: "addition", params: [2, 2]});
+  const result = await client.request({ method: "addition", params: [2, 2] });
   console.log(result);
 };
 
@@ -67,7 +70,6 @@ main().then(() => {
 ```
 
 </details>
-
 
 <details>
   <summary>HTTP</summary>
@@ -80,7 +82,7 @@ const requestManager = new RequestManager([transport]);
 const client = new Client(requestManager);
 
 const main = async () => {
-  const result = await client.request({method: "addition", params: [2, 2]});
+  const result = await client.request({ method: "addition", params: [2, 2] });
   console.log(result);
 };
 
@@ -91,19 +93,22 @@ main().then(() => {
 
 </details>
 
-
 <details>
   <summary>WebSocket</summary>
 
 ```javascript
-import { RequestManager, Client, WebSocketTransport } from "@open-rpc/client-js";
+import {
+  RequestManager,
+  Client,
+  WebSocketTransport,
+} from "@open-rpc/client-js";
 
 const transport = new WebSocketTransport("ws://localhost:3333");
 const requestManager = new RequestManager([transport]);
 const client = new Client(requestManager);
 
 const main = async () => {
-  const result = await client.request({method: "addition", params: [2, 2]});
+  const result = await client.request({ method: "addition", params: [2, 2] });
   console.log(result);
 };
 
@@ -111,11 +116,20 @@ main().then(() => {
   console.log("DONE");
   client.close();
 });
-
 ```
 
 </details>
 
+### Building
+
+```sh
+# Install bun
+curl -fsSL https://bun.sh/install | bash
+
+# Build the repo
+bun install
+bun run build
+```
 
 ### Contributing
 

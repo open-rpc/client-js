@@ -1,11 +1,11 @@
-import RequestManager from "./RequestManager";
-import EventEmitterTransport from "./transports/EventEmitterTransport";
-import HTTPTransport from "./transports/HTTPTransport";
-import WebSocketTransport from "./transports/WebSocketTransport";
-import PostMessageWindowTransport from "./transports/PostMessageWindowTransport";
-import PostMessageIframeTransport from "./transports/PostMessageIframeTransport";
-import { JSONRPCError } from "./Error";
-import Client from "./Client";
+import RequestManager from "./RequestManager.js";
+import EventEmitterTransport from "./transports/EventEmitterTransport.js";
+import HTTPTransport from "./transports/HTTPTransport.js";
+import WebSocketTransport from "./transports/WebSocketTransport.js";
+import PostMessageWindowTransport from "./transports/PostMessageWindowTransport.js";
+import PostMessageIframeTransport from "./transports/PostMessageIframeTransport.js";
+import { JSONRPCError } from "./Error.js";
+import Client from "./Client.js";
 
 export default Client;
 export {

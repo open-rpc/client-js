@@ -1,7 +1,11 @@
-import * as req from "../Request";
+import * as req from "../Request.js";
 import url from "url";
 
-export const generateMockNotificationRequest = (method: string, params: any[]): req.IJSONRPCNotification => {
+export const generateMockNotificationRequest = (
+  method: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: any[],
+): req.IJSONRPCNotification => {
   return {
     jsonrpc: "2.0",
     method,
@@ -9,7 +13,12 @@ export const generateMockNotificationRequest = (method: string, params: any[]): 
   };
 };
 
-export const generateMockRequest = (id: number, method: string, params: any[]): req.IJSONRPCRequest => {
+export const generateMockRequest = (
+  id: number,
+  method: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: any[],
+): req.IJSONRPCRequest => {
   return {
     id,
     jsonrpc: "2.0",
@@ -18,7 +27,13 @@ export const generateMockRequest = (id: number, method: string, params: any[]): 
   };
 };
 
-export const generateMockResponse = (id: number, result: any, error?: any): req.IJSONRPCResponse => {
+export const generateMockResponse = (
+  id: number,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  result: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error?: any,
+): req.IJSONRPCResponse => {
   return {
     id,
     jsonrpc: "2.0",
@@ -27,7 +42,12 @@ export const generateMockResponse = (id: number, result: any, error?: any): req.
   };
 };
 
-export const generateMockNotificationResponse = (result: any, error?: any): req.IJSONRPCNotificationResponse => {
+export const generateMockNotificationResponse = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  result: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error?: any,
+): req.IJSONRPCNotificationResponse => {
   return {
     jsonrpc: "2.0",
     result,
@@ -35,7 +55,11 @@ export const generateMockNotificationResponse = (result: any, error?: any): req.
   };
 };
 
-export const generateMockErrorResponse = (id: number | undefined, data: any): req.IJSONRPCResponse => {
+export const generateMockErrorResponse = (
+  id: number | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
+): req.IJSONRPCResponse => {
   return {
     id,
     jsonrpc: "2.0",
@@ -47,6 +71,7 @@ export const generateMockErrorResponse = (id: number | undefined, data: any): re
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const generateMockResponseData = (uri: string, data: any) => {
   const parsedUrl = url.parse(uri);
   const path = parsedUrl.path || "";
@@ -70,6 +95,7 @@ export const generateMockResponseData = (uri: string, data: any) => {
   return data;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const generateSingleRequestResponse = (error: boolean, data: any) => {
   if (error) {
     return generateMockErrorResponse(data.id, data);
@@ -77,14 +103,18 @@ const generateSingleRequestResponse = (error: boolean, data: any) => {
   return generateMockResponse(data.id, data);
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const generateRequestResponse = (error: boolean, data: any): string => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let parsedReq: any = data;
 
   if (typeof data === "string") {
     parsedReq = JSON.parse(data);
   }
   if (parsedReq instanceof Array) {
-    return JSON.stringify(parsedReq.map((parsed) => generateSingleRequestResponse(error, parsed)));
+    return JSON.stringify(
+      parsedReq.map((parsed) => generateSingleRequestResponse(error, parsed)),
+    );
   }
   return JSON.stringify(generateSingleRequestResponse(error, parsedReq));
 };

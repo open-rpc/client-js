@@ -22,18 +22,28 @@ aliases:
     branches:
       only:  /^(pull|dependabot|fix|feat)\/.*$/
 
+  # -------------------------
+  #  ALIASES: Bun Install
+  # -------------------------
+  - &install-bun
+    name: Install Bun
+    command: |
+      curl -fsSL https://bun.sh/install | bash -s "bun-v1.3.1"
+      echo 'export PATH="$HOME/.bun/bin:$PATH"' >> $BASH_ENV
+
 defaults: &defaults
   working_directory: ~/client-js
   docker:
-    - image: cimg/node:20.11.0
+    - image: cimg/node:24.10.0
 
 jobs:
   test:
     <<: *defaults
     steps:
       - checkout
+      - run: *install-bun
       - restore_cache: *restore-deps-cache
-      - run: npm install
+      - run: bun install
       - run: npm install codecov
       - run: npm test
       - run: ./node_modules/.bin/codecov
@@ -43,18 +53,20 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run: *install-bun
       - restore_cache: *restore-deps-cache
-      - run: npm install
-      - run: npm run build
+      - run: bun install
+      - run: bun run build
       - save_cache: *save-deps-cache
 
   release:
     <<: *defaults
     steps:
       - checkout
+      - run: *install-bun
       - restore_cache: *restore-deps-cache
-      - run: npm install
-      - run: npm run build
+      - run: bun install
+      - run: bun run build
       - run: npm install semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github @semantic-release/npm @semantic-release/commit-analyzer @semantic-release/release-notes-generator @qiwi/semantic-release-gh-pages-plugin
       - run: git checkout .
       - run: ./node_modules/.bin/semantic-release

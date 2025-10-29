@@ -1,13 +1,19 @@
-import EventEmitterTransport from "./EventEmitterTransport";
+import EventEmitterTransport from "./EventEmitterTransport.js";
 import { EventEmitter } from "events";
-import { generateMockRequest, generateMockNotificationRequest } from "../__mocks__/requestData";
-import { addMockServerTransport } from "../__mocks__/eventEmitter";
+import {
+  generateMockRequest,
+  generateMockNotificationRequest,
+} from "../__mocks__/requestData.js";
+import { addMockServerTransport } from "../__mocks__/eventEmitter.js";
 
 describe("EventEmitterTransport", () => {
-
   it("can connect", async () => {
     const emitter = new EventEmitter();
-    const eventEmitterTransport = new EventEmitterTransport(emitter, "foo://in", "foo://out");
+    const eventEmitterTransport = new EventEmitterTransport(
+      emitter,
+      "foo://in",
+      "foo://out",
+    );
     await eventEmitterTransport.connect();
   });
 
@@ -15,14 +21,26 @@ describe("EventEmitterTransport", () => {
     const emitter = new EventEmitter();
     const reqUri = "from";
     const resUri = "to";
-    const eventEmitterTransport = new EventEmitterTransport(emitter, reqUri, resUri);
+    const eventEmitterTransport = new EventEmitterTransport(
+      emitter,
+      reqUri,
+      resUri,
+    );
     eventEmitterTransport.close();
   });
 
   it("can send and receive data", async () => {
     const emitter = new EventEmitter();
-    addMockServerTransport(emitter, "from1://asdf/rpc-request", "to1://asdf/rpc-response");
-    const eventEmitterTransport = new EventEmitterTransport(emitter, "from1://asdf/rpc-request", "to1://asdf/rpc-response");
+    addMockServerTransport(
+      emitter,
+      "from1://asdf/rpc-request",
+      "to1://asdf/rpc-response",
+    );
+    const eventEmitterTransport = new EventEmitterTransport(
+      emitter,
+      "from1://asdf/rpc-request",
+      "to1://asdf/rpc-response",
+    );
     await eventEmitterTransport.connect();
     const result = await eventEmitterTransport.sendData({
       request: generateMockRequest(1, "foo", ["bar"]),
@@ -35,7 +53,11 @@ describe("EventEmitterTransport", () => {
   it("can send notifications", async () => {
     const emitter = new EventEmitter();
     addMockServerTransport(emitter, "from1", "to1://asdf/rpc-notification");
-    const eventEmitterTransport = new EventEmitterTransport(emitter, "from1", "to1://asdf/rpc-notification");
+    const eventEmitterTransport = new EventEmitterTransport(
+      emitter,
+      "from1",
+      "to1://asdf/rpc-notification",
+    );
     await eventEmitterTransport.connect();
     const result = await eventEmitterTransport.sendData({
       request: generateMockNotificationRequest("foo", ["bar"]),
@@ -47,26 +69,37 @@ describe("EventEmitterTransport", () => {
   it("should throw error on bad response", async () => {
     const emitter = new EventEmitter();
     addMockServerTransport(emitter, "from1", "to1://asdf/rpc-error");
-    const eventEmitterTransport = new EventEmitterTransport(emitter, "from1", "to1://asdf/rpc-error");
+    const eventEmitterTransport = new EventEmitterTransport(
+      emitter,
+      "from1",
+      "to1://asdf/rpc-error",
+    );
     await eventEmitterTransport.connect();
-    await expect(eventEmitterTransport.sendData({
-      request: generateMockRequest(1, "foo", ["bar"]),
-      internalID: 1,
-    }))
-      .rejects.toThrowError("Error message");
+    await expect(
+      eventEmitterTransport.sendData({
+        request: generateMockRequest(1, "foo", ["bar"]),
+        internalID: 1,
+      }),
+    ).rejects.toThrowError("Error message");
   });
 
   it("should throw error on bad protocol", async () => {
     const emitter = new EventEmitter();
     addMockServerTransport(emitter, "from1", "to1://asdf/rpc-error");
-    const eventEmitterTransport = new EventEmitterTransport(emitter, "from1", "to1://asdf/rpc-error");
+    const eventEmitterTransport = new EventEmitterTransport(
+      emitter,
+      "from1",
+      "to1://asdf/rpc-error",
+    );
     await eventEmitterTransport.connect();
-    eventEmitterTransport.connection.emit = () => { throw new Error("failed protocol"); };
-    await expect(eventEmitterTransport.sendData({
-      request: generateMockRequest(1, "foo", ["bar"]),
-      internalID: 1,
-    }))
-      .rejects.toThrowError("failed protocol");
+    eventEmitterTransport.connection.emit = () => {
+      throw new Error("failed protocol");
+    };
+    await expect(
+      eventEmitterTransport.sendData({
+        request: generateMockRequest(1, "foo", ["bar"]),
+        internalID: 1,
+      }),
+    ).rejects.toThrowError("failed protocol");
   });
-
 });
