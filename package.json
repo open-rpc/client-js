@@ -50,7 +50,7 @@
     "prettier": "3.5.2",
     "serve-handler": "6.1.6",
     "ts-jest": "29.4.2",
-    "typedoc": "0.28.13",
+    "typedoc": "0.28.14",
     "typescript": "5.9.2"
   },
   "dependencies": {
