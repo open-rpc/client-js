@@ -28,7 +28,7 @@ describe("WebSocketTransport", () => {
     await wst.connect();
     const result = await wst.sendData(
       { request: generateMockRequest(1, "foo", ["bar"]), internalID: 1 },
-      10000,
+      { timeout: 100 },
     );
     expect(result.method).toEqual("foo");
     expect(result.params).toEqual(["bar"]);

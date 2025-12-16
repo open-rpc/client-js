@@ -1,11 +1,30 @@
-import { Client } from "./index.js";
-import RequestManager from "./RequestManager.js";
-import EventEmitterTransport from "./transports/EventEmitterTransport.js";
+import Client, {
+  RequestManager,
+  EventEmitterTransport,
+  HTTPTransport,
+  WebSocketTransport,
+  PostMessageWindowTransport,
+  PostMessageIframeTransport,
+  JSONRPCError,
+  AbortError,
+} from "./index.js";
 import { EventEmitter } from "events";
 import { addMockServerTransport } from "./__mocks__/eventEmitter.js";
 import { generateMockNotificationRequest } from "./__mocks__/requestData.js";
 
 describe("client-js", () => {
+  it("exposes the package exports", () => {
+    expect(Client).toBeDefined();
+    expect(RequestManager).toBeDefined();
+    expect(EventEmitterTransport).toBeDefined();
+    expect(HTTPTransport).toBeDefined();
+    expect(WebSocketTransport).toBeDefined();
+    expect(PostMessageWindowTransport).toBeDefined();
+    expect(PostMessageIframeTransport).toBeDefined();
+    expect(JSONRPCError).toBeDefined();
+    expect(AbortError).toBeDefined();
+  });
+
   it("can be constructed", () => {
     const emitter = new EventEmitter();
     const c = new Client(
@@ -30,6 +49,28 @@ describe("client-js", () => {
     );
     expect(typeof c.request).toEqual("function");
     expect(typeof c.notify({ method: "my_method" }).then).toEqual("function");
+  });
+
+  it("accepts an options object as second arg (timeout + signal)", () => {
+    const emitter = new EventEmitter();
+    const c = new Client(
+      new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]),
+    );
+    const controller = new AbortController();
+    const promiseLike = c.request({ method: "my_method" }, { timeout: 50, signal: controller.signal });
+    expect(typeof (promiseLike as Promise<unknown>).then).toEqual("function");
+  });
+
+  it("accepts a numeric timeout as second arg for request and notify (backcompat)", () => {
+    const emitter = new EventEmitter();
+    const c = new Client(
+      new RequestManager([new EventEmitterTransport(emitter, "from1", "to1")]),
+    );
+    const reqPromiseLike = c.request({ method: "my_method" }, 50);
+    expect(typeof (reqPromiseLike as Promise<unknown>).then).toEqual("function");
+
+    const notifyPromiseLike = c.notify({ method: "my_method" }, 50);
+    expect(typeof (notifyPromiseLike as Promise<unknown>).then).toEqual("function");
   });
 
   it("can recieve notifications", (done) => {

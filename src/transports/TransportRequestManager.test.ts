@@ -5,6 +5,7 @@ import {
   IJSONRPCNotificationResponse,
   IBatchRequest,
 } from "../Request.js";
+import { AbortError } from "../Error.js";
 
 describe("Transport Request Manager", () => {
   let transportReqMan: TransportRequestManager;
@@ -42,7 +43,7 @@ describe("Transport Request Manager", () => {
         request: reqData.generateMockRequest(1, "foo", ["bar"]),
         internalID: 1,
       },
-      1000,
+      50,
     );
     await expect(prom).rejects.toThrowError("timeout");
   });
@@ -248,4 +249,64 @@ describe("Transport Request Manager", () => {
       JSON.stringify(reqData.generateMockErrorResponse(1, "Bad terrible data")),
     );
   });
+
+  it("should reject when signal is already aborted", async () => {
+    const controller = new AbortController();
+    controller.abort();
+    const request = {
+      request: reqData.generateMockRequest(1, "foo", ["bar"]),
+      internalID: 1,
+    };
+    await expect(
+      transportReqMan.addRequest(request, null, controller.signal),
+    ).rejects.toThrow(AbortError);
+  });
+
+  it("should reject when signal becomes aborted", async () => {
+    const controller = new AbortController();
+    const request = {
+      request: reqData.generateMockRequest(1, "foo", ["bar"]),
+      internalID: 1,
+    };
+    const prom = transportReqMan.addRequest(request, null, controller.signal);
+    controller.abort();
+    await expect(prom).rejects.toThrow(AbortError);
+  });
+
+  it("should remove abort listener when request settled", async () => {
+    const controller = new AbortController();
+    const removeSpy = jest.spyOn(controller.signal, "removeEventListener");
+    const request = {
+      request: reqData.generateMockRequest(1, "foo", ["bar"]),
+      internalID: 1,
+    };
+    const prom = transportReqMan.addRequest(request, null, controller.signal);
+    transportReqMan.resolveResponse(
+      JSON.stringify(reqData.generateMockResponse(1, "success")),
+    );
+    await prom;
+    expect(removeSpy).toHaveBeenCalledWith("abort", expect.any(Function));
+  });
+
+  it("should remove abort listener when request rejected", async () => {
+    const controller = new AbortController();
+    const removeSpy = jest.spyOn(controller.signal, "removeEventListener");
+    const request = {
+      request: reqData.generateMockRequest(1, "foo", ["bar"]),
+      internalID: 1,
+    };
+    const prom = transportReqMan.addRequest(request, null, controller.signal);
+    transportReqMan.settlePendingRequest([request], new Error("fail"));
+    await expect(prom).rejects.toThrow("fail");
+    expect(removeSpy).toHaveBeenCalledWith("abort", expect.any(Function));
+  });
+
+  it("should return error from batch response resolution", () => {
+    const res = [reqData.generateMockErrorResponse(1, "error")];
+    const err = transportReqMan.resolveResponse(JSON.stringify(res), false);
+    expect(err).toBeDefined();
+    expect(err).toBeInstanceOf(Error);
+  });
 });
+
+

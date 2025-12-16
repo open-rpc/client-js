@@ -62,9 +62,9 @@ describe("client-js", () => {
       });
     });
     await expect(
-      c.request({ method: "foo", params: ["bar"] }, false, 1000),
+      c.request({ method: "foo", params: ["bar"] }, false, { timeout: 50 }),
     ).rejects.toThrowError(
-      "Request timeout request took longer than 1000 ms to resolve",
+      "Request timeout request took longer than 50 ms to resolve",
     );
     const formatError = (await unknownError) as JSONRPCError;
     expect(formatError.message).toContain("Bad response format");

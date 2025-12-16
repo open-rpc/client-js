@@ -13,6 +13,7 @@ import {
   ERR_TIMEOUT,
   ERR_UNKNOWN,
   convertJSONToRPCError,
+  AbortError,
 } from "../Error.js";
 import {
   promiseResolve,
@@ -41,6 +42,7 @@ export class TransportRequestManager {
   public addRequest(
     data: JSONRPCRequestData,
     timeout: number | null,
+    signal?: AbortSignal | null,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     this.transportEventChannel.emit("pending", data);
@@ -48,7 +50,7 @@ export class TransportRequestManager {
       this.addBatchReq(data, timeout);
       return Promise.resolve();
     }
-    return this.addReq(data.internalID, timeout);
+    return this.addReq(data.internalID, timeout || null, signal);
   }
 
   public settlePendingRequest(request: IJSONRPCData[], error?: Error) {
@@ -108,12 +110,28 @@ export class TransportRequestManager {
     });
     return Promise.resolve();
   }
-  private addReq(id: string | number, timeout: number | null) {
+  private addReq(
+    id: string | number,
+    timeout: number | null,
+    signal?: AbortSignal | null,
+  ) {
     return new Promise((resolve, reject) => {
       if (timeout !== null && timeout) {
         this.setRequestTimeout(id, timeout, reject);
       }
-      this.pendingRequest[id] = { resolve, reject };
+      if (signal) {
+        if (signal.aborted) {
+          return reject(new AbortError());
+        }
+        this.pendingRequest[id] = this.setupRequestCancellation(
+          id,
+          signal,
+          resolve,
+          reject,
+        );
+      } else {
+        this.pendingRequest[id] = { resolve, reject };
+      }
     });
   }
 
@@ -198,5 +216,29 @@ export class TransportRequestManager {
         ),
       );
     }, timeout);
+  }
+
+  private setupRequestCancellation(
+    id: string | number,
+    signal: AbortSignal,
+    resolve: promiseResolve,
+    reject: promiseReject,
+  ) {
+    const onAbort = () => {
+      delete this.pendingRequest[id];
+      reject(new AbortError());
+      signal.removeEventListener("abort", onAbort);
+    };
+    signal.addEventListener("abort", onAbort);
+    return {
+      resolve: (val?: any) => {
+        signal.removeEventListener("abort", onAbort);
+        resolve(val);
+      },
+      reject: (err?: unknown) => {
+        signal.removeEventListener("abort", onAbort);
+        reject(err);
+      },
+    };
   }
 }

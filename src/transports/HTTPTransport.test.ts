@@ -1,5 +1,6 @@
 import { HTTPTransport, HTTPTransportOptions } from "./HTTPTransport.js";
 import * as reqMocks from "../__mocks__/requestData.js";
+import { AbortError } from "../Error.js";
 
 describe("HTTPTransport", () => {
   let mockFetch: jest.MockedFunction<typeof fetch>;
@@ -178,5 +179,57 @@ describe("HTTPTransport", () => {
     });
     expect(injectedFetchMock.mock.calls.length).toEqual(1);
     expect(result).toEqual(undefined);
+  });
+
+  it("should use global fetch if no fetcher provided", async () => {
+    const globalFetch = jest.fn().mockImplementation((url, options) => {
+      const body = options?.body as string;
+      const responseText = reqMocks.generateMockResponseData(url.toString(), body);
+      return Promise.resolve({
+        text: () => Promise.resolve(responseText),
+      });
+    }) as any;
+    global.fetch = globalFetch;
+
+    const httpTransport = new HTTPTransport("http://localhost:8545/rpc-request");
+    await httpTransport.sendData({
+      request: reqMocks.generateMockRequest(1, "foo", ["bar"]),
+      internalID: 1,
+    });
+
+    expect(globalFetch).toHaveBeenCalled();
+  });
+
+  it("should abort the fetch request when signal is aborted", async () => {
+    const controller = new AbortController();
+    const httpTransport = new HTTPTransport("http://localhost:8545", {
+      fetcher: mockFetch,
+    });
+    const data = reqMocks.generateMockRequest(1, "foo", ["bar"]);
+
+    // Setup mock to fail if aborted (simulating fetch behavior)
+    mockFetch.mockImplementation(async (_url, options) => {
+      if (options?.signal?.aborted) {
+        throw new DOMException("The user aborted a request.", "AbortError");
+      }
+      return new Promise((_, reject) => {
+        options?.signal?.addEventListener("abort", () => {
+          reject(new DOMException("The user aborted a request.", "AbortError"));
+        });
+      });
+    });
+
+    const prom = httpTransport.sendData({
+      request: data,
+      internalID: 1,
+    }, { timeout: null, signal: controller.signal });
+
+    controller.abort();
+
+    await expect(prom).rejects.toThrow(AbortError);
+
+    const callArgs = mockFetch.mock.calls[0];
+    expect(callArgs[1]?.signal).toBeDefined();
+    expect(callArgs[1]?.signal?.aborted).toBe(true);
   });
 });

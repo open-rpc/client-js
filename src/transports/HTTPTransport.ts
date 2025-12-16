@@ -1,4 +1,4 @@
-import { Transport } from "./Transport.js";
+import { Transport, TransportOptions } from "./Transport.js";
 import {
   JSONRPCRequestData,
   getNotifications,
@@ -33,10 +33,12 @@ class HTTPTransport extends Transport {
 
   public async sendData(
     data: JSONRPCRequestData,
-    timeout: number | null = null,
+    options?: TransportOptions,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
-    const prom = this.transportRequestManager.addRequest(data, timeout);
+  const timeout = options?.timeout ?? null;
+  const signal = options?.signal;
+  const prom = this.transportRequestManager.addRequest(data, timeout, signal);
     const notifications = getNotifications(data);
     const batch = getBatchRequests(data);
     const fetcher = this.injectedFetcher || fetch;
@@ -46,6 +48,7 @@ class HTTPTransport extends Transport {
         headers: this.headers,
         body: JSON.stringify(this.parseData(data)),
         credentials: this.credentials,
+        signal,
       });
       // requirements are that notifications are successfully sent
       this.transportRequestManager.settlePendingRequest(notifications);
@@ -55,7 +58,7 @@ class HTTPTransport extends Transport {
       const body = await result.text();
       const responseErr = this.transportRequestManager.resolveResponse(body);
       if (responseErr) {
-        // requirements are that batch requuests are successfully resolved
+        // requirements are that batch requests are successfully resolved
         // this ensures that individual requests within the batch request are settled
         this.transportRequestManager.settlePendingRequest(batch, responseErr);
         return Promise.reject(responseErr);
@@ -63,15 +66,20 @@ class HTTPTransport extends Transport {
     } catch (e) {
       const error = e as Error;
       const responseErr = new JSONRPCError(error.message, ERR_UNKNOWN, error);
+      // requirements are that notifications are successfully resolved
       this.transportRequestManager.settlePendingRequest(
         notifications,
         responseErr,
       );
+      // requirements are that batch requests are successfully resolved
       this.transportRequestManager.settlePendingRequest(
         getBatchRequests(data),
         responseErr,
       );
-      return Promise.reject(responseErr);
+      // requirements are that individual requests are successfully resolved
+      if (!Array.isArray(data)) {
+        this.transportRequestManager.settlePendingRequest([data], responseErr);
+      }
     }
     return prom;
   }

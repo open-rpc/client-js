@@ -1,4 +1,4 @@
-import { Transport } from "./Transport.js";
+import { Transport, TransportOptions } from "./Transport.js";
 import {
   JSONRPCRequestData,
   IJSONRPCData,
@@ -50,10 +50,11 @@ class PostMessageIframeTransport extends Transport {
 
   public async sendData(
     data: JSONRPCRequestData,
-    _timeout: number | null = 5000,
+    options?: TransportOptions,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
-    const prom = this.transportRequestManager.addRequest(data, null);
+    const signal = options?.signal;
+    const prom = this.transportRequestManager.addRequest(data, null, signal);
     const notifications = getNotifications(data);
     if (this.frame) {
       this.frame.postMessage((data as IJSONRPCData).request, "*");

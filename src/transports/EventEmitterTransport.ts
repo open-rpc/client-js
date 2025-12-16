@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { Transport } from "./Transport.js";
+import { Transport, TransportOptions } from "./Transport.js";
 import { JSONRPCRequestData, getNotifications } from "../Request.js";
 import { JSONRPCError, ERR_UNKNOWN } from "../Error.js";
 
@@ -26,10 +26,12 @@ class EventEmitterTransport extends Transport {
 
   public sendData(
     data: JSONRPCRequestData,
-    timeout: number | null = null,
+    options?: TransportOptions,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
-    const prom = this.transportRequestManager.addRequest(data, timeout);
+  const timeout = options?.timeout ?? null;
+  const signal = options?.signal;
+  const prom = this.transportRequestManager.addRequest(data, timeout, signal);
     const notifications = getNotifications(data);
     const parsedData = this.parseData(data);
     try {

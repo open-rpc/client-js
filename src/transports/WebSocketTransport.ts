@@ -1,5 +1,5 @@
 import WS from "isomorphic-ws";
-import { Transport } from "./Transport.js";
+import { Transport, TransportOptions } from "./Transport.js";
 import {
   JSONRPCRequestData,
   getNotifications,
@@ -38,10 +38,12 @@ class WebSocketTransport extends Transport {
 
   public async sendData(
     data: JSONRPCRequestData,
-    timeout: number | null = 5000,
+    options?: TransportOptions,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
-    let prom = this.transportRequestManager.addRequest(data, timeout);
+    const timeout = options?.timeout ?? 5000;
+    const signal = options?.signal;
+    let prom = this.transportRequestManager.addRequest(data, timeout, signal);
     const notifications = getNotifications(data);
     try {
       this.connection.send(JSON.stringify(this.parseData(data)));

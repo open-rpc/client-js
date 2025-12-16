@@ -22,6 +22,11 @@ export type TransportEventChannel = StrictEventEmitter<
   ITransportEvents
 >;
 
+export interface TransportOptions {
+  timeout?: number | null;
+  signal?: AbortSignal | null;
+}
+
 export abstract class Transport {
   protected transportRequestManager: TransportRequestManager;
   constructor() {
@@ -36,7 +41,8 @@ export abstract class Transport {
   public abstract close(): void;
   public abstract sendData(
     data: JSONRPCRequestData,
-    timeout?: number | null, // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    options?: TransportOptions,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any>;
 
   public subscribe(
@@ -69,6 +75,7 @@ export abstract class Transport {
     return data.request;
   }
 }
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type promiseResolve = (r?: {} | PromiseLike<{}> | undefined) => void;
 

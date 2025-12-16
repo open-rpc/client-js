@@ -4,6 +4,7 @@ import {
   IClient,
   RequestArguments,
   NotificationArguments,
+  Options,
 } from "./ClientInterface.js";
 import { IJSONRPCNotification } from "./Request.js";
 
@@ -67,22 +68,27 @@ class Client implements IClient {
    * followed by a period character (U+002E or ASCII 46) are reserved for rpc-internal methods and extensions and
    * MUST NOT be used for anything else.
    * @param requestObject.params A Structured value that holds the parameter values to be used during the invocation of the method.
+   * @param options.timeout Optional timeout in milliseconds for the request.
+   * @param options.signal Optional AbortSignal to cancel the request.
    *
    * @example
    * myClient.request({method: "foo", params: ["bar"]}).then(() => console.log('foobar'));
    */
-  public async request(requestObject: RequestArguments, timeout?: number) {
+  public async request(requestObject: RequestArguments, options?: Options | number) {
     if (this.requestManager.connectPromise) {
       await this.requestManager.connectPromise;
     }
-    return this.requestManager.request(requestObject, false, timeout);
+    // Backwards-compat: allow passing a number as the second arg (timeout)
+    const normalizedOptions = typeof options === "number" ? { timeout: options } : options;
+    return this.requestManager.request(requestObject, false, normalizedOptions);
   }
 
-  public async notify(requestObject: NotificationArguments) {
+  public async notify(requestObject: NotificationArguments, options?: Options | number) {
     if (this.requestManager.connectPromise) {
       await this.requestManager.connectPromise;
     }
-    return this.requestManager.request(requestObject, true, null);
+    const normalizedOptions = typeof options === "number" ? { timeout: options } : options;
+    return this.requestManager.request(requestObject, true, normalizedOptions);
   }
 
   public onNotification(callback: (data: IJSONRPCNotification) => void) {

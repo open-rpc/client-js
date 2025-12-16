@@ -5,6 +5,11 @@ interface Arguments {
   readonly params?: readonly unknown[] | object;
 }
 
+export interface Options {
+  readonly timeout?: number;
+  readonly signal?: AbortSignal;
+}
+
 export type RequestArguments = Arguments;
 
 export type NotificationArguments = Arguments;
@@ -12,8 +17,8 @@ export type NotificationArguments = Arguments;
 export type JSONRPCMessage = RequestArguments | NotificationArguments;
 
 export interface IClient {
-  request(args: RequestArguments): Promise<unknown>;
-  notify(args: NotificationArguments): Promise<unknown>;
+  request(args: RequestArguments, options?: Options | number): Promise<unknown>;
+  notify(args: NotificationArguments, options?: Options | number): Promise<unknown>;
   close(): void;
   onNotification(callback: (data: IJSONRPCNotification) => void): void;
 }

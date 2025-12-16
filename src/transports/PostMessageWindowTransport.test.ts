@@ -80,15 +80,15 @@ describe("PostMessageWindowTransport", () => {
     it("can send and receive data against potential timeout", async () => {
       const pmt = new PostMessageWindowTransport("http://open-rpc.org");
       await pmt.connect();
-      const result = await pmt.sendData(
+        const result = await pmt.sendData(
         {
           request: generateMockRequest(0, "foo", ["bar"]),
           internalID: 0,
         },
-        10000,
+        { timeout: 100 },
       );
       expect(result).toEqual("bar");
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
     });
 
     it("can send and receive errors", async () => {
@@ -102,7 +102,7 @@ describe("PostMessageWindowTransport", () => {
           internalID: 1,
         }),
       ).rejects.toThrowError("Error message");
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
     });
 
     it("can handle underlying transport crash", async () => {
@@ -114,7 +114,7 @@ describe("PostMessageWindowTransport", () => {
           internalID: 2,
         }),
       ).rejects.toThrowError("Random Segfault that crashes fetch");
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
     });
   });
 

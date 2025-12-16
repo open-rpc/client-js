@@ -71,10 +71,10 @@ describe("PostMessageIframeTransport", () => {
           request: generateMockRequest(0, "foo", ["bar"]),
           internalID: 0,
         },
-        10000,
+        { timeout: 100 },
       );
       expect(result).toEqual("bar");
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
     });
 
     it("can send and receive errors", async () => {
@@ -88,7 +88,7 @@ describe("PostMessageIframeTransport", () => {
           internalID: 1,
         }),
       ).rejects.toThrowError("Error message");
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
     });
 
     it("can handle underlying transport crash", async () => {
@@ -102,7 +102,7 @@ describe("PostMessageIframeTransport", () => {
           internalID: 2,
         }),
       ).rejects.toThrowError("Random Segfault that crashes fetch");
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 10));
     });
   });
 });

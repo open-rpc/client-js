@@ -4,7 +4,7 @@ import HTTPTransport from "./transports/HTTPTransport.js";
 import WebSocketTransport from "./transports/WebSocketTransport.js";
 import PostMessageWindowTransport from "./transports/PostMessageWindowTransport.js";
 import PostMessageIframeTransport from "./transports/PostMessageIframeTransport.js";
-import { JSONRPCError } from "./Error.js";
+import { JSONRPCError, AbortError } from "./Error.js";
 import Client from "./Client.js";
 
 export default Client;
@@ -15,6 +15,7 @@ export {
   EventEmitterTransport,
   WebSocketTransport,
   JSONRPCError,
+  AbortError,
   PostMessageWindowTransport,
   PostMessageIframeTransport,
 };

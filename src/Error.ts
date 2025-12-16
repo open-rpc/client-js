@@ -2,6 +2,13 @@ export const ERR_TIMEOUT = 7777;
 export const ERR_MISSIING_ID = 7878;
 export const ERR_UNKNOWN = 7979;
 
+export class AbortError extends Error {
+  constructor(message: string = "Request aborted") {
+    super(message);
+    this.name = "AbortError";
+  }
+}
+
 export class JSONRPCError extends Error {
   public message: string;
   public code: number;

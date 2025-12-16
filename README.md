@@ -120,6 +120,40 @@ main().then(() => {
 
 </details>
 
+<details>
+  <summary>AbortController</summary>
+
+```javascript
+import { RequestManager, Client, HTTPTransport, AbortError } from "@open-rpc/client-js";
+
+const transport = new HTTPTransport("http://localhost:3333");
+const requestManager = new RequestManager([transport]);
+const client = new Client(requestManager);
+
+const main = async () => {
+  const controller = new AbortController();
+  const signal = controller.signal;
+
+  setTimeout(() => {
+    controller.abort();
+  }, 100);
+
+  try {
+    await client.request({ method: "long_running_method", params: [] }, { timeout: 5000, signal });
+  } catch (e) {
+    if (e instanceof AbortError) {
+      console.log("Request was aborted");
+    } else {
+      console.error(e);
+    }
+  }
+};
+
+main();
+```
+
+</details>
+
 ### Building
 
 ```sh

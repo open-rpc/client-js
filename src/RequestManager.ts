@@ -7,7 +7,7 @@ import {
 import { JSONRPCError } from "./Error.js";
 import { StrictEventEmitter } from "strict-event-emitter-types";
 import { EventEmitter } from "events";
-import { JSONRPCMessage } from "./ClientInterface.js";
+import { JSONRPCMessage, Options } from "./ClientInterface.js";
 
 export type RequestChannel = StrictEventEmitter<EventEmitter, IRequestEvents>;
 
@@ -69,7 +69,7 @@ class RequestManager {
   public async request(
     requestObject: JSONRPCMessage,
     notification: boolean = false,
-    timeout?: number | null,
+    options?: Options,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<any> {
     const internalID = this.nextID().toString();
@@ -89,7 +89,7 @@ class RequestManager {
       });
       return result;
     }
-    return this.getPrimaryTransport().sendData(payload, timeout);
+    return this.getPrimaryTransport().sendData(payload, options);
   }
 
   public close(): void {
@@ -120,7 +120,7 @@ class RequestManager {
       return;
     }
 
-    this.getPrimaryTransport().sendData(this.batch);
+  this.getPrimaryTransport().sendData(this.batch);
     this.batch = [];
     this.batchStarted = false;
   }
