@@ -164,6 +164,86 @@ describe("StreamTransport", () => {
     t.close();
   });
 
+  it("disposes the streams when close lands while connect is in flight", async () => {
+    const pair = makePair();
+    const dispose = jest.fn();
+    let release: () => void = () => undefined;
+    const gate = new Promise<void>((resolve) => (release = resolve));
+    const t = new StreamTransport({
+      provider: async () => {
+        await gate;
+        return { readable: pair.readable, writable: pair.writable, dispose };
+      },
+    });
+
+    const connecting = t.connect();
+    t.close();
+    release();
+    await connecting;
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(dispose).toHaveBeenCalledTimes(1);
+    await expect(t.sendRaw("x")).rejects.toThrow("Transport is not connected");
+  });
+
+  it("serializes a reconnect that starts while a close is still pending", async () => {
+    const first = makePair();
+    const second = makePair();
+    const disposeFirst = jest.fn();
+    const disposeSecond = jest.fn();
+    let release: () => void = () => undefined;
+    const gate = new Promise<void>((resolve) => (release = resolve));
+    let calls = 0;
+    const provider = jest.fn(async () => {
+      await gate;
+      calls += 1;
+      return calls === 1
+        ? {
+            readable: first.readable,
+            writable: first.writable,
+            dispose: disposeFirst,
+          }
+        : {
+            readable: second.readable,
+            writable: second.writable,
+            dispose: disposeSecond,
+          };
+    });
+    const t = new StreamTransport({ provider });
+
+    const firstConnect = t.connect();
+    t.close();
+    const secondConnect = t.connect();
+    release();
+    await Promise.all([firstConnect, secondConnect]);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(provider).toHaveBeenCalledTimes(2);
+    expect(disposeFirst).toHaveBeenCalledTimes(1);
+    expect(disposeSecond).not.toHaveBeenCalled();
+
+    // the second pair is the live one; the abandoned first must not see traffic
+    const p = t.sendData({
+      request: generateMockRequest(8, "foo", ["bar"]),
+      internalID: 8,
+    });
+    second.push(JSON.stringify({ jsonrpc: "2.0", id: 8, result: 13 }) + "\n");
+    await expect(p).resolves.toEqual(13);
+    expect(second.written.length).toBe(1);
+    expect(first.written.length).toBe(0);
+    t.close();
+  });
+
+  it("connects after a close that preceded any connect", async () => {
+    const pair = makePair();
+    const t = StreamTransport.fromStreams(pair.readable, pair.writable);
+    t.close();
+    await t.connect();
+    await t.sendRaw('{"a":1}');
+    expect(pair.written[0]).toBe('{"a":1}\n');
+    t.close();
+  });
+
   it("sendRaw writes a framed payload", async () => {
     const pair = makePair();
     const t = StreamTransport.fromStreams(pair.readable, pair.writable);

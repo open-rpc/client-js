@@ -30,6 +30,8 @@ class StreamTransport extends Transport {
   private reader?: ReadableStreamDefaultReader<Uint8Array>;
   private logReader?: ReadableStreamDefaultReader<Uint8Array>;
   private closed = false;
+  private connecting?: Promise<void>;
+  private closing?: Promise<void>;
 
   constructor(options: StreamTransportOptions) {
     super();
@@ -39,8 +41,27 @@ class StreamTransport extends Transport {
   }
 
   public async connect(): Promise<void> {
-    if (this.streams) return;
+    // here we check for concurrent connect/close races
+    if (!this.closed && this.streams) return;
+    if (!this.connecting) {
+      const attempt: Promise<void> = this.reopen().finally(() => {
+        if (this.connecting === attempt) this.connecting = undefined;
+      });
+      this.connecting = attempt;
+    }
+    return this.connecting;
+  }
+
+  private async reopen(): Promise<void> {
+    if (this.closing) {
+      await this.closing;
+      this.closing = undefined;
+    }
     this.closed = false;
+    await this.open();
+  }
+
+  private async open(): Promise<void> {
     const streams = await this.provider();
     this.streams = streams;
     this.writer = streams.writable.getWriter();
@@ -87,6 +108,20 @@ class StreamTransport extends Transport {
   public close(): void {
     if (this.closed) return;
     this.closed = true;
+    const pending = this.connecting;
+    this.connecting = undefined;
+    if (!pending) {
+      this.teardown();
+      this.closing = Promise.resolve();
+      return;
+    }
+    // the provider is mid-flight and already owns a resource (a spawned child,
+    // an open socket); tear down once it lands or that resource leaks
+    const teardown = () => this.teardown();
+    this.closing = pending.then(teardown, teardown);
+  }
+
+  private teardown(): void {
     const streams = this.streams;
     this.streams = undefined;
     void this.reader?.cancel().catch(() => undefined);
@@ -105,7 +140,7 @@ class StreamTransport extends Transport {
   }
 
   private write(frame: Uint8Array): Promise<void> {
-    if (!this.writer) {
+    if (this.closed || !this.writer) {
       return Promise.reject(new Error("Transport is not connected"));
     }
     return this.writer.write(frame);
