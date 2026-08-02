@@ -71,4 +71,11 @@ describe("ContentLengthMessageFramer", () => {
       '{"b":2}',
     ]);
   });
+
+  it("drops a malformed header and resyncs on the next frame", () => {
+    const f = new ContentLengthMessageFramer();
+    expect(
+      f.decode(bytes('X-Other: 1\r\n\r\nContent-Length: 7\r\n\r\n{"a":1}')),
+    ).toEqual(['{"a":1}']);
+  });
 });
