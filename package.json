@@ -7,6 +7,10 @@
       "types": "./dist/index.d.ts",
       "browser": "./dist/browser/index.js",
       "import": "./dist/index.js"
+    },
+    "./stdio": {
+      "types": "./dist/stdio.d.ts",
+      "import": "./dist/stdio.js"
     }
   },
   "main": "./dist/index.js",
