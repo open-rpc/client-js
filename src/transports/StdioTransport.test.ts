@@ -1,7 +1,9 @@
 /**
  * @jest-environment node
  */
-import StdioTransport from "./StdioTransport.js";
+import { ChildProcess } from "child_process";
+import { Readable, Writable } from "stream";
+import StdioTransport, { childStreamPair } from "./StdioTransport.js";
 
 // A tiny JSON-RPC echo "server": for each line, reply with the params as result.
 const ECHO_SERVER = `
@@ -67,6 +69,31 @@ describe("StdioTransport", () => {
     transport.close();
     await new Promise((resolve) => setTimeout(resolve, 500));
   }, 20000);
+
+  describe("childStreamPair", () => {
+    const fakeChild = (stderr: Readable | null): ChildProcess =>
+      ({
+        stdout: Readable.from([]),
+        stdin: new Writable({
+          write(_chunk, _encoding, cb) {
+            cb();
+          },
+        }),
+        stderr,
+      }) as unknown as ChildProcess;
+
+    it("omits the log stream when the child has no stderr", () => {
+      const pair = childStreamPair(fakeChild(null), 2000);
+      expect(pair.logStream).toBeUndefined();
+      expect(pair.readable).toBeDefined();
+      expect(pair.writable).toBeDefined();
+    });
+
+    it("exposes stderr as the log stream when the child has one", () => {
+      const pair = childStreamPair(fakeChild(Readable.from([])), 2000);
+      expect(pair.logStream).toBeDefined();
+    });
+  });
 
   it("shutdown is a no-op for an already-exited child", async () => {
     const transport = new StdioTransport({
