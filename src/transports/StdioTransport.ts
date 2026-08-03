@@ -12,6 +12,48 @@ export interface StdioTransportOptions {
   shutdownTimeout?: number;
 }
 
+function waitForSpawn(child: ChildProcess): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    child.once("spawn", () => resolve());
+    child.once("error", (err) => reject(err));
+  });
+}
+
+async function shutdown(child: ChildProcess, timeout: number): Promise<void> {
+  if (child.exitCode !== null || child.signalCode !== null) return;
+  child.stdin?.end();
+  const killTimer = setTimeout(() => child.kill("SIGKILL"), timeout);
+  try {
+    await new Promise<void>((resolve) => child.once("exit", () => resolve()));
+  } finally {
+    clearTimeout(killTimer);
+  }
+}
+
+/**
+ * Bridges a child's Node stdio to a Web Streams pair. As a client we write to
+ * the child's stdin and read from its stdout.
+ */
+export function childStreamPair(
+  child: ChildProcess,
+  shutdownTimeout: number,
+): StreamPair {
+  return {
+    readable: Readable.toWeb(
+      child.stdout as Readable,
+    ) as unknown as ReadableStream<Uint8Array>,
+    writable: Writable.toWeb(
+      child.stdin as Writable,
+    ) as unknown as WritableStream<Uint8Array>,
+    logStream: child.stderr
+      ? (Readable.toWeb(
+          child.stderr as Readable,
+        ) as unknown as ReadableStream<Uint8Array>)
+      : undefined,
+    dispose: () => shutdown(child, shutdownTimeout),
+  };
+}
+
 class StdioTransport extends StreamTransport {
   constructor(options: StdioTransportOptions) {
     super({
@@ -21,47 +63,10 @@ class StdioTransport extends StreamTransport {
         const child = spawn(options.command, options.args ?? [], {
           stdio: ["pipe", "pipe", "pipe"],
         });
-        await StdioTransport.waitForSpawn(child);
-        // As a client we write to the child's stdin and read from its stdout.
-        return {
-          readable: Readable.toWeb(
-            child.stdout as Readable,
-          ) as unknown as ReadableStream<Uint8Array>,
-          writable: Writable.toWeb(
-            child.stdin as Writable,
-          ) as unknown as WritableStream<Uint8Array>,
-          logStream: child.stderr
-            ? (Readable.toWeb(
-                child.stderr as Readable,
-              ) as unknown as ReadableStream<Uint8Array>)
-            : undefined,
-          dispose: () =>
-            StdioTransport.shutdown(child, options.shutdownTimeout ?? 2000),
-        };
+        await waitForSpawn(child);
+        return childStreamPair(child, options.shutdownTimeout ?? 2000);
       },
     });
-  }
-
-  private static waitForSpawn(child: ChildProcess): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      child.once("spawn", () => resolve());
-      child.once("error", (err) => reject(err));
-    });
-  }
-
-  private static async shutdown(
-    child: ChildProcess,
-    timeout: number,
-  ): Promise<void> {
-    if (child.exitCode !== null || child.signalCode !== null) return;
-    // Closing stdin signals EOF so a well-behaved child exits on its own.
-    child.stdin?.end();
-    const killTimer = setTimeout(() => child.kill("SIGKILL"), timeout);
-    try {
-      await new Promise<void>((resolve) => child.once("exit", () => resolve()));
-    } finally {
-      clearTimeout(killTimer);
-    }
   }
 }
 
