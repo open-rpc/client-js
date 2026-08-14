@@ -7,6 +7,7 @@ export default {
   restoreMocks: true,
   rootDir: "./src",
   testEnvironment: "jsdom",
+  setupFiles: ["<rootDir>/../jest.polyfills.cjs"],
   preset: "ts-jest/presets/default-esm",
   extensionsToTreatAsEsm: [".ts"],
   moduleNameMapper: {
