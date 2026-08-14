@@ -1,3 +1,15 @@
+# [2.1.0](https://github.com/open-rpc/client-js/compare/2.0.0...2.1.0) (2026-08-14)
+
+
+### Bug Fixes
+
+* race condition between connect and close ([25dff42](https://github.com/open-rpc/client-js/commit/25dff4272a26700d94fc91bc225bf912c16cd480))
+
+
+### Features
+
+* add support for Stream and Stdio transports ([935a897](https://github.com/open-rpc/client-js/commit/935a897823f7a67a979627d0d552d979a4bdde1c))
+
 # [2.0.0](https://github.com/open-rpc/client-js/compare/1.8.1...2.0.0) (2025-10-29)
 
 
